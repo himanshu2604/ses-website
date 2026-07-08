@@ -7,7 +7,10 @@ export const Route = createFileRoute("/status")({
       { title: "Status — SES" },
       { name: "description", content: "System status for ses.service — all systems operational." },
       { property: "og:title", content: "Status — SES" },
-      { property: "og:description", content: "System status for ses.service — all systems operational." },
+      {
+        property: "og:description",
+        content: "System status for ses.service — all systems operational.",
+      },
       { property: "og:url", content: "/status" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -16,12 +19,7 @@ export const Route = createFileRoute("/status")({
   component: StatusPage,
 });
 
-const systems = [
-  "ses.service",
-  "audit pipeline",
-  "report delivery",
-  "health score engine",
-];
+const systems = ["ses.service", "audit pipeline", "report delivery", "health score engine"];
 
 function StatusPage() {
   return (
@@ -35,7 +33,13 @@ function StatusPage() {
               <h1 className="headline text-[32px] md:text-[52px]">All systems operational.</h1>
               <span
                 className="pulse-dot"
-                style={{ width: 14, height: 14, borderRadius: 999, background: "#22c55e", display: "inline-block" }}
+                style={{
+                  width: 14,
+                  height: 14,
+                  borderRadius: 999,
+                  background: "#22c55e",
+                  display: "inline-block",
+                }}
               />
             </div>
             <ul className="mono text-[14px] md:text-[15px] space-y-3 pt-4">

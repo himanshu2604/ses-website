@@ -2,20 +2,29 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Nav, Footer, HealthCard, VolLabel, Eyebrow } from "@/components/site";
 
-
 export const Route = createFileRoute("/evidence")({
   head: () => ({
     meta: [
       { title: "Evidence — SES Software Evolution Service" },
-      { name: "description", content: "Real projects, real Health Score movement. Same automated scan at Week 0 and Week 12 — no cherry-picked metrics." },
+      {
+        name: "description",
+        content:
+          "Real projects, real Health Score movement. Same automated scan at Week 0 and Week 12 — no cherry-picked metrics.",
+      },
       { property: "og:title", content: "Evidence — SES Software Evolution Service" },
-      { property: "og:description", content: "Same scoring, every time. Watch real projects move their Health Score under SES." },
+      {
+        property: "og:description",
+        content: "Same scoring, every time. Watch real projects move their Health Score under SES.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://ses.service/evidence" },
       { property: "og:image", content: "https://ses.service/og.svg" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Evidence — SES Software Evolution Service" },
-      { name: "twitter:description", content: "Real projects. Real numbers. Same scoring every time." },
+      {
+        name: "twitter:description",
+        content: "Real projects. Real numbers. Same scoring every time.",
+      },
       { name: "twitter:image", content: "https://ses.service/og.svg" },
     ],
     links: [{ rel: "canonical", href: "https://ses.service/evidence" }],
@@ -39,7 +48,9 @@ function HealthChart() {
   const max = 100;
   const x = (i: number) => padL + (i / (scores.length - 1)) * innerW;
   const y = (v: number) => padT + innerH - ((v - min) / (max - min)) * innerH;
-  const pathD = scores.map((v, i) => `${i === 0 ? "M" : "L"} ${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(" ");
+  const pathD = scores
+    .map((v, i) => `${i === 0 ? "M" : "L"} ${x(i).toFixed(1)} ${y(v).toFixed(1)}`)
+    .join(" ");
   const avgY = y(61);
 
   const pathRef = useRef<SVGPathElement | null>(null);
@@ -51,7 +62,9 @@ function HealthChart() {
     if (pathRef.current) {
       try {
         setLineLen(Math.ceil(pathRef.current.getTotalLength()));
-      } catch { /* noop */ }
+      } catch {
+        /* noop */
+      }
     }
   }, []);
 
@@ -66,7 +79,7 @@ function HealthChart() {
           }
         });
       },
-      { threshold: 0.35 }
+      { threshold: 0.35 },
     );
     obs.observe(wrapRef.current);
     return () => obs.disconnect();
@@ -79,14 +92,46 @@ function HealthChart() {
         <span className="text-[#22c55e]">● 12-week progression</span>
       </div>
       <div className="w-full overflow-x-auto">
-        <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-auto min-w-[560px]" role="img" aria-label="Health score improving from 44 to 88 over 12 weeks">
+        <svg
+          viewBox={`0 0 ${w} ${h}`}
+          className="w-full h-auto min-w-[560px]"
+          role="img"
+          aria-label="Health score improving from 44 to 88 over 12 weeks"
+        >
           {/* industry avg horizontal rule */}
-          <line x1={padL} x2={w - padR} y1={avgY} y2={avgY} stroke="#333" strokeDasharray="3 4" strokeWidth={1} />
-          <text x={w - padR} y={avgY - 6} textAnchor="end" fontFamily="'JetBrains Mono', monospace" fontSize={10} fill="#666">industry avg: 61</text>
+          <line
+            x1={padL}
+            x2={w - padR}
+            y1={avgY}
+            y2={avgY}
+            stroke="#333"
+            strokeDasharray="3 4"
+            strokeWidth={1}
+          />
+          <text
+            x={w - padR}
+            y={avgY - 6}
+            textAnchor="end"
+            fontFamily="'JetBrains Mono', monospace"
+            fontSize={10}
+            fill="#666"
+          >
+            industry avg: 61
+          </text>
 
           {/* y-axis labels: 44, 61, 88 */}
           {[44, 61, 88].map((v) => (
-            <text key={v} x={padL - 10} y={y(v) + 3} textAnchor="end" fontFamily="'JetBrains Mono', monospace" fontSize={10} fill="#666">{v}</text>
+            <text
+              key={v}
+              x={padL - 10}
+              y={y(v) + 3}
+              textAnchor="end"
+              fontFamily="'JetBrains Mono', monospace"
+              fontSize={10}
+              fill="#666"
+            >
+              {v}
+            </text>
           ))}
 
           {/* line — animated left-to-right on view */}
@@ -110,13 +155,34 @@ function HealthChart() {
               cy={y(v)}
               r={i === 0 || i === scores.length - 1 ? 4 : 2.5}
               fill="#22c55e"
-              style={{ opacity: inView ? 1 : 0, transition: `opacity 240ms ease-out ${400 + i * 30}ms` }}
+              style={{
+                opacity: inView ? 1 : 0,
+                transition: `opacity 240ms ease-out ${400 + i * 30}ms`,
+              }}
             />
           ))}
 
           {/* x-axis labels: week 0 and week 12 */}
-          <text x={x(0)} y={h - 10} textAnchor="start" fontFamily="'JetBrains Mono', monospace" fontSize={10} fill="#666">week 0</text>
-          <text x={x(scores.length - 1)} y={h - 10} textAnchor="end" fontFamily="'JetBrains Mono', monospace" fontSize={10} fill="#666">week 12</text>
+          <text
+            x={x(0)}
+            y={h - 10}
+            textAnchor="start"
+            fontFamily="'JetBrains Mono', monospace"
+            fontSize={10}
+            fill="#666"
+          >
+            week 0
+          </text>
+          <text
+            x={x(scores.length - 1)}
+            y={h - 10}
+            textAnchor="end"
+            fontFamily="'JetBrains Mono', monospace"
+            fontSize={10}
+            fill="#666"
+          >
+            week 12
+          </text>
         </svg>
       </div>
       <div className="hairline mt-6 pt-4 mono text-[10px] text-[#444] flex justify-between">
@@ -127,13 +193,24 @@ function HealthChart() {
   );
 }
 
-
 /* -------------------- Deep case columns -------------------- */
 
-function ChangeColumn({ label, delta, body, impact }: { label: string; delta: string; body: string; impact: string }) {
+function ChangeColumn({
+  label,
+  delta,
+  body,
+  impact,
+}: {
+  label: string;
+  delta: string;
+  body: string;
+  impact: string;
+}) {
   return (
     <div className="bg-[#111] border border-[#1e1e1e] rounded-[3px] p-6 border-l-2 border-l-[#1f1f1f] flex flex-col gap-4">
-      <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#22c55e] font-medium">{label}</div>
+      <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#22c55e] font-medium">
+        {label}
+      </div>
       <div className="mono text-[13px] text-[#22c55e] tabular-nums">{delta}</div>
       <p className="text-[#888] text-[14px] leading-[1.7]">{body}</p>
       <div className="hairline mt-auto pt-4">
@@ -146,25 +223,52 @@ function ChangeColumn({ label, delta, body, impact }: { label: string; delta: st
 
 /* -------------------- Summary case cards -------------------- */
 
-function SummaryCase({ title, timeline, from, to, delta, wins }: { title: string; timeline: string; from: number; to: number; delta: string; wins: string[] }) {
+function SummaryCase({
+  title,
+  timeline,
+  from,
+  to,
+  delta,
+  wins,
+}: {
+  title: string;
+  timeline: string;
+  from: number;
+  to: number;
+  delta: string;
+  wins: string[];
+}) {
   return (
     <div className="bg-[#111] border border-[#1e1e1e] rounded-[3px] p-7 flex flex-col gap-5 border-l-2 border-l-[#1f1f1f]">
       <div className="flex items-center justify-between mono text-[11px]">
         <span className="text-[#444]">case.json</span>
         <span className="flex items-center gap-2 text-[#22c55e]">
-          <span className="pulse-dot" style={{ width: 6, height: 6, borderRadius: 999, background: "#22c55e", display: "inline-block" }} />
+          <span
+            className="pulse-dot"
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: 999,
+              background: "#22c55e",
+              display: "inline-block",
+            }}
+          />
           live
         </span>
       </div>
       <div>
-        <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#666] font-medium">timeline: {timeline}</div>
+        <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#666] font-medium">
+          timeline: {timeline}
+        </div>
         <h3 className="headline text-[22px] mt-3">{title}</h3>
       </div>
       <div className="flex items-baseline gap-4">
         <span className="mono text-[#666] text-[16px] tabular-nums">{from}</span>
         <span className="mono text-[#444]">→</span>
         <span className="mono text-[#f0f0f0] text-[16px] tabular-nums">{to}</span>
-        <span className="mono font-semibold tabular-nums text-[#22c55e] text-[36px] leading-none ml-auto">{delta}</span>
+        <span className="mono font-semibold tabular-nums text-[#22c55e] text-[36px] leading-none ml-auto">
+          {delta}
+        </span>
       </div>
       <ul className="space-y-2.5 text-[13px] text-[#666] leading-[1.7]">
         {wins.map((w, i) => (
@@ -188,9 +292,12 @@ function EvidencePage() {
             <div className="border-l-2 border-[#1f1f1f] pl-6 md:pl-8 max-w-[920px] space-y-5">
               <Eyebrow>{"// SOFTWARE EVOLUTION SERVICE"}</Eyebrow>
               <VolLabel vol="VOL. V" label="THE EVIDENCE" />
-              <h1 className="headline text-[36px] md:text-[56px] leading-[1.05]">Real projects. Real numbers. Same scoring every time.</h1>
+              <h1 className="headline text-[36px] md:text-[56px] leading-[1.05]">
+                Real projects. Real numbers. Same scoring every time.
+              </h1>
               <p className="text-[#888] text-[16px] md:text-[17px] leading-[1.7] max-w-[720px]">
-                Every case below used the same automated Health Score scan at Week 0 and Week 12. No cherry-picked metrics — the score either moved or it didn't.
+                Every case below used the same automated Health Score scan at Week 0 and Week 12. No
+                cherry-picked metrics — the score either moved or it didn't.
               </p>
             </div>
           </div>
@@ -199,11 +306,15 @@ function EvidencePage() {
         {/* Primary case */}
         <section className="py-16 md:py-30 border-b border-[#1a1a1a]">
           <div className="max-w-[1280px] mx-auto px-6 md:px-10 space-y-12">
-            <div className="mono text-[11px] tracking-[0.12em] text-[#22c55e] uppercase font-medium">{"// PRIMARY CASE — B2B SAAS PLATFORM"}</div>
+            <div className="mono text-[11px] tracking-[0.12em] text-[#22c55e] uppercase font-medium">
+              {"// PRIMARY CASE — B2B SAAS PLATFORM"}
+            </div>
 
             <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-8 items-center">
               <div className="space-y-3">
-                <div className="mono text-[11px] text-[#444] uppercase tracking-[0.12em] font-medium">BEFORE — Week 0</div>
+                <div className="mono text-[11px] text-[#444] uppercase tracking-[0.12em] font-medium">
+                  BEFORE — Week 0
+                </div>
                 <HealthCard
                   file="baseline.json"
                   status="archived"
@@ -223,7 +334,9 @@ function EvidencePage() {
                 <span className="hidden lg:inline">→</span>
               </div>
               <div className="space-y-3">
-                <div className="mono text-[11px] text-[#22c55e] uppercase tracking-[0.12em] font-medium">AFTER — Week 12</div>
+                <div className="mono text-[11px] text-[#22c55e] uppercase tracking-[0.12em] font-medium">
+                  AFTER — Week 12
+                </div>
                 <HealthCard
                   score={88}
                   delta="↑ +44 since baseline"
@@ -239,7 +352,9 @@ function EvidencePage() {
 
             {/* What changed */}
             <div className="space-y-6">
-              <div className="mono text-[11px] tracking-[0.12em] text-[#666] uppercase font-medium">{"// what changed"}</div>
+              <div className="mono text-[11px] tracking-[0.12em] text-[#666] uppercase font-medium">
+                {"// what changed"}
+              </div>
               <div className="grid md:grid-cols-3 gap-6">
                 <ChangeColumn
                   label="PERFORMANCE"
@@ -264,7 +379,9 @@ function EvidencePage() {
 
             {/* Chart */}
             <div className="space-y-5">
-              <div className="mono text-[11px] tracking-[0.12em] text-[#666] uppercase font-medium">{"// 12-week health score progression"}</div>
+              <div className="mono text-[11px] tracking-[0.12em] text-[#666] uppercase font-medium">
+                {"// 12-week health score progression"}
+              </div>
               <HealthChart />
             </div>
           </div>
@@ -274,8 +391,12 @@ function EvidencePage() {
         <section className="py-16 md:py-30 border-b border-[#1a1a1a]">
           <div className="max-w-[1280px] mx-auto px-6 md:px-10 space-y-10">
             <div className="border-l-2 border-[#1f1f1f] pl-6 md:pl-8 max-w-[720px] space-y-3">
-              <div className="mono text-[11px] tracking-[0.12em] text-[#22c55e] uppercase font-medium">{"// ADDITIONAL CASES"}</div>
-              <p className="text-[#888] text-[15px] leading-[1.7]">Shorter engagements. Same methodology.</p>
+              <div className="mono text-[11px] tracking-[0.12em] text-[#22c55e] uppercase font-medium">
+                {"// ADDITIONAL CASES"}
+              </div>
+              <p className="text-[#888] text-[15px] leading-[1.7]">
+                Shorter engagements. Same methodology.
+              </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -310,20 +431,26 @@ function EvidencePage() {
         {/* Bottom CTA */}
         <section className="py-16 md:py-30" style={{ background: "#22c55e", color: "#0c0c0c" }}>
           <div className="max-w-[820px] mx-auto px-6 md:px-10 border-l-2 border-[#0c0c0c]/30 pl-6 md:pl-8 space-y-6">
-            <div className="mono text-[11px] uppercase tracking-[0.12em] text-[#0c0c0c]/70">{"// YOUR BASELINE"}</div>
-            <h2 className="headline text-[#0c0c0c] text-[30px] sm:text-[36px] md:text-[56px] break-words">See where your product stands.</h2>
+            <div className="mono text-[11px] uppercase tracking-[0.12em] text-[#0c0c0c]/70">
+              {"// YOUR BASELINE"}
+            </div>
+            <h2 className="headline text-[#0c0c0c] text-[30px] sm:text-[36px] md:text-[56px] break-words">
+              See where your product stands.
+            </h2>
             <p className="text-[#0c0c0c]/80 text-[16px] leading-[1.7] max-w-[640px]">
-              Your baseline audit is free. We run the same scan, score the same four pillars, and send you the results within 48 hours.
+              Your baseline audit is free. We run the same scan, score the same four pillars, and
+              send you the results within 48 hours.
             </p>
             <div className="flex flex-wrap items-center gap-5 pt-2">
               <Link
                 to="/audit"
                 className="btn-primary mono text-[13px] bg-[#0c0c0c] text-[#22c55e] px-5 py-3 rounded-[3px] font-semibold"
               >
-
                 $ request --audit ↵
               </Link>
-              <a href="/#pricing" className="mono text-[13px] text-[#0c0c0c] hover:underline">view pricing →</a>
+              <a href="/#pricing" className="mono text-[13px] text-[#0c0c0c] hover:underline">
+                view pricing →
+              </a>
             </div>
           </div>
         </section>

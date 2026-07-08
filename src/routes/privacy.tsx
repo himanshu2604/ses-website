@@ -5,9 +5,15 @@ export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
       { title: "Privacy Policy — SES" },
-      { name: "description", content: "How Software Evolution Service collects, uses, and protects your data." },
+      {
+        name: "description",
+        content: "How Software Evolution Service collects, uses, and protects your data.",
+      },
       { property: "og:title", content: "Privacy Policy — SES" },
-      { property: "og:description", content: "How Software Evolution Service collects, uses, and protects your data." },
+      {
+        property: "og:description",
+        content: "How Software Evolution Service collects, uses, and protects your data.",
+      },
       { property: "og:url", content: "/privacy" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -59,7 +65,9 @@ function PrivacyPage() {
           <div className="max-w-[820px] mx-auto px-6 md:px-10 space-y-12">
             {sections.map((s) => (
               <div key={s.title} className="space-y-3">
-                <h2 className="font-sans font-semibold text-[20px] md:text-[22px] text-[#f0f0f0]">{s.title}</h2>
+                <h2 className="font-sans font-semibold text-[20px] md:text-[22px] text-[#f0f0f0]">
+                  {s.title}
+                </h2>
                 <p className="text-[#666] text-[15px] md:text-[16px] leading-[1.7]">{s.body}</p>
               </div>
             ))}
