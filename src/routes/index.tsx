@@ -13,7 +13,6 @@ import {
   AuditForm,
 } from "@/components/site";
 
-
 function useIsLgUp() {
   const [isLg, setIsLg] = useState(false);
   useEffect(() => {
@@ -26,31 +25,37 @@ function useIsLgUp() {
   return isLg;
 }
 
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "SES — Software Evolution Service | Weekly AI-Assisted Software Improvement" },
-      { name: "description", content: "Software decays without active maintenance. SES ships measurable improvements to your product every week — performance, security, and code quality. Backed by data, not promises." },
+      {
+        name: "description",
+        content:
+          "Software decays without active maintenance. SES ships measurable improvements to your product every week — performance, security, and code quality. Backed by data, not promises.",
+      },
       { property: "og:title", content: "SES — Software Evolution Service" },
-      { property: "og:description", content: "Your software is getting worse every week. We fix that. Weekly AI-assisted improvements, measured by your Health Score." },
+      {
+        property: "og:description",
+        content:
+          "Your software is getting worse every week. We fix that. Weekly AI-assisted improvements, measured by your Health Score.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://ses.service" },
       { property: "og:image", content: "https://ses.service/og.svg" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "SES — Software Evolution Service" },
-      { name: "twitter:description", content: "Your software is getting worse every week. We fix that. Weekly AI-assisted improvements, measured by your Health Score." },
+      {
+        name: "twitter:description",
+        content:
+          "Your software is getting worse every week. We fix that. Weekly AI-assisted improvements, measured by your Health Score.",
+      },
       { name: "twitter:image", content: "https://ses.service/og.svg" },
     ],
-    links: [
-      { rel: "canonical", href: "https://ses.service" },
-    ],
+    links: [{ rel: "canonical", href: "https://ses.service" }],
   }),
   component: Index,
 });
-
-
-
 
 /* -------------------- Hero -------------------- */
 
@@ -69,7 +74,8 @@ function Hero() {
           <div className="space-y-3">
             <VolLabel vol="VOL. II" label="THE SERVICE" />
             <p className="text-[#888] text-[16px] md:text-[17px] leading-[1.7] max-w-[520px]">
-              Every week we make measurable improvements to your product's speed, security, and reliability — backed by data, reports, and AI-assisted engineering.
+              Every week we make measurable improvements to your product's speed, security, and
+              reliability — backed by data, reports, and AI-assisted engineering.
             </p>
           </div>
           <div className="pt-2 italic text-[#666] text-[14px] mono border-l border-[#22c55e] pl-4">
@@ -86,7 +92,6 @@ function Hero() {
               see results →
             </a>
           </div>
-
         </div>
 
         <div className="lg:pl-6">
@@ -111,8 +116,12 @@ function Hero() {
             { num: "top 32%", label: "in your industry" },
           ].map((s) => (
             <div key={s.label} className="p-6 md:p-8 border-l-2 border-[#1f1f1f]">
-              <div className="mono font-semibold tabular-nums text-[#22c55e] text-[32px] md:text-[40px] leading-none">{s.num}</div>
-              <div className="mono text-[11px] text-[#666] mt-3 uppercase tracking-[0.12em]">{s.label}</div>
+              <div className="mono font-semibold tabular-nums text-[#22c55e] text-[32px] md:text-[40px] leading-none">
+                {s.num}
+              </div>
+              <div className="mono text-[11px] text-[#666] mt-3 uppercase tracking-[0.12em]">
+                {s.label}
+              </div>
             </div>
           ))}
         </div>
@@ -121,16 +130,45 @@ function Hero() {
   );
 }
 
-
 /* -------------------- Problem / Decay timeline -------------------- */
 
 function Problem() {
   const stages = [
-    { when: "Week 0", score: 88, label: "Launch", desc: "Clean codebase, current dependencies, fast.", tone: "green" as const },
-    { when: "Month 3", score: 76, label: "Drift", desc: "Patches stack up. Edge cases multiply.", tone: "green" as const },
-    { when: "Month 9", score: 61, label: "Rot", desc: "Deps go stale. Latency creeps upward.", tone: "amber" as const },
-    { when: "Year 1", score: 44, label: "Risk", desc: "CVEs unaddressed. Incidents recur.", tone: "amber" as const },
-    { when: "Year 2", score: 28, label: "Liability", desc: "Rewrites get proposed. Velocity stalls.", tone: "red" as const },
+    {
+      when: "Week 0",
+      score: 88,
+      label: "Launch",
+      desc: "Clean codebase, current dependencies, fast.",
+      tone: "green" as const,
+    },
+    {
+      when: "Month 3",
+      score: 76,
+      label: "Drift",
+      desc: "Patches stack up. Edge cases multiply.",
+      tone: "green" as const,
+    },
+    {
+      when: "Month 9",
+      score: 61,
+      label: "Rot",
+      desc: "Deps go stale. Latency creeps upward.",
+      tone: "amber" as const,
+    },
+    {
+      when: "Year 1",
+      score: 44,
+      label: "Risk",
+      desc: "CVEs unaddressed. Incidents recur.",
+      tone: "amber" as const,
+    },
+    {
+      when: "Year 2",
+      score: 28,
+      label: "Liability",
+      desc: "Rewrites get proposed. Velocity stalls.",
+      tone: "red" as const,
+    },
   ];
   return (
     <section className="py-16 md:py-30 border-b border-[#1a1a1a]">
@@ -145,11 +183,17 @@ function Problem() {
         <div className="border border-[#1e1e1e] rounded-[3px] p-6 md:p-10">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-[#1e1e1e]">
             {stages.map((s, i) => {
-              const color = s.tone === "green" ? "#22c55e" : s.tone === "amber" ? "#d97706" : "#b91c1c";
+              const color =
+                s.tone === "green" ? "#22c55e" : s.tone === "amber" ? "#d97706" : "#b91c1c";
               return (
                 <div key={s.label} className="bg-[#111] p-6 flex flex-col gap-4">
-                  <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#444]">{s.when}</div>
-                  <div className="mono font-semibold tabular-nums text-[44px] leading-none" style={{ color }}>
+                  <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#444]">
+                    {s.when}
+                  </div>
+                  <div
+                    className="mono font-semibold tabular-nums text-[44px] leading-none"
+                    style={{ color }}
+                  >
                     <CountUp to={s.score} duration={1200 + i * 120} />
                   </div>
                   <Bar value={s.score} tone={s.tone} />
@@ -229,8 +273,8 @@ function Workflow() {
       bullets: [],
       output: [
         "$ ses engineer",
-        "> PR #482 opened: \"Add connection pooling to /api/orders\"",
-        "> PR #483 opened: \"Patch CVE-2026-1142 in auth middleware\"",
+        '> PR #482 opened: "Add connection pooling to /api/orders"',
+        '> PR #483 opened: "Patch CVE-2026-1142 in auth middleware"',
         "> evidence attached: benchmarks, traces, diff summary",
       ],
       fact: "PRs that ship with before/after evidence attached get reviewed and merged noticeably faster than PRs with description text alone.",
@@ -270,10 +314,18 @@ function Workflow() {
     },
   ];
 
-  const pipelineStages = ["GitHub", "Jules Agents", "Pull Requests", "Review", "Deploy", "Health Score", "Monthly Report"];
+  const pipelineStages = [
+    "GitHub",
+    "Jules Agents",
+    "Pull Requests",
+    "Review",
+    "Deploy",
+    "Health Score",
+    "Monthly Report",
+  ];
 
   const stepRefs = useRef<Array<HTMLDivElement | null>>([]);
-  
+
   const [active, setActive] = useState(0);
   const isLgUp = useIsLgUp();
   const isMobile = useIsMobile();
@@ -300,7 +352,7 @@ function Workflow() {
         });
         if (bestRatio > 0) setActive(best);
       },
-      { rootMargin: "-40% 0px -40% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+      { rootMargin: "-40% 0px -40% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
     );
     stepRefs.current.forEach((el) => el && obs.observe(el));
     return () => obs.disconnect();
@@ -340,10 +392,12 @@ function Workflow() {
     };
   }, []);
 
-
   return (
-    <section id="process" ref={sectionRef} className="relative py-16 md:py-30 border-b border-[#1a1a1a]">
-
+    <section
+      id="process"
+      ref={sectionRef}
+      className="relative py-16 md:py-30 border-b border-[#1a1a1a]"
+    >
       {/* Mobile section-level scroll tracker (≤768px) */}
       <div className="md:hidden absolute left-0 top-0 bottom-0 w-[3px] bg-[#1e1e1e] pointer-events-none">
         <div
@@ -353,7 +407,6 @@ function Workflow() {
       </div>
 
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 space-y-14">
-
         <SectionHead
           vol="VOL. IV"
           label="THE LOOP"
@@ -378,9 +431,15 @@ function Workflow() {
           </div>
         )}
 
-        <div className={isMobile ? "" : "grid lg:grid-cols-[1fr_360px] gap-10 lg:gap-14 items-start"}>
+        <div
+          className={isMobile ? "" : "grid lg:grid-cols-[1fr_360px] gap-10 lg:gap-14 items-start"}
+        >
           {/* Left: steps */}
-          <div className={isMobile ? "space-y-4" : "space-y-px bg-[#1e1e1e] lg:bg-transparent lg:space-y-0"}>
+          <div
+            className={
+              isMobile ? "space-y-4" : "space-y-px bg-[#1e1e1e] lg:bg-transparent lg:space-y-0"
+            }
+          >
             {steps.map((s, i) => {
               const isActive = isLgUp && i === active;
               const direction = isLgUp ? (i < active ? -1 : i > active ? 1 : 0) : 0;
@@ -399,11 +458,17 @@ function Workflow() {
                   ? "translateY(0)"
                   : `translateY(${direction < 0 ? -6 : 6}px)`
                 : "none";
-              const contentPointer: "auto" | "none" = isLgUp ? (isActive ? "auto" : "none") : "auto";
+              const contentPointer: "auto" | "none" = isLgUp
+                ? isActive
+                  ? "auto"
+                  : "none"
+                : "auto";
               return (
                 <div
                   key={s.n}
-                  ref={(el) => { stepRefs.current[i] = el; }}
+                  ref={(el) => {
+                    stepRefs.current[i] = el;
+                  }}
                   data-idx={i}
                   className={
                     isMobile
@@ -431,7 +496,13 @@ function Workflow() {
                     <div
                       className="mono text-[28px] tabular-nums"
                       style={{
-                        color: isMobile ? "#666" : isTablet ? "#666" : (isActive ? "#f0f0f0" : "#333"),
+                        color: isMobile
+                          ? "#666"
+                          : isTablet
+                            ? "#666"
+                            : isActive
+                              ? "#f0f0f0"
+                              : "#333",
                         fontWeight: isLgUp && isActive ? 700 : 400,
                         transform: headTransform,
                         opacity: contentOpacity,
@@ -462,7 +533,7 @@ function Workflow() {
                         <h3
                           className="headline text-[22px]"
                           style={{
-                            color: compact ? "#f0f0f0" : (isActive ? "#f0f0f0" : "#444"),
+                            color: compact ? "#f0f0f0" : isActive ? "#f0f0f0" : "#444",
                             transition: `color 250ms ${ease}`,
                           }}
                         >
@@ -482,7 +553,9 @@ function Workflow() {
                           willChange: "transform",
                         }}
                       >
-                        <p className="text-[#888] text-[15px] leading-[1.7] mt-3 max-w-[640px]">{s.desc}</p>
+                        <p className="text-[#888] text-[15px] leading-[1.7] mt-3 max-w-[640px]">
+                          {s.desc}
+                        </p>
                         {s.bullets.length > 0 && (
                           <ul className="mt-4 space-y-1.5 mono text-[12px] text-[#666]">
                             {s.bullets.map((b) => (
@@ -492,8 +565,12 @@ function Workflow() {
                         )}
                         <TerminalBlock lines={s.output} />
                         <div className="mt-4 bg-[#111] border border-[#1e1e1e] rounded-[3px] px-4 py-3 max-w-[640px]">
-                          <div className="mono text-[10px] uppercase tracking-[0.12em] text-[#22c55e]">// did you know</div>
-                          <p className="text-[#666] text-[12.5px] leading-[1.65] mt-1.5">{s.fact}</p>
+                          <div className="mono text-[10px] uppercase tracking-[0.12em] text-[#22c55e]">
+                            // did you know
+                          </div>
+                          <p className="text-[#666] text-[12.5px] leading-[1.65] mt-1.5">
+                            {s.fact}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -534,7 +611,11 @@ function Workflow() {
                       }}
                     >
                       <span
-                        className={on ? "w-1.5 h-1.5 rounded-full shrink-0 pulse-dot" : "w-1.5 h-1.5 rounded-full shrink-0"}
+                        className={
+                          on
+                            ? "w-1.5 h-1.5 rounded-full shrink-0 pulse-dot"
+                            : "w-1.5 h-1.5 rounded-full shrink-0"
+                        }
                         style={{
                           background: dotColor,
                           opacity: on ? 1 : isTablet ? 1 : 0,
@@ -584,7 +665,9 @@ function Evidence() {
 
         <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-8 items-center">
           <div className="space-y-3">
-            <div className="mono text-[11px] text-[#444] uppercase tracking-[0.12em] font-medium">BEFORE — Week 0</div>
+            <div className="mono text-[11px] text-[#444] uppercase tracking-[0.12em] font-medium">
+              BEFORE — Week 0
+            </div>
             <HealthCard
               file="baseline.json"
               status="archived"
@@ -606,7 +689,9 @@ function Evidence() {
           </div>
 
           <div className="space-y-3">
-            <div className="mono text-[11px] text-[#22c55e] uppercase tracking-[0.12em] font-medium">AFTER — Week 12</div>
+            <div className="mono text-[11px] text-[#22c55e] uppercase tracking-[0.12em] font-medium">
+              AFTER — Week 12
+            </div>
             <HealthCard
               score={88}
               delta="↑ +44 since baseline"
@@ -633,7 +718,12 @@ function Pricing() {
       tag: "HOLD THE LINE",
       price: "$650",
       unit: "/mo",
-      features: ["Weekly automated scan", "Up to 4 fixes/week", "Security patching", "Monthly health report"],
+      features: [
+        "Weekly automated scan",
+        "Up to 4 fixes/week",
+        "Security patching",
+        "Monthly health report",
+      ],
       cta: "$ start --maintain",
       filled: false,
       featured: false,
@@ -643,7 +733,13 @@ function Pricing() {
       tag: "MOST CHOSEN",
       price: "$1,500",
       unit: "/mo",
-      features: ["Everything in Maintain", "Up to 12 fixes/week", "AI-assisted engineering", "Performance + reliability work", "Weekly report + roadmap"],
+      features: [
+        "Everything in Maintain",
+        "Up to 12 fixes/week",
+        "AI-assisted engineering",
+        "Performance + reliability work",
+        "Weekly report + roadmap",
+      ],
       cta: "$ start --growth",
       filled: true,
       featured: true,
@@ -653,7 +749,13 @@ function Pricing() {
       tag: "FULL EVOLUTION",
       price: "Custom",
       unit: "",
-      features: ["Everything in Growth", "Dedicated engineering pod", "Architecture modernization", "SLA-backed response times", "Quarterly strategy review"],
+      features: [
+        "Everything in Growth",
+        "Dedicated engineering pod",
+        "Architecture modernization",
+        "SLA-backed response times",
+        "Quarterly strategy review",
+      ],
       cta: "$ start --compound",
       filled: false,
       featured: false,
@@ -680,11 +782,20 @@ function Pricing() {
             >
               <div className="flex items-center justify-between">
                 <div className="mono text-[12px] text-[#f0f0f0]">{p.name}</div>
-                <div className="mono text-[10px] tracking-[0.12em]" style={{ color: p.featured ? "#22c55e" : "#444" }}>{p.tag}</div>
+                <div
+                  className="mono text-[10px] tracking-[0.12em]"
+                  style={{ color: p.featured ? "#22c55e" : "#444" }}
+                >
+                  {p.tag}
+                </div>
               </div>
               <div className="mt-6 flex items-baseline gap-1.5">
-                <span className="mono font-semibold tabular-nums text-[#f0f0f0] text-[44px] leading-none">{p.price}</span>
-                {p.unit && <span className="mono text-[#666] text-[14px] tabular-nums">{p.unit}</span>}
+                <span className="mono font-semibold tabular-nums text-[#f0f0f0] text-[44px] leading-none">
+                  {p.price}
+                </span>
+                {p.unit && (
+                  <span className="mono text-[#666] text-[14px] tabular-nums">{p.unit}</span>
+                )}
               </div>
               <ul className="mt-7 space-y-3 text-[14px] text-[#888]">
                 {p.features.map((f) => (
@@ -707,7 +818,6 @@ function Pricing() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
@@ -717,12 +827,42 @@ function Pricing() {
 
 function Results() {
   const items = [
-    { type: "PERF", num: "-1.8s", title: "Cut largest contentful paint", desc: "Replaced a render-blocking bundle with route-level code splitting and edge caching." },
-    { type: "RELIABILITY", num: "99.98%", title: "Uptime over 90 days", desc: "Added circuit breakers, retries with backoff, and graceful degradation on the payment path." },
-    { type: "PERF", num: "+3.2x", title: "Faster API throughput", desc: "Introduced connection pooling and a read replica for the hottest query paths." },
-    { type: "SECURITY", num: "17", title: "Critical CVEs resolved", desc: "Patched cascading vulnerabilities across the dependency graph and locked transitive versions." },
-    { type: "COST", num: "-41%", title: "Cloud infrastructure spend", desc: "Right-sized compute, archived cold storage, and consolidated redundant queues." },
-    { type: "CODE HEALTH", num: "+38", title: "Maintainability index", desc: "Eliminated dead code, extracted shared modules, and added contract tests on critical paths." },
+    {
+      type: "PERF",
+      num: "-1.8s",
+      title: "Cut largest contentful paint",
+      desc: "Replaced a render-blocking bundle with route-level code splitting and edge caching.",
+    },
+    {
+      type: "RELIABILITY",
+      num: "99.98%",
+      title: "Uptime over 90 days",
+      desc: "Added circuit breakers, retries with backoff, and graceful degradation on the payment path.",
+    },
+    {
+      type: "PERF",
+      num: "+3.2x",
+      title: "Faster API throughput",
+      desc: "Introduced connection pooling and a read replica for the hottest query paths.",
+    },
+    {
+      type: "SECURITY",
+      num: "17",
+      title: "Critical CVEs resolved",
+      desc: "Patched cascading vulnerabilities across the dependency graph and locked transitive versions.",
+    },
+    {
+      type: "COST",
+      num: "-41%",
+      title: "Cloud infrastructure spend",
+      desc: "Right-sized compute, archived cold storage, and consolidated redundant queues.",
+    },
+    {
+      type: "CODE HEALTH",
+      num: "+38",
+      title: "Maintainability index",
+      desc: "Eliminated dead code, extracted shared modules, and added contract tests on critical paths.",
+    },
   ];
   return (
     <section id="results" className="py-16 md:py-30 border-b border-[#1a1a1a]">
@@ -736,14 +876,20 @@ function Results() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1e1e1e] border border-[#1e1e1e] rounded-[3px] overflow-hidden">
           {items.map((it) => (
-            <div key={it.title} className="results-card bg-[#111] p-7 flex flex-col gap-4 border-l-2 border-[#1f1f1f]">
-              <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#22c55e] font-medium">{it.type}</div>
-              <div className="mono font-semibold tabular-nums text-[42px] leading-none text-[#f0f0f0]">{it.num}</div>
+            <div
+              key={it.title}
+              className="results-card bg-[#111] p-7 flex flex-col gap-4 border-l-2 border-[#1f1f1f]"
+            >
+              <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#22c55e] font-medium">
+                {it.type}
+              </div>
+              <div className="mono font-semibold tabular-nums text-[42px] leading-none text-[#f0f0f0]">
+                {it.num}
+              </div>
               <div className="text-[#f0f0f0] text-[15px] font-semibold">{it.title}</div>
               <div className="text-[#666] text-[13px] leading-[1.7]">{it.desc}</div>
             </div>
           ))}
-
         </div>
       </div>
     </section>
@@ -834,7 +980,8 @@ function Contact() {
     if (!msg) return null;
     return (
       <div className="mono text-[12px] text-[#ef4444] mt-1.5 field-error">
-        {"// error: "}{msg}
+        {"// error: "}
+        {msg}
       </div>
     );
   };
@@ -850,7 +997,8 @@ function Contact() {
             <VolLabel vol="VOL. VIII" label="THE AUDIT" />
             <h2 className="headline text-[32px] md:text-[48px]">Get your free baseline audit.</h2>
             <p className="text-[#888] text-[16px] leading-[1.7]">
-              We scan your product, score all four pillars, and send you a full report within 48 hours. No access required beyond a URL.
+              We scan your product, score all four pillars, and send you a full report within 48
+              hours. No access required beyond a URL.
             </p>
           </div>
         </div>
@@ -859,10 +1007,17 @@ function Contact() {
           {submitted ? (
             <div className="mono text-[13px] space-y-2">
               <div className="text-[#22c55e]">{"> audit requested."}</div>
-              <div className="text-[#888]">scanning: <span className="text-[#f0f0f0]">{submittedUrl}</span></div>
-              <div className="text-[#888]">expected delivery: <span className="text-[#f0f0f0]">48h</span></div>
+              <div className="text-[#888]">
+                scanning: <span className="text-[#f0f0f0]">{submittedUrl}</span>
+              </div>
+              <div className="text-[#888]">
+                expected delivery: <span className="text-[#f0f0f0]">48h</span>
+              </div>
               <div className="flex items-center gap-2 pt-2">
-                <span className="pulse-dot" style={{ width: 6, height: 6, borderRadius: 999, background: "#22c55e" }} />
+                <span
+                  className="pulse-dot"
+                  style={{ width: 6, height: 6, borderRadius: 999, background: "#22c55e" }}
+                />
                 <span className="text-[#22c55e]">queued</span>
               </div>
             </div>
@@ -870,7 +1025,9 @@ function Contact() {
             <form className="space-y-4" onSubmit={handleSubmit} noValidate>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">name</label>
+                  <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">
+                    name
+                  </label>
                   <input
                     className={fieldClass(showError("name"))}
                     placeholder="ada lovelace"
@@ -880,7 +1037,9 @@ function Contact() {
                   {showError("name") && errMsg(errors.name)}
                 </div>
                 <div>
-                  <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">work email</label>
+                  <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">
+                    work email
+                  </label>
                   <input
                     type="email"
                     className={fieldClass(showError("email"))}
@@ -892,7 +1051,9 @@ function Contact() {
                 </div>
               </div>
               <div>
-                <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">product url</label>
+                <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">
+                  product url
+                </label>
                 <input
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
@@ -903,7 +1064,9 @@ function Contact() {
                 {showError("url") && errMsg(errors.url)}
               </div>
               <div>
-                <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">biggest concern</label>
+                <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">
+                  biggest concern
+                </label>
                 <select
                   className={fieldClass(showError("concern"))}
                   value={concern}
@@ -920,12 +1083,10 @@ function Contact() {
                 {showError("concern") && errMsg(errors.concern)}
               </div>
               <div>
-                <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">monthly cloud spend (optional)</label>
-                <select
-                  className="field"
-                  value={spend}
-                  onChange={(e) => setSpend(e.target.value)}
-                >
+                <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">
+                  monthly cloud spend (optional)
+                </label>
+                <select className="field" value={spend} onChange={(e) => setSpend(e.target.value)}>
                   <option>Prefer not to say</option>
                   <option>Under $500</option>
                   <option>$500–2000</option>
@@ -938,7 +1099,7 @@ function Contact() {
                 disabled={submitting || (attempted && hasErrors)}
                 className="btn-primary mono text-[13px] w-full bg-[#22c55e] text-[#0c0c0c] py-3.5 rounded-[3px] font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
                 style={{
-                  cursor: (submitting || (attempted && hasErrors)) ? "not-allowed" : "pointer",
+                  cursor: submitting || (attempted && hasErrors) ? "not-allowed" : "pointer",
                 }}
               >
                 {submitting ? "// processing..." : "$ request --audit ↵"}
@@ -946,12 +1107,17 @@ function Contact() {
 
               {submitError && (
                 <div className="mono text-[12px] text-[#ef4444] field-error">
-                  {"// error: "}{submitError}
+                  {"// error: "}
+                  {submitError}
                 </div>
               )}
-              <div className="mono text-[11px] text-[#444] text-center">{"// no commitment required. response within 48h."}</div>
+              <div className="mono text-[11px] text-[#444] text-center">
+                {"// no commitment required. response within 48h."}
+              </div>
               <div className="mono text-[11px] text-center pt-1">
-                <Link to="/audit" className="text-[#666] hover:text-[#22c55e] transition-colors">{"// prefer a dedicated page? audit.ses.service →"}</Link>
+                <Link to="/audit" className="text-[#666] hover:text-[#22c55e] transition-colors">
+                  {"// prefer a dedicated page? audit.ses.service →"}
+                </Link>
               </div>
             </form>
           )}
@@ -967,10 +1133,15 @@ function FinalCTA() {
   return (
     <section className="py-16 md:py-30" style={{ background: "#22c55e", color: "#0c0c0c" }}>
       <div className="max-w-[820px] mx-auto px-6 md:px-10 border-l-2 border-[#0c0c0c]/30 pl-6 md:pl-8 space-y-6">
-        <div className="mono text-[11px] uppercase tracking-[0.12em] text-[#0c0c0c]/70">{"// GET YOUR BASELINE"}</div>
-        <h2 className="headline text-[#0c0c0c] text-[30px] sm:text-[36px] md:text-[56px] break-words">Find out how much your software has decayed.</h2>
+        <div className="mono text-[11px] uppercase tracking-[0.12em] text-[#0c0c0c]/70">
+          {"// GET YOUR BASELINE"}
+        </div>
+        <h2 className="headline text-[#0c0c0c] text-[30px] sm:text-[36px] md:text-[56px] break-words">
+          Find out how much your software has decayed.
+        </h2>
         <p className="text-[#0c0c0c]/80 text-[16px] leading-[1.7] max-w-[640px]">
-          The first audit is free. We scan your product, score its health, and show you exactly what is degrading — no commitment.
+          The first audit is free. We scan your product, score its health, and show you exactly what
+          is degrading — no commitment.
         </p>
         <div className="flex flex-wrap items-center gap-5 pt-2">
           <a
@@ -979,14 +1150,17 @@ function FinalCTA() {
           >
             $ audit --free ↵
           </a>
-          <a href="#pricing" className="mono text-[13px] text-[#0c0c0c] hover:underline transition-all">view plans →</a>
+          <a
+            href="#pricing"
+            className="mono text-[13px] text-[#0c0c0c] hover:underline transition-all"
+          >
+            view plans →
+          </a>
         </div>
-
       </div>
     </section>
   );
 }
-
 
 /* -------------------- Page -------------------- */
 

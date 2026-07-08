@@ -5,9 +5,17 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About — SES" },
-      { name: "description", content: "Why we built Software Evolution Service — separating shipping from continuous improvement." },
+      {
+        name: "description",
+        content:
+          "Why we built Software Evolution Service — separating shipping from continuous improvement.",
+      },
       { property: "og:title", content: "About — SES" },
-      { property: "og:description", content: "Why we built Software Evolution Service — separating shipping from continuous improvement." },
+      {
+        property: "og:description",
+        content:
+          "Why we built Software Evolution Service — separating shipping from continuous improvement.",
+      },
       { property: "og:url", content: "/about" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -41,13 +49,20 @@ function AboutPage() {
           <div className="max-w-[900px] mx-auto px-6 md:px-10 space-y-14">
             <Block label="// THE OBSERVATION">
               <p className="text-[#666] text-[16px] md:text-[17px] leading-[1.7]">
-                Most software teams ship a product, celebrate the launch, and move on to the next feature. Within months, the codebase that felt clean at launch is accumulating dependency debt, unresolved CVEs, and performance regressions nobody has time to address. Not because the team is bad — because continuous improvement competes with continuous shipping, and shipping always wins.
+                Most software teams ship a product, celebrate the launch, and move on to the next
+                feature. Within months, the codebase that felt clean at launch is accumulating
+                dependency debt, unresolved CVEs, and performance regressions nobody has time to
+                address. Not because the team is bad — because continuous improvement competes with
+                continuous shipping, and shipping always wins.
               </p>
             </Block>
 
             <Block label="// THE RESPONSE">
               <p className="text-[#666] text-[16px] md:text-[17px] leading-[1.7]">
-                SES exists to separate those two concerns. We run the improvement loop — scanning, prioritizing, engineering, verifying — on a fixed weekly cadence so your team never has to choose between building new things and keeping existing things healthy. Every week, measurable. Every change, evidenced.
+                SES exists to separate those two concerns. We run the improvement loop — scanning,
+                prioritizing, engineering, verifying — on a fixed weekly cadence so your team never
+                has to choose between building new things and keeping existing things healthy. Every
+                week, measurable. Every change, evidenced.
               </p>
             </Block>
 
@@ -56,13 +71,17 @@ function AboutPage() {
                 "Software doesn't stay finished. It either evolves or decays."
               </blockquote>
               <p className="text-[#666] text-[16px] md:text-[17px] leading-[1.7]">
-                That line drives every decision we make about what to fix, how to prioritize it, and how to prove it worked.
+                That line drives every decision we make about what to fix, how to prioritize it, and
+                how to prove it worked.
               </p>
             </Block>
           </div>
         </section>
 
-        <section className="py-16 md:py-24 border-t border-[#1a1a1a]" style={{ background: "#0a0a0a" }}>
+        <section
+          className="py-16 md:py-24 border-t border-[#1a1a1a]"
+          style={{ background: "#0a0a0a" }}
+        >
           <div className="max-w-[900px] mx-auto px-6 md:px-10 space-y-8">
             <h2 className="headline text-[28px] md:text-[40px]">See where your product stands.</h2>
             <div className="flex flex-wrap items-center gap-5">

@@ -33,7 +33,9 @@
 }
 
 @layer base {
-  * { border-color: var(--color-border); }
+  * {
+    border-color: var(--color-border);
+  }
   html {
     background: #0c0c0c;
     scroll-behavior: smooth;
@@ -45,10 +47,15 @@
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
   }
-  ::selection { background: #22c55e; color: #0c0c0c; }
+  ::selection {
+    background: #22c55e;
+    color: #0c0c0c;
+  }
 
   /* Kill browser default focus outline site-wide, use custom green ring */
-  *:focus { outline: none; }
+  *:focus {
+    outline: none;
+  }
   *:focus-visible {
     outline: 2px solid #22c55e;
     outline-offset: 2px;
@@ -56,9 +63,10 @@
   }
 
   /* Section anchor scroll offset (nav 64px + 16px breathing room) */
-  section[id] { scroll-margin-top: 80px; }
+  section[id] {
+    scroll-margin-top: 80px;
+  }
 }
-
 
 @utility eyebrow {
   font-family: var(--font-mono);
@@ -85,22 +93,56 @@
 }
 
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.35); }
-  50% { opacity: 0.65; box-shadow: 0 0 0 3px rgba(34,197,94,0); }
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.35);
+  }
+  50% {
+    opacity: 0.65;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0);
+  }
 }
-.pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+.pulse-dot {
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
 
 @keyframes fadeup {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.reveal { opacity: 0; }
-.reveal.in { animation: fadeup 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.reveal {
+  opacity: 0;
+}
+.reveal.in {
+  animation: fadeup 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
 
-.bar-track { background: #1a1a1a; height: 2px; width: 100%; position: relative; overflow: hidden; }
-.bar-fill { background: #22c55e; height: 100%; width: 0; transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
-.bar-fill.amber { background: #d97706; }
-.bar-fill.red { background: #b91c1c; }
+.bar-track {
+  background: #1a1a1a;
+  height: 2px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.bar-fill {
+  background: #22c55e;
+  height: 100%;
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bar-fill.amber {
+  background: #d97706;
+}
+.bar-fill.red {
+  background: #b91c1c;
+}
 
 .field {
   background: #0c0c0c;
@@ -111,28 +153,51 @@
   padding: 14px 14px;
   border-radius: 3px;
   width: 100%;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 .field:focus {
   outline: none;
   border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34,197,94,0.15);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
 }
-.field::placeholder { color: #444444; }
-.field-invalid { border-color: #ef4444; }
-.field-invalid:focus { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
+.field::placeholder {
+  color: #444444;
+}
+.field-invalid {
+  border-color: #ef4444;
+}
+.field-invalid:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
 @keyframes field-error-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-.field-error { animation: field-error-in 150ms ease-out both; }
+.field-error {
+  animation: field-error-in 150ms ease-out both;
+}
 
 /* Evidence page arrow: down on mobile, right on desktop */
-.arrow-down { display: inline; }
-.arrow-right { display: none; }
+.arrow-down {
+  display: inline;
+}
+.arrow-right {
+  display: none;
+}
 @media (min-width: 769px) {
-  .arrow-down { display: none; }
-  .arrow-right { display: inline; }
+  .arrow-down {
+    display: none;
+  }
+  .arrow-right {
+    display: inline;
+  }
 }
 
 /* -------- Interactive polish -------- */
@@ -155,22 +220,33 @@
   transform-origin: left center;
   transition: transform 150ms ease-out;
 }
-.nav-link:hover { color: #f0f0f0; }
-.nav-link:hover::after { transform: scaleX(1); }
+.nav-link:hover {
+  color: #f0f0f0;
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
 
 /* Filled green CTA — brightness lift + subtle scale */
 .btn-primary {
-  transition: background-color 150ms ease-out, transform 150ms ease-out, filter 150ms ease-out;
+  transition:
+    background-color 150ms ease-out,
+    transform 150ms ease-out,
+    filter 150ms ease-out;
 }
 .btn-primary:hover {
   filter: brightness(1.1);
   transform: scale(1.01);
 }
-.btn-primary:active { transform: scale(1); }
+.btn-primary:active {
+  transform: scale(1);
+}
 
 /* Outlined green CTA — tinted fill on hover, border stays */
 .btn-outline {
-  transition: background-color 150ms ease-out, transform 150ms ease-out;
+  transition:
+    background-color 150ms ease-out,
+    transform 150ms ease-out;
 }
 .btn-outline:hover {
   background-color: rgba(34, 197, 94, 0.08);
@@ -179,28 +255,42 @@
 
 /* Pricing card hover — border brighten */
 .pricing-card {
-  transition: border-color 200ms ease-out, background-color 200ms ease-out;
+  transition:
+    border-color 200ms ease-out,
+    background-color 200ms ease-out;
 }
-.pricing-card-standard:hover { border-color: #2e2e2e !important; }
-.pricing-card-featured:hover { border-color: #4ade80 !important; }
+.pricing-card-standard:hover {
+  border-color: #2e2e2e !important;
+}
+.pricing-card-featured:hover {
+  border-color: #4ade80 !important;
+}
 
 /* Results grid card hover — bg lift */
 .results-card {
   transition: background-color 200ms ease-out;
 }
-.results-card:hover { background-color: #161616; }
+.results-card:hover {
+  background-color: #161616;
+}
 
 /* Footer link — brightens to #f0f0f0 */
 .footer-link {
   color: #888;
   transition: color 150ms ease-out;
 }
-.footer-link:hover { color: #f0f0f0; }
+.footer-link:hover {
+  color: #f0f0f0;
+}
 
 /* SVG line-draw animation for evidence chart */
 @keyframes draw-line {
-  from { stroke-dashoffset: var(--line-len, 2000); }
-  to { stroke-dashoffset: 0; }
+  from {
+    stroke-dashoffset: var(--line-len, 2000);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 .chart-line {
   stroke-dasharray: var(--line-len, 2000);
@@ -214,5 +304,6 @@
   transition: opacity 220ms ease-out;
 }
 .chart-line.in ~ .chart-point,
-.chart-point.in { opacity: 1; }
-
+.chart-point.in {
+  opacity: 1;
+}

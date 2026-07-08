@@ -5,9 +5,15 @@ export const Route = createFileRoute("/security")({
   head: () => ({
     meta: [
       { title: "Security — SES" },
-      { name: "description", content: "Report a vulnerability or security concern related to ses.service." },
+      {
+        name: "description",
+        content: "Report a vulnerability or security concern related to ses.service.",
+      },
       { property: "og:title", content: "Security — SES" },
-      { property: "og:description", content: "Report a vulnerability or security concern related to ses.service." },
+      {
+        property: "og:description",
+        content: "Report a vulnerability or security concern related to ses.service.",
+      },
       { property: "og:url", content: "/security" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -27,8 +33,11 @@ function SecurityPage() {
             <h1 className="headline text-[36px] md:text-[56px]">Security</h1>
             <p className="text-[#666] text-[16px] md:text-[17px] leading-[1.7] max-w-[640px]">
               To report a vulnerability or security concern related to ses.service, email{" "}
-              <a href="mailto:hi@ses.service?subject=SECURITY" className="text-[#22c55e] nav-link">hi@ses.service</a>{" "}
-              with the subject line "SECURITY". We acknowledge all reports within 24 hours and aim to resolve critical issues within 72 hours.
+              <a href="mailto:hi@ses.service?subject=SECURITY" className="text-[#22c55e] nav-link">
+                hi@ses.service
+              </a>{" "}
+              with the subject line "SECURITY". We acknowledge all reports within 24 hours and aim
+              to resolve critical issues within 72 hours.
             </p>
           </div>
         </section>

@@ -5,15 +5,25 @@ export const Route = createFileRoute("/audit")({
   head: () => ({
     meta: [
       { title: "Free Baseline Audit — SES Software Evolution Service" },
-      { name: "description", content: "Free Health Score audit. We scan your product, score all four pillars, and send you a full report within 48 hours — no access required beyond a URL." },
+      {
+        name: "description",
+        content:
+          "Free Health Score audit. We scan your product, score all four pillars, and send you a full report within 48 hours — no access required beyond a URL.",
+      },
       { property: "og:title", content: "Free Baseline Audit — SES" },
-      { property: "og:description", content: "Score your software in 48 hours. No credentials, no repo access, no sales call." },
+      {
+        property: "og:description",
+        content: "Score your software in 48 hours. No credentials, no repo access, no sales call.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://ses.service/audit" },
       { property: "og:image", content: "https://ses.service/og.svg" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Free Baseline Audit — SES" },
-      { name: "twitter:description", content: "Score your software in 48 hours. No credentials, no repo access, no sales call." },
+      {
+        name: "twitter:description",
+        content: "Score your software in 48 hours. No credentials, no repo access, no sales call.",
+      },
       { name: "twitter:image", content: "https://ses.service/og.svg" },
     ],
     links: [{ rel: "canonical", href: "https://ses.service/audit" }],
@@ -24,7 +34,9 @@ export const Route = createFileRoute("/audit")({
 function TrustSignal({ label, body }: { label: string; body: string }) {
   return (
     <div className="space-y-2">
-      <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#22c55e] font-medium">{label}</div>
+      <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#22c55e] font-medium">
+        {label}
+      </div>
       <p className="text-[#888] text-[14px] leading-[1.7]">{body}</p>
     </div>
   );
@@ -42,9 +54,12 @@ function AuditPage() {
               <div className="space-y-7">
                 <Eyebrow>{"// SOFTWARE EVOLUTION SERVICE"}</Eyebrow>
                 <VolLabel vol="VOL. VIII" label="THE AUDIT" />
-                <h1 className="headline text-[36px] md:text-[56px] leading-[1.05]">Get your free baseline audit.</h1>
+                <h1 className="headline text-[36px] md:text-[56px] leading-[1.05]">
+                  Get your free baseline audit.
+                </h1>
                 <p className="text-[#888] text-[16px] md:text-[17px] leading-[1.7] max-w-[520px]">
-                  We scan your product, score all four pillars, and send you a full report within 48 hours. No access required beyond a URL.
+                  We scan your product, score all four pillars, and send you a full report within 48
+                  hours. No access required beyond a URL.
                 </p>
               </div>
             </div>
