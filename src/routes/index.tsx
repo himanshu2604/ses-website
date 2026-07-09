@@ -228,6 +228,7 @@ function TerminalBlock({ lines }: { lines: string[] }) {
   );
 }
 
+// ⚡ Bolt 2025-05-14: Optimized Workflow scroll tracking by moving progress state to a CSS variable — expected impact: Reduced main-thread work and improved scroll performance.
 function Workflow() {
   const steps = [
     {
@@ -363,7 +364,6 @@ function Workflow() {
   const easeIn = "cubic-bezier(0.4, 0, 1, 1)";
 
   const sectionRef = useRef<HTMLElement>(null);
-  const [sectionFill, setSectionFill] = useState(0);
 
   useEffect(() => {
     let ticking = false;
@@ -379,14 +379,32 @@ function Workflow() {
         const scrollY = window.scrollY;
         const denom = sectionHeight - viewportHeight;
         const progress = denom > 0 ? (scrollY - sectionTop) / denom : 0;
-        setSectionFill(Math.max(0, Math.min(1, progress)) * 100);
+        const fill = Math.max(0, Math.min(1, progress)) * 100;
+        section.style.setProperty("--section-fill", `${fill}%`);
         ticking = false;
       });
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    onScroll();
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            window.addEventListener("scroll", onScroll, { passive: true });
+            window.addEventListener("resize", onScroll, { passive: true });
+            onScroll();
+          } else {
+            window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("resize", onScroll);
+          }
+        });
+      },
+      { rootMargin: "20% 0px" },
+    );
+
+    if (section) obs.observe(section);
+
     return () => {
+      obs.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
@@ -402,7 +420,7 @@ function Workflow() {
       <div className="md:hidden absolute left-0 top-0 bottom-0 w-[3px] bg-[#1e1e1e] pointer-events-none">
         <div
           className="w-full bg-[#22c55e]"
-          style={{ height: `${sectionFill}%`, willChange: "height" }}
+          style={{ height: "var(--section-fill, 0%)", willChange: "height" }}
         />
       </div>
 
@@ -588,7 +606,7 @@ function Workflow() {
                 <div
                   className="w-full bg-[#22c55e]"
                   style={{
-                    height: `${isLgUp ? sectionFill : 0}%`,
+                    height: isLgUp ? "var(--section-fill, 0%)" : "0%",
                     willChange: "height",
                   }}
                 />
