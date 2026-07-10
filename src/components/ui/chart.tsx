@@ -40,7 +40,7 @@ const ChartContainer = React.forwardRef<
   }
 >(({ id, className, children, config, ...props }, ref) => {
   const uniqueId = React.useId();
-  const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`;
+  const chartId = `chart-${(id || uniqueId).replace(/:/g, "")}`;
 
   return (
     <ChartContext.Provider value={{ config }}>
@@ -68,22 +68,35 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     return null;
   }
 
+  // 🛡️ Sentinel 2026-07-10: XSS — Sanitize dynamic CSS to prevent injection via ChartStyle
+  const safeId = id.replace(/[^\w-]/g, "");
+
   return (
     <style
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
-    return color ? `  --color-${key}: ${color};` : null;
-  })
-  .join("\n")}
+          .map(([theme, prefix]) => {
+            const cssRules = colorConfig
+              .map(([key, itemConfig]) => {
+                const color =
+                  itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
+                if (!color) return null;
+
+                const safeKey = key.replace(/[^\w-]/g, "");
+                // Allow valid CSS color characters: alphanumeric, #, (), %, commas, spaces, dashes, dots, and slashes (for colors like lab/lch or alpha)
+                const safeColor = String(color).replace(/[^\w#()%, ./-]/g, "");
+
+                return `  --color-${safeKey}: ${safeColor};`;
+              })
+              .filter(Boolean)
+              .join("\n");
+
+            return `
+${prefix} [data-chart=${safeId}] {
+${cssRules}
 }
-`,
-          )
+`;
+          })
           .join("\n"),
       }}
     />
