@@ -388,7 +388,9 @@ export function Footer() {
       <div className="border-t border-[#1a1a1a]">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex flex-wrap items-center justify-between gap-3 mono text-[11px] text-[#444]">
           <span className="min-w-0">
-            {"// © 2026 ses.service — software evolution service. all systems operational."}
+            {
+              "// © 2026 ses.service — software evolution service. all systems operational. · no tracking cookies."
+            }
           </span>
           <span className="hidden md:flex items-center gap-2">
             <span
@@ -405,6 +407,8 @@ export function Footer() {
 
 /* -------------------- Audit Form (shared) -------------------- */
 
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkolddre";
+
 // 🎨 Palette 2025-05-14: Improve form accessibility — Links labels to inputs and adds ARIA attributes for validation states.
 export function AuditForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -418,6 +422,7 @@ export function AuditForm() {
   const [url, setUrl] = useState("");
   const [concern, setConcern] = useState("");
   const [spend, setSpend] = useState("Prefer not to say");
+  const [gdprConsent, setGdprConsent] = useState(false);
 
   const baseId = useId();
   const nameId = `${baseId}-name`;
@@ -425,6 +430,7 @@ export function AuditForm() {
   const urlId = `${baseId}-url`;
   const concernId = `${baseId}-concern`;
   const spendId = `${baseId}-spend`;
+  const gdprConsentId = `${baseId}-gdpr-consent`;
   const nameErrId = `${nameId}-error`;
   const emailErrId = `${emailId}-error`;
   const urlErrId = `${urlId}-error`;
@@ -480,11 +486,31 @@ export function AuditForm() {
     if (hasErrors) return;
     setSubmitting(true);
     try {
-      await new Promise((resolve) => {
-        setTimeout(() => resolve(null), 1500);
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          productUrl: url,
+          biggestConcern: concern,
+          cloudSpend: spend,
+          gdprConsent,
+          _subject: `New audit request — ${url}`,
+          _replyto: email,
+        }),
       });
-      setSubmittedUrl(url);
-      setSubmitted(true);
+
+      if (response.ok) {
+        setSubmittedUrl(url);
+        setSubmitted(true);
+      } else {
+        const data = await response.json();
+        throw new Error(data?.error || "Submission failed");
+      }
     } catch {
       setSubmitError("submission failed. try again or email hi@ses.service");
     } finally {
@@ -633,6 +659,25 @@ export function AuditForm() {
               <option>Over $10000</option>
             </select>
           </div>
+
+          <div className="flex gap-3 items-start mt-4">
+            <input
+              type="checkbox"
+              id={gdprConsentId}
+              name="gdprConsent"
+              checked={gdprConsent}
+              onChange={(e) => setGdprConsent(e.target.checked)}
+              className="mt-1 w-4 h-4 rounded-sm border border-[#1e1e1e] bg-[#111111] accent-[#22c55e] cursor-pointer flex-shrink-0"
+            />
+            <label
+              htmlFor={gdprConsentId}
+              className="text-[#666] text-[13px] leading-relaxed font-sans cursor-pointer"
+            >
+              I agree to receive follow-up emails about my audit results and SES service updates.
+              You can unsubscribe at any time.
+            </label>
+          </div>
+
           <button
             type="submit"
             disabled={submitting || (attempted && hasErrors)}
