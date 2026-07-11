@@ -38,14 +38,9 @@
   *::after {
     box-sizing: border-box;
   }
-
   * {
     border-color: var(--color-border);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
   }
-
   .font-mono,
   code,
   pre,
@@ -81,9 +76,6 @@
   html {
     background: #0c0c0c;
     scroll-behavior: smooth;
-    scrollbar-gutter: stable;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
   }
   body {
     background: #0c0c0c;
@@ -110,33 +102,6 @@
   /* Section anchor scroll offset (nav 64px + 16px breathing room) */
   section[id] {
     scroll-margin-top: 80px;
-  }
-
-  /* Style the scrollbar to match the design system on Windows/Chrome */
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #0c0c0c;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #1e1e1e;
-    border-radius: 4px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #333;
-  }
-
-  .sticky-element {
-    position: -webkit-sticky;
-    position: sticky;
-  }
-
-  @media (min-width: 1024px) {
-    .lg-sticky-element {
-      position: -webkit-sticky;
-      position: sticky;
-    }
   }
 }
 
@@ -225,8 +190,6 @@
   padding: 14px 14px;
   border-radius: 3px;
   width: 100%;
-  -webkit-appearance: none;
-  appearance: none;
   transition:
     border-color 0.2s,
     box-shadow 0.2s;

@@ -436,11 +436,11 @@ function Workflow() {
         {isMobile && (
           <div className="border border-[#1e1e1e] rounded-[3px] p-4 -mx-1">
             <div className="eyebrow mb-3">// pipeline</div>
-            <div className="flex flex-wrap -m-[3px]">
+            <div className="flex flex-wrap gap-x-1.5 gap-y-1.5">
               {pipelineStages.map((p) => (
                 <span
                   key={p}
-                  className="mono text-[12px] text-[#22c55e] bg-[#111] border border-[#1e1e1e] rounded-[3px] px-2.5 py-1 m-[3px]"
+                  className="mono text-[12px] text-[#22c55e] bg-[#111] border border-[#1e1e1e] rounded-[3px] px-2.5 py-1"
                 >
                   {p}
                 </span>
@@ -600,7 +600,7 @@ function Workflow() {
 
           {/* Right: pipeline panel (desktop + tablet) */}
           {!isMobile && (
-            <aside className="border border-[#1e1e1e] rounded-[3px] p-6 lg:sticky lg:top-24 relative overflow-hidden lg-sticky-element">
+            <aside className="border border-[#1e1e1e] rounded-[3px] p-6 lg:sticky lg:top-24 relative overflow-hidden">
               {/* progress rail — desktop only, rAF-driven, no CSS transition */}
               <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[2px] bg-[#1a1a1a]">
                 <div
@@ -624,7 +624,6 @@ function Workflow() {
                       className="flex items-center gap-3"
                       style={{
                         opacity: itemOpacity,
-                        WebkitTransition: `opacity 200ms ${ease}`,
                         transition: `opacity 200ms ${ease}`,
                         willChange: "opacity",
                       }}
@@ -638,14 +637,12 @@ function Workflow() {
                         style={{
                           background: dotColor,
                           opacity: on ? 1 : isTablet ? 1 : 0,
-                          WebkitTransition: `background-color 200ms ${ease}, opacity ${on ? 200 : 150}ms ${ease}`,
                           transition: `background-color 200ms ${ease}, opacity ${on ? 200 : 150}ms ${ease}`,
                         }}
                       />
                       <span
                         style={{
                           color: textColor,
-                          WebkitTransition: `color 200ms ${ease}`,
                           transition: `color 200ms ${ease}`,
                         }}
                       >

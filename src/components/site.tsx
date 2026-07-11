@@ -207,10 +207,9 @@ export function Nav() {
   ];
   return (
     <nav
-      className="fixed top-0 inset-x-0 z-50 border-b transition-colors sticky-element"
+      className="fixed top-0 inset-x-0 z-50 border-b transition-colors"
       style={{
         background: scrolled || open ? "rgba(12,12,12,0.92)" : "#0c0c0c",
-        WebkitBackdropFilter: scrolled || open ? "blur(14px) saturate(140%)" : "none",
         backdropFilter: scrolled || open ? "blur(14px) saturate(140%)" : "none",
         borderColor: "#1a1a1a",
       }}
