@@ -63,7 +63,7 @@ cloud_off_limits:
 
 # Scribe updates this automatically. Operator can also add entries.
 
-completed: []
+completed: ["🛡️ Sentinel: [HIGH] Fix XSS vulnerability in ChartStyle component"]
 
 ## Report format preference
 

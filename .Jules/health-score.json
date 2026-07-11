@@ -1,0 +1,10 @@
+{
+  "client": "Software Evolution Service (SES)",
+  "last_updated": "2026-07-11",
+  "performance_score": 0,
+  "security_score": 8,
+  "ux_score": 0,
+  "maintainability_score": 0,
+  "overall_score": 2.4,
+  "week_summary": "Security score improved following the resolution of a high-severity vulnerability."
+}
