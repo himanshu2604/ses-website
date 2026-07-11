@@ -94,7 +94,8 @@ function HealthChart() {
       <div className="w-full overflow-x-auto">
         <svg
           viewBox={`0 0 ${w} ${h}`}
-          className="w-full h-auto min-w-[560px]"
+          className="w-full h-auto min-w-[560px] overflow-visible"
+          style={{ overflow: "visible" }}
           role="img"
           aria-label="Health score improving from 44 to 88 over 12 weeks"
         >
