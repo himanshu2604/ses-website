@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useId } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Nav,
@@ -41,8 +41,8 @@ export const Route = createFileRoute("/")({
           "Your software is getting worse every week. We fix that. Weekly AI-assisted improvements, measured by your Health Score.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://ses.service" },
-      { property: "og:image", content: "https://ses.service/og.svg" },
+      { property: "og:url", content: "https://softwareevolutionservice.com" },
+      { property: "og:image", content: "https://softwareevolutionservice.com/og.svg" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "SES — Software Evolution Service" },
       {
@@ -50,9 +50,9 @@ export const Route = createFileRoute("/")({
         content:
           "Your software is getting worse every week. We fix that. Weekly AI-assisted improvements, measured by your Health Score.",
       },
-      { name: "twitter:image", content: "https://ses.service/og.svg" },
+      { name: "twitter:image", content: "https://softwareevolutionservice.com/og.svg" },
     ],
-    links: [{ rel: "canonical", href: "https://ses.service" }],
+    links: [{ rel: "canonical", href: "https://softwareevolutionservice.com" }],
   }),
   component: Index,
 });
@@ -919,6 +919,8 @@ function Results() {
 
 /* -------------------- Contact -------------------- */
 
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkolddre";
+
 function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -931,6 +933,9 @@ function Contact() {
   const [url, setUrl] = useState("");
   const [concern, setConcern] = useState("");
   const [spend, setSpend] = useState("Prefer not to say");
+  const [gdprConsent, setGdprConsent] = useState(false);
+
+  const baseId = useId();
 
   const personalDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"];
 
@@ -982,16 +987,36 @@ function Contact() {
     if (hasErrors) return;
     setSubmitting(true);
     try {
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          // Simulated success — flip to reject() to test failure.
-          resolve(null);
-        }, 1500);
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          productUrl: url,
+          biggestConcern: concern,
+          cloudSpend: spend,
+          gdprConsent: gdprConsent,
+          _subject: `New audit request — ${url}`,
+          _replyto: email,
+        }),
       });
-      setSubmittedUrl(url);
-      setSubmitted(true);
-    } catch {
-      setSubmitError("submission failed. try again or email hi@ses.service");
+
+      if (response.ok) {
+        setSubmittedUrl(url);
+        setSubmitted(true);
+      } else {
+        const data = await response.json();
+        throw new Error(data?.error || "Submission failed");
+      }
+    } catch (error) {
+      const err = error as Error;
+      setSubmitError(
+        err.message || "submission failed. try again or email hi@softwareevolutionservice.com",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -1115,6 +1140,21 @@ function Contact() {
                   <option>Over $10000</option>
                 </select>
               </div>
+              <div className="flex items-start gap-3 py-1">
+                <input
+                  id={`${baseId}-gdpr`}
+                  type="checkbox"
+                  checked={gdprConsent}
+                  onChange={(e) => setGdprConsent(e.target.checked)}
+                  className="mt-1 accent-[#22c55e] h-4 w-4 rounded border-[#1e1e1e] bg-[#0c0c0c] text-[#22c55e]"
+                />
+                <label
+                  htmlFor={`${baseId}-gdpr`}
+                  className="mono text-[11px] text-[#666] leading-[1.4] select-none cursor-pointer"
+                >
+                  I agree to receive the free audit report and follow-up communications. (Optional)
+                </label>
+              </div>
               <button
                 type="submit"
                 disabled={submitting || (attempted && hasErrors)}
@@ -1186,8 +1226,20 @@ function FinalCTA() {
 /* -------------------- Page -------------------- */
 
 function Index() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "SES — Software Evolution Service",
+    url: "https://softwareevolutionservice.com",
+    description: "Weekly AI-Assisted Software Improvement",
+  };
+
   return (
     <div className="min-h-screen bg-[#0c0c0c]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Nav />
       <main>
         <Hero />
