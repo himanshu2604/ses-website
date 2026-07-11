@@ -102,6 +102,11 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          defer
+          data-domain="softwareevolutionservice.com"
+          src="https://plausible.io/js/script.js"
+        />
       </head>
       <body>
         {children}
