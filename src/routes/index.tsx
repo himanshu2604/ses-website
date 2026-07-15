@@ -978,7 +978,7 @@ function Pricing() {
 
                 <a
                   href="#audit"
-                  className={`mt-8 mono text-[12px] text-center px-4 py-3 rounded-[3px] ${
+                  className={`mt-auto pt-8 mono text-[12px] text-center px-4 py-3 rounded-[3px] ${
                     p.filled
                       ? "btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold"
                       : "btn-outline border border-[#22c55e] text-[#22c55e]"
@@ -1018,16 +1018,16 @@ function Results() {
       desc: "Introduced connection pooling and a read replica for the hottest query paths.",
     },
     {
-      type: "ENGINEERING QUALITY",
-      num: "94/100",
-      title: "Average PR confidence score",
-      desc: "Every improvement this month passed all three quality gates. 812 lines deleted. 340 lines added. 0 new dependencies. 100% rollback ready.",
-    },
-    {
       type: "SECURITY",
       num: "17",
       title: "Critical CVEs resolved",
       desc: "Patched cascading vulnerabilities across the dependency graph and locked transitive versions.",
+    },
+    {
+      type: "ENGINEERING QUALITY",
+      num: "94/100",
+      title: "Average PR confidence score",
+      desc: "Eliminated dead code, extracted shared modules, and added contract tests on critical paths.",
     },
     {
       type: "COST",
@@ -1039,7 +1039,7 @@ function Results() {
       type: "CODE HEALTH",
       num: "+38",
       title: "Maintainability index",
-      desc: "Eliminated dead code, extracted shared modules, and added contract tests on critical paths.",
+      desc: "Every improvement this month passed all three quality gates. 812 lines deleted. 340 lines added. 0 new dependencies. 100% rollback ready.",
     },
   ];
   return (
@@ -1063,10 +1063,10 @@ function Results() {
             return (
               <div
                 key={it.title}
-                className={`results-card bg-[#111] p-7 flex flex-col gap-4 border-l-2 border-[#1f1f1f] ${isLast ? "md:col-span-2 lg:col-span-3" : ""}`}
+                className={`results-card bg-[#111] p-7 flex flex-col gap-4 border-l-2 border-[#1f1f1f] ${isLast ? "items-center text-center" : ""}`}
               >
                 <div
-                  className="mono text-[10px] tracking-[0.12em] uppercase font-medium rounded-[3px] px-2 py-0.5 self-start"
+                  className={`mono text-[10px] tracking-[0.12em] uppercase font-medium rounded-[3px] px-2 py-0.5 ${isLast ? "self-center" : "self-start"}`}
                   style={{
                     backgroundColor: badgeBg,
                     color: badgeText,
