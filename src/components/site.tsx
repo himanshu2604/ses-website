@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useId } from "react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 /* -------------------- hooks & primitives -------------------- */
 
@@ -116,7 +117,22 @@ export function SectionHead({
 
 /* -------------------- Health Score card -------------------- */
 
-export type Metric = { label: string; score: number; tone?: "green" | "amber" | "red" };
+// 🎨 Palette 2026-07-11: Add tooltips to Health Score metrics — Provides context for health pillars, improving user understanding of the scoring system.
+export type Metric = {
+  label: string;
+  score: number;
+  tone?: "green" | "amber" | "red";
+  description?: string;
+};
+
+const DEFAULT_DESCRIPTIONS: Record<string, string> = {
+  Performance: "Measures load times, responsiveness, and resource efficiency.",
+  Security: "Evaluates vulnerability exposure, dependency safety, and access controls.",
+  "Experience Quality": "Assesses UI consistency, accessibility, and user flow friction.",
+  "Code Quality": "Measures maintainability, technical debt, and architectural standards.",
+  "Code Health": "Measures maintainability, technical debt, and architectural standards.",
+  Reliability: "Evaluates uptime, error rates, and system stability.",
+};
 
 export function HealthCard({
   file = "health.json",
@@ -167,18 +183,31 @@ export function HealthCard({
         )}
       </div>
       <div className="mt-8 space-y-5">
-        {metrics.map((m) => (
-          <div key={m.label}>
-            <div className="flex items-center justify-between mono text-[12px]">
-              <span className="text-[#888]">{m.label}</span>
-              <span className="text-[#f0f0f0]">{m.score}</span>
+        <TooltipProvider>
+          {metrics.map((m) => (
+            <div key={m.label}>
+              <div className="flex items-center justify-between mono text-[12px]">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="text-[#888] cursor-help border-b border-[#333] border-dotted">
+                      {m.label}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-[200px]">
+                      {m.description || DEFAULT_DESCRIPTIONS[m.label] || m.label}
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+                <span className="text-[#f0f0f0]">{m.score}</span>
+              </div>
+              <Bar
+                value={m.score}
+                tone={m.tone || (m.score >= 70 ? "green" : m.score >= 50 ? "amber" : "red")}
+              />
             </div>
-            <Bar
-              value={m.score}
-              tone={m.tone || (m.score >= 70 ? "green" : m.score >= 50 ? "amber" : "red")}
-            />
-          </div>
-        ))}
+          ))}
+        </TooltipProvider>
       </div>
       <div className="hairline mt-8 pt-4 mono text-[10px] text-[#444] flex justify-between">
         <span>industry avg: 61</span>
