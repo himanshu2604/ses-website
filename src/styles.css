@@ -327,25 +327,30 @@
   color: #22c55e;
 }
 
-/* Pricing card hover — border brighten */
-.pricing-card {
+/* Unified Hover Micro-interactions — Subtle scale (1.03), green border shift, soft green glow box-shadow, and 180-200ms ease-out transitions */
+.pricing-card,
+.results-card,
+.gate-card,
+.pipeline-step {
   transition:
-    border-color 200ms ease-out,
-    background-color 200ms ease-out;
-}
-.pricing-card-standard:hover {
-  border-color: #2e2e2e !important;
-}
-.pricing-card-featured:hover {
-  border-color: #4ade80 !important;
+    transform 190ms ease-out,
+    border-color 190ms ease-out,
+    box-shadow 190ms ease-out,
+    background-color 190ms ease-out !important;
+  will-change: transform, border-color, box-shadow;
 }
 
-/* Results grid card hover — bg lift */
-.results-card {
-  transition: background-color 200ms ease-out;
+.pricing-card:hover,
+.results-card:hover,
+.gate-card:hover,
+.pipeline-step:hover {
+  transform: scale(1.03);
+  border-color: #22c55e !important;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.15) !important;
 }
+
 .results-card:hover {
-  background-color: #161616;
+  background-color: #161616 !important;
 }
 
 /* Footer link — brightens to #f0f0f0 */

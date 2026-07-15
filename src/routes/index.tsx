@@ -671,6 +671,142 @@ function Workflow() {
   );
 }
 
+/* -------------------- Pipeline -------------------- */
+
+function Pipeline() {
+  const gates = [
+    {
+      num: "01",
+      name: "Engineering Standards",
+      accent: true,
+      questions: [
+        "Is this the simplest possible solution?",
+        "Can code be deleted instead of added?",
+        "Is there a native API that already does this?",
+        "Does this reduce or maintain complexity?",
+      ],
+    },
+    {
+      num: "02",
+      name: "Evidence Required",
+      accent: false,
+      questions: [
+        "Which tool proved this problem exists?",
+        "What is the expected improvement, in numbers?",
+        "What is the exact rollback command?",
+        "Do all tests pass?",
+      ],
+    },
+    {
+      num: "03",
+      name: "Business Impact",
+      accent: false,
+      questions: [
+        "Does this affect speed, security, reliability, or cost?",
+        "Is the improvement measurable?",
+        "If business impact is zero — the PR is rejected.",
+      ],
+    },
+  ];
+
+  const steps = [
+    "GitHub",
+    "Constitution Check",
+    "7 Skills",
+    "Evidence Assembly",
+    "PR Confidence Score",
+    "Human Review",
+    "Deploy",
+    "Health Score Updated",
+    "Client Report",
+  ];
+
+  return (
+    <section id="pipeline" className="py-16 md:py-30 border-b border-[#1a1a1a]">
+      <div className="max-w-[1280px] mx-auto px-6 md:px-10 space-y-14">
+        <SectionHead
+          vol="VOL. IV.5"
+          label="THE STANDARD"
+          title="Every change passes through the same gates."
+          sub="Not guidelines. Not suggestions. Hard stops. If a PR does not pass all three gates, it does not ship."
+        />
+
+        {/* Three gate cards side by side (desktop), stacked (mobile) */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {gates.map((g) => (
+            <div
+              key={g.num}
+              className="gate-card bg-[#111] border border-[#1e1e1e] rounded-[4px] p-6 md:p-8 flex flex-col"
+            >
+              <div className="mono font-semibold tabular-nums text-[40px] leading-none text-[#22c55e]">
+                {g.num}
+              </div>
+              <h3 className="font-bold text-[#f0f0f0] text-[18px] font-sans mt-3">{g.name}</h3>
+              <ul className="mt-4 space-y-2 text-[#666] text-[13px] leading-[1.7]">
+                {g.questions.map((q, i) => (
+                  <li key={i} className="flex gap-1.5 items-start">
+                    <span className="text-[#444] mono shrink-0">—</span>
+                    <span className="mono">{q}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Connected pipeline visual */}
+        <div className="border border-[#1e1e1e] rounded-[4px] p-6 md:p-10 bg-[#0c0c0c] overflow-x-auto scrollbar-thin">
+          {/* Desktop flow (horizontal connected pipeline) */}
+          <div className="hidden lg:flex items-center justify-center w-full relative">
+            <div className="flex items-center justify-center min-w-max">
+              {steps.map((s, idx) => (
+                <div key={s} className="flex items-center shrink-0 max-w-[130px] relative">
+                  <div className="bg-[#111] border border-[#1e1e1e] rounded-[4px] px-3 py-2 text-center text-[11px] mono text-[#888] font-medium z-10 break-words w-[110px] pipeline-step">
+                    {s}
+                  </div>
+                  {idx < steps.length - 1 && (
+                    <div className="flex items-center justify-center w-[25px] h-4 shrink-0 mx-0.5 z-0">
+                      {/* Horizontal thin green line with arrow indicator */}
+                      <div className="relative w-full h-[1px] bg-[#22c55e]">
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 border-y-[3px] border-y-transparent border-l-[4px] border-l-[#22c55e]" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile flow (vertical connected pipeline) */}
+          <div className="lg:hidden flex flex-col items-center gap-2">
+            {steps.map((s, idx) => (
+              <div key={s} className="flex flex-col items-center w-full max-w-[200px]">
+                <div className="bg-[#111] border border-[#1e1e1e] rounded-[4px] px-4 py-2.5 text-center text-[12px] mono text-[#888] font-medium w-full pipeline-step">
+                  {s}
+                </div>
+                {idx < steps.length - 1 && (
+                  <div className="flex flex-col items-center justify-center h-6 py-1">
+                    {/* Vertical thin green line with arrow indicator */}
+                    <div className="relative w-[1px] h-full bg-[#22c55e]">
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 border-x-[3px] border-x-transparent border-t-[4px] border-t-[#22c55e]" />
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <p className="mono text-[11px] text-[#666]">
+              "// every improvement. every week. no exceptions."
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* -------------------- Evidence -------------------- */
 
 function Evidence() {
@@ -771,11 +907,16 @@ function Pricing() {
       price: "Custom",
       unit: "",
       features: [
-        "Everything in Growth",
-        "Dedicated engineering pod",
-        "Architecture modernization",
-        "SLA-backed response times",
-        "Quarterly strategy review",
+        "20+ improvements per month",
+        "All five AI agents active",
+        "Weekly strategy call",
+        "Dedicated Slack channel",
+        "Client Approval Policy",
+        "Execution Planner for complex improvements",
+        "PR Confidence Score dashboard",
+        "Recovery Agent — incident response",
+        "Custom benchmark peer group",
+        "Quarterly business review",
       ],
       cta: "$ start --compound",
       filled: false,
@@ -792,52 +933,64 @@ function Pricing() {
           sub="Every plan ships measurable improvements on a weekly cadence. Scale the throughput to match your product."
         />
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {plans.map((p) => (
-            <div
-              key={p.name}
-              className={`pricing-card bg-[#111] rounded-[3px] p-7 flex flex-col ${p.featured ? "pricing-card-featured" : "pricing-card-standard"}`}
-              style={{
-                border: p.featured ? "2px solid #22c55e" : "1px solid #1e1e1e",
-              }}
-            >
-              <div className="flex items-center justify-between">
-                <div className="mono text-[12px] text-[#f0f0f0]">{p.name}</div>
-                <div
-                  className="mono text-[10px] tracking-[0.12em]"
-                  style={{ color: p.featured ? "#22c55e" : "#444" }}
-                >
-                  {p.tag}
-                </div>
-              </div>
-              <div className="mt-6 flex items-baseline gap-1.5">
-                <span className="mono font-semibold tabular-nums text-[#f0f0f0] text-[44px] leading-none">
-                  {p.price}
-                </span>
-                {p.unit && (
-                  <span className="mono text-[#666] text-[14px] tabular-nums">{p.unit}</span>
-                )}
-              </div>
-              <ul className="mt-7 space-y-3 text-[14px] text-[#888]">
-                {p.features.map((f) => (
-                  <li key={f} className="flex gap-3">
-                    <span className="text-[#444] mono">—</span>
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="#audit"
-                className={`mt-8 mono text-[12px] text-center px-4 py-3 rounded-[3px] ${
-                  p.filled
-                    ? "btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold"
-                    : "btn-outline border border-[#22c55e] text-[#22c55e]"
-                }`}
+        <div className="grid md:grid-cols-3 gap-6 items-start">
+          {plans.map((p) => {
+            const isCompound = p.name === "COMPOUND";
+            return (
+              <div
+                key={p.name}
+                className={`pricing-card h-auto bg-[#111] rounded-[3px] p-7 flex flex-col ${p.featured ? "pricing-card-featured" : "pricing-card-standard"}`}
+                style={{
+                  border: p.featured ? "2px solid #22c55e" : "1px solid #1e1e1e",
+                }}
               >
-                {p.cta}
-              </a>
-            </div>
-          ))}
+                <div className="flex items-center justify-between">
+                  <div className="mono text-[12px] text-[#f0f0f0]">{p.name}</div>
+                  <div
+                    className="mono text-[10px] tracking-[0.12em]"
+                    style={{ color: p.featured ? "#22c55e" : "#444" }}
+                  >
+                    {p.tag}
+                  </div>
+                </div>
+                <div className="mt-6 flex items-baseline gap-1.5">
+                  <span className="mono font-semibold tabular-nums text-[#f0f0f0] text-[44px] leading-none">
+                    {p.price}
+                  </span>
+                  {p.unit && (
+                    <span className="mono text-[#666] text-[14px] tabular-nums">{p.unit}</span>
+                  )}
+                </div>
+                <ul className="mt-7 space-y-3 text-[14px] text-[#888]">
+                  {p.features.map((f) => (
+                    <li key={f} className="flex gap-3">
+                      <span className="text-[#444] mono">—</span>
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {isCompound && (
+                  <div className="mt-4 p-3 bg-[#1a2a1a] border-l-[3px] border-[#22c55e] rounded-sm">
+                    <p className="mono text-[12px] text-[#22c55e] leading-relaxed">
+                      "// you define what the AI can and cannot touch. Your codebase. Your rules."
+                    </p>
+                  </div>
+                )}
+
+                <a
+                  href="#audit"
+                  className={`mt-8 mono text-[12px] text-center px-4 py-3 rounded-[3px] ${
+                    p.filled
+                      ? "btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold"
+                      : "btn-outline border border-[#22c55e] text-[#22c55e]"
+                  }`}
+                >
+                  {p.cta}
+                </a>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -873,6 +1026,12 @@ function Results() {
       desc: "Patched cascading vulnerabilities across the dependency graph and locked transitive versions.",
     },
     {
+      type: "ENGINEERING QUALITY",
+      num: "94/100",
+      title: "Average PR confidence score",
+      desc: "Eliminated dead code, extracted shared modules, and added contract tests on critical paths.",
+    },
+    {
       type: "COST",
       num: "-41%",
       title: "Cloud infrastructure spend",
@@ -882,7 +1041,7 @@ function Results() {
       type: "CODE HEALTH",
       num: "+38",
       title: "Maintainability index",
-      desc: "Eliminated dead code, extracted shared modules, and added contract tests on critical paths.",
+      desc: "Every improvement this month passed all three quality gates. 812 lines deleted. 340 lines added. 0 new dependencies. 100% rollback ready.",
     },
   ];
   return (
@@ -895,22 +1054,39 @@ function Results() {
           sub="A sample from the changelog. Every entry is a shipped change with a measured outcome attached."
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1e1e1e] border border-[#1e1e1e] rounded-[3px] overflow-hidden">
-          {items.map((it) => (
-            <div
-              key={it.title}
-              className="results-card bg-[#111] p-7 flex flex-col gap-4 border-l-2 border-[#1f1f1f]"
-            >
-              <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#22c55e] font-medium">
-                {it.type}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 bg-transparent overflow-hidden">
+          {items.map((it, idx) => {
+            const isEngQuality = it.type === "ENGINEERING QUALITY";
+            const badgeBg = isEngQuality ? "#1a3a2a" : "";
+            const badgeText = isEngQuality ? "#4ade80" : "#22c55e";
+            const metricColor = isEngQuality ? "#22c55e" : "#f0f0f0";
+            const isLast = idx === items.length - 1;
+
+            return (
+              <div
+                key={it.title}
+                className={`results-card bg-[#111] p-7 flex flex-col gap-4 border border-[#1e1e1e] rounded-[3px] border-l-2 border-l-[#1f1f1f] ${isLast ? "items-center text-center col-span-1 md:col-span-1 lg:col-span-1" : ""}`}
+              >
+                <div
+                  className={`mono text-[10px] tracking-[0.12em] uppercase font-medium rounded-[3px] px-2 py-0.5 ${isLast ? "self-center" : "self-start"}`}
+                  style={{
+                    backgroundColor: badgeBg,
+                    color: badgeText,
+                  }}
+                >
+                  {it.type}
+                </div>
+                <div
+                  className="mono font-semibold tabular-nums text-[42px] leading-none"
+                  style={{ color: metricColor }}
+                >
+                  {it.num}
+                </div>
+                <div className="text-[#f0f0f0] text-[15px] font-semibold">{it.title}</div>
+                <div className="text-[#666] text-[13px] leading-[1.7]">{it.desc}</div>
               </div>
-              <div className="mono font-semibold tabular-nums text-[42px] leading-none text-[#f0f0f0]">
-                {it.num}
-              </div>
-              <div className="text-[#f0f0f0] text-[15px] font-semibold">{it.title}</div>
-              <div className="text-[#666] text-[13px] leading-[1.7]">{it.desc}</div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -1283,6 +1459,7 @@ function Index() {
         <Hero />
         <Problem />
         <Workflow />
+        <Pipeline />
         <Evidence />
         <Pricing />
         <Results />
