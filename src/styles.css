@@ -327,25 +327,51 @@
   color: #22c55e;
 }
 
-/* Pricing card hover — border brighten */
+/* Pricing card hover — border brighten, subtle lift scale & glow shadow */
 .pricing-card {
   transition:
-    border-color 200ms ease-out,
-    background-color 200ms ease-out;
+    border-color 180ms ease-out,
+    background-color 180ms ease-out,
+    transform 180ms ease-out,
+    box-shadow 180ms ease-out !important;
 }
 .pricing-card-standard:hover {
-  border-color: #2e2e2e !important;
+  border-color: #22c55e !important;
+  transform: scale(1.03);
+  box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.2);
 }
 .pricing-card-featured:hover {
-  border-color: #4ade80 !important;
+  border-color: #22c55e !important;
+  transform: scale(1.03);
+  box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.2);
 }
 
-/* Results grid card hover — bg lift */
+/* Results grid card hover — border brighten, bg lift, subtle scale & glow shadow */
 .results-card {
-  transition: background-color 200ms ease-out;
+  transition:
+    border-color 180ms ease-out,
+    background-color 180ms ease-out,
+    transform 180ms ease-out,
+    box-shadow 180ms ease-out !important;
 }
 .results-card:hover {
   background-color: #161616;
+  border-color: #22c55e !important;
+  transform: scale(1.03);
+  box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.2);
+}
+
+/* Pipeline Step node hover interactions */
+.pipeline-step {
+  transition:
+    border-color 180ms ease-out,
+    transform 180ms ease-out,
+    box-shadow 180ms ease-out !important;
+}
+.pipeline-step:hover {
+  border-color: #22c55e !important;
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px -5px rgba(34, 197, 94, 0.3);
 }
 
 /* Footer link — brightens to #f0f0f0 */

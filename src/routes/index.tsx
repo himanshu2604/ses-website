@@ -757,10 +757,10 @@ function Pipeline() {
         {/* Connected pipeline visual */}
         <div className="border border-[#1e1e1e] rounded-[4px] p-6 md:p-10 bg-[#0c0c0c] overflow-hidden">
           {/* Desktop flow (horizontal connected pipeline) */}
-          <div className="hidden lg:flex items-center justify-between w-full relative">
+          <div className="hidden lg:flex items-center justify-center flex-wrap gap-y-4 w-full relative">
             {steps.map((s, idx) => (
               <div key={s} className="flex items-center shrink-0 max-w-[130px] relative">
-                <div className="bg-[#111] border border-[#1e1e1e] rounded-[4px] px-3 py-2 text-center text-[11px] mono text-[#888] font-medium z-10 break-words w-[110px]">
+                <div className="bg-[#111] border border-[#1e1e1e] rounded-[4px] px-3 py-2 text-center text-[11px] mono text-[#888] font-medium z-10 break-words w-[110px] pipeline-step">
                   {s}
                 </div>
                 {idx < steps.length - 1 && (
@@ -931,7 +931,7 @@ function Pricing() {
           sub="Every plan ships measurable improvements on a weekly cadence. Scale the throughput to match your product."
         />
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 items-start">
           {plans.map((p) => {
             const isCompound = p.name === "COMPOUND";
             return (
@@ -978,7 +978,7 @@ function Pricing() {
 
                 <a
                   href="#audit"
-                  className={`mt-auto pt-8 mono text-[12px] text-center px-4 py-3 rounded-[3px] ${
+                  className={`mt-8 mono text-[12px] text-center px-4 py-3 rounded-[3px] ${
                     p.filled
                       ? "btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold"
                       : "btn-outline border border-[#22c55e] text-[#22c55e]"
@@ -1052,7 +1052,7 @@ function Results() {
           sub="A sample from the changelog. Every entry is a shipped change with a measured outcome attached."
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1e1e1e] border border-[#1e1e1e] rounded-[3px] overflow-hidden">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 bg-transparent overflow-hidden">
           {items.map((it, idx) => {
             const isEngQuality = it.type === "ENGINEERING QUALITY";
             const badgeBg = isEngQuality ? "#1a3a2a" : "";
@@ -1063,7 +1063,7 @@ function Results() {
             return (
               <div
                 key={it.title}
-                className={`results-card bg-[#111] p-7 flex flex-col gap-4 border-l-2 border-[#1f1f1f] ${isLast ? "items-center text-center" : ""}`}
+                className={`results-card bg-[#111] p-7 flex flex-col gap-4 border border-[#1e1e1e] rounded-[3px] border-l-2 border-l-[#1f1f1f] ${isLast ? "items-center text-center col-span-1 md:col-span-1 lg:col-span-1" : ""}`}
               >
                 <div
                   className={`mono text-[10px] tracking-[0.12em] uppercase font-medium rounded-[3px] px-2 py-0.5 ${isLast ? "self-center" : "self-start"}`}
