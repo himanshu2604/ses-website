@@ -1053,16 +1053,17 @@ function Results() {
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1e1e1e] border border-[#1e1e1e] rounded-[3px] overflow-hidden">
-          {items.map((it) => {
+          {items.map((it, idx) => {
             const isEngQuality = it.type === "ENGINEERING QUALITY";
             const badgeBg = isEngQuality ? "#1a3a2a" : "";
             const badgeText = isEngQuality ? "#4ade80" : "#22c55e";
             const metricColor = isEngQuality ? "#22c55e" : "#f0f0f0";
+            const isLast = idx === items.length - 1;
 
             return (
               <div
                 key={it.title}
-                className="results-card bg-[#111] p-7 flex flex-col gap-4 border-l-2 border-[#1f1f1f]"
+                className={`results-card bg-[#111] p-7 flex flex-col gap-4 border-l-2 border-[#1f1f1f] ${isLast ? "md:col-span-2 lg:col-span-3" : ""}`}
               >
                 <div
                   className="mono text-[10px] tracking-[0.12em] uppercase font-medium rounded-[3px] px-2 py-0.5 self-start"
