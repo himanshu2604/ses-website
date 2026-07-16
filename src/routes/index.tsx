@@ -1014,7 +1014,7 @@ function Contact() {
         throw new Error(data?.error || "Submission failed");
       }
     } catch {
-      setSubmitError("submission failed. try again or email hi@ses.service");
+      setSubmitError("submission failed. try again or email hi@softwareevolutionservice.com");
     } finally {
       setSubmitting(false);
     }
@@ -1243,7 +1243,7 @@ function Index() {
               "Weekly AI-assisted software improvement service. We ship measurable improvements to your product every week — performance, security, and code quality.",
             contactPoint: {
               "@type": "ContactPoint",
-              email: "hi@ses.service",
+              email: "hi@softwareevolutionservice.com",
               contactType: "customer service",
               availableLanguage: "English",
             },

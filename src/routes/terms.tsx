@@ -37,7 +37,7 @@ const sections: Array<{ title: string; body: string }> = [
   },
   {
     title: "4. Payment",
-    body: "Subscriptions are billed monthly in advance. All prices are in USD. No refunds are issued for partial months. Subscriptions may be cancelled with 30 days written notice to hi@ses.service.",
+    body: "Subscriptions are billed monthly in advance. All prices are in USD. No refunds are issued for partial months. Subscriptions may be cancelled with 30 days written notice to hi@softwareevolutionservice.com.",
   },
   {
     title: "5. Intellectual property",
@@ -51,7 +51,10 @@ const sections: Array<{ title: string; body: string }> = [
     title: "7. Governing law",
     body: "These terms are governed by the laws of India. Disputes shall be resolved by mutual agreement before any formal proceedings.",
   },
-  { title: "8. Contact", body: "For any questions about these terms: hi@ses.service" },
+  {
+    title: "8. Contact",
+    body: "For any questions about these terms: hi@softwareevolutionservice.com",
+  },
 ];
 
 function TermsPage() {

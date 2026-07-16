@@ -33,7 +33,7 @@ const sections: Array<{ title: string; body: string }> = [
   },
   {
     title: "3. Data storage",
-    body: "Your data is stored securely. Audit submissions are retained for up to 24 months to allow comparison across engagements. You may request deletion at any time by emailing hi@ses.service.",
+    body: "Your data is stored securely. Audit submissions are retained for up to 24 months to allow comparison across engagements. You may request deletion at any time by emailing hi@softwareevolutionservice.com.",
   },
   {
     title: "4. Cookies",
@@ -41,11 +41,11 @@ const sections: Array<{ title: string; body: string }> = [
   },
   {
     title: "5. Your rights",
-    body: "If you are located in the European Economic Area, you have the right to access, correct, or delete your personal data at any time. To exercise these rights, contact hi@ses.service. We will respond within 30 days.",
+    body: "If you are located in the European Economic Area, you have the right to access, correct, or delete your personal data at any time. To exercise these rights, contact hi@softwareevolutionservice.com. We will respond within 30 days.",
   },
   {
     title: "6. Contact",
-    body: "For any privacy-related questions: hi@ses.service",
+    body: "For any privacy-related questions: hi@softwareevolutionservice.com",
   },
 ];
 

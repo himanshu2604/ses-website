@@ -5,11 +5,14 @@ export const Route = createFileRoute("/status")({
   head: () => ({
     meta: [
       { title: "Status — SES" },
-      { name: "description", content: "System status for ses.service — all systems operational." },
+      {
+        name: "description",
+        content: "System status for SES — Software Evolution Service — all systems operational.",
+      },
       { property: "og:title", content: "Status — SES" },
       {
         property: "og:description",
-        content: "System status for ses.service — all systems operational.",
+        content: "System status for SES — Software Evolution Service — all systems operational.",
       },
       { property: "og:url", content: "/status" },
       { name: "twitter:card", content: "summary_large_image" },
