@@ -263,7 +263,8 @@ export function Nav() {
             }}
           />
           <span className="mono text-[13px] text-[#f0f0f0] truncate">
-            SES — Software Evolution Service
+            <span className="sm:hidden">SES</span>
+            <span className="hidden sm:inline">SES — Software Evolution Service</span>
           </span>
         </Link>
         <div className="hidden md:flex items-center gap-7 mono text-[12px]">
@@ -661,7 +662,7 @@ export function AuditForm() {
             </label>
             <select
               id={concernId}
-              className={fieldClass(showError("concern"))}
+              className={`${fieldClass(showError("concern"))} ${!concern ? "text-[#444444]" : "text-[#f0f0f0]"}`}
               value={concern}
               onChange={(e) => setConcern(e.target.value)}
               aria-required="true"
@@ -671,7 +672,8 @@ export function AuditForm() {
               <option value="">Select a concern…</option>
               <option value="Performance">Performance</option>
               <option value="Security">Security</option>
-              <option value="Experience Quality">Experience Quality</option>
+              <option value="Reliability">Reliability</option>
+              <option value="Code Health">Code Health</option>
               <option value="General decay">General decay</option>
               <option value="Cloud costs">Cloud costs</option>
               <option value="Not sure — audit everything">Not sure — audit everything</option>
@@ -687,7 +689,7 @@ export function AuditForm() {
             </label>
             <select
               id={spendId}
-              className="field"
+              className={`field ${spend === "Prefer not to say" ? "text-[#444444]" : "text-[#f0f0f0]"}`}
               value={spend}
               onChange={(e) => setSpend(e.target.value)}
             >

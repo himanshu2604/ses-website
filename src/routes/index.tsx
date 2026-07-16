@@ -74,8 +74,8 @@ function Hero() {
           <div className="space-y-3">
             <VolLabel vol="VOL. II" label="THE SERVICE" />
             <p className="text-[#888] text-[16px] md:text-[17px] leading-[1.7] max-w-[520px]">
-              Every week we make measurable improvements to your product's speed, security, and
-              reliability — backed by data, reports, and AI-assisted engineering.
+              Every week we make measurable improvements to your product's performance, security,
+              reliability, and code health — backed by data, reports, and AI-assisted engineering.
             </p>
           </div>
           <div className="pt-2 italic text-[#666] text-[14px] mono border-l border-[#22c55e] pl-4">
@@ -101,8 +101,8 @@ function Hero() {
             metrics={[
               { label: "Performance", score: 67 },
               { label: "Security", score: 51, tone: "amber" },
-              { label: "Experience Quality", score: 71 },
-              { label: "Code Quality", score: 64 },
+              { label: "Reliability", score: 71 },
+              { label: "Code Health", score: 64 },
             ]}
           />
         </div>
@@ -247,7 +247,7 @@ function Workflow() {
         "> scan complete — 6.2s",
       ],
       fact: "The average production codebase accumulates a new dependency vulnerability roughly every nine days without active monitoring.",
-      pipeline: ["GitHub", "Jules Agents"],
+      pipeline: ["GitHub"],
     },
     {
       n: "02",
@@ -263,7 +263,7 @@ function Workflow() {
         "> est. health score impact: +6 to +9 points",
       ],
       fact: "Teams that triage by impact-vs-effort consistently ship more fixes per sprint than teams working tickets in reported order.",
-      pipeline: ["Pull Requests"],
+      pipeline: ["Jules Agents"],
     },
     {
       n: "03",
@@ -1112,14 +1112,15 @@ function Contact() {
                   biggest concern
                 </label>
                 <select
-                  className={fieldClass(showError("concern"))}
+                  className={`${fieldClass(showError("concern"))} ${!concern ? "text-[#444444]" : "text-[#f0f0f0]"}`}
                   value={concern}
                   onChange={(e) => setConcern(e.target.value)}
                 >
                   <option value="">Select a concern…</option>
                   <option value="Performance">Performance</option>
                   <option value="Security">Security</option>
-                  <option value="Experience Quality">Experience Quality</option>
+                  <option value="Reliability">Reliability</option>
+                  <option value="Code Health">Code Health</option>
                   <option value="General decay">General decay</option>
                   <option value="Cloud costs">Cloud costs</option>
                   <option value="Not sure — audit everything">Not sure — audit everything</option>
@@ -1130,7 +1131,11 @@ function Contact() {
                 <label className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2">
                   monthly cloud spend (optional)
                 </label>
-                <select className="field" value={spend} onChange={(e) => setSpend(e.target.value)}>
+                <select
+                  className={`field ${spend === "Prefer not to say" ? "text-[#444444]" : "text-[#f0f0f0]"}`}
+                  value={spend}
+                  onChange={(e) => setSpend(e.target.value)}
+                >
                   <option>Prefer not to say</option>
                   <option>Under $500</option>
                   <option>$500–2000</option>
@@ -1254,7 +1259,7 @@ function Index() {
                 price: "0",
                 priceCurrency: "USD",
                 description:
-                  "Free software health audit across 4 pillars — Performance, Security, Experience Quality, Code Health. Delivered within 48 hours.",
+                  "Free software health audit across 4 pillars — Performance, Security, Reliability, Code Health. Delivered within 48 hours.",
               },
               {
                 "@type": "Offer",
