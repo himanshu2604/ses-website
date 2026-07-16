@@ -262,7 +262,9 @@ export function Nav() {
               display: "inline-block",
             }}
           />
-          <span className="mono text-[13px] text-[#f0f0f0] truncate">ses.service</span>
+          <span className="mono text-[13px] text-[#f0f0f0] truncate">
+            SES — Software Evolution Service
+          </span>
         </Link>
         <div className="hidden md:flex items-center gap-7 mono text-[12px]">
           {links.map((l) =>
@@ -359,7 +361,7 @@ export function Footer() {
         { label: "About", to: "/about" },
         { label: "Engineering blog", to: "/about" },
         { label: "Changelog", to: "/evidence" },
-        { label: "Careers", href: "mailto:hi@ses.service?subject=Careers at SES" },
+        { label: "Careers", href: "mailto:hi@softwareevolutionservice.com?subject=Careers at SES" },
       ],
     },
     {
@@ -387,7 +389,9 @@ export function Footer() {
                 display: "inline-block",
               }}
             />
-            <span className="mono text-[14px] text-[#f0f0f0]">ses.service</span>
+            <span className="mono text-[14px] text-[#f0f0f0]">
+              SES — Software Evolution Service
+            </span>
           </div>
           <p className="text-[#666] text-[13px] leading-[1.7] max-w-[260px]">
             Measurable software improvement, shipped every week. Backed by data, reports, and
@@ -424,7 +428,7 @@ export function Footer() {
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex flex-wrap items-center justify-between gap-3 mono text-[11px] text-[#444]">
           <span className="min-w-0">
             {
-              "// © 2026 ses.service — software evolution service. all systems operational. · no tracking cookies."
+              "// © 2026 SES — Software Evolution Service — software evolution service. all systems operational. · no tracking cookies."
             }
           </span>
           <span className="hidden md:flex items-center gap-2">
@@ -547,7 +551,7 @@ export function AuditForm() {
         throw new Error(data?.error || "Submission failed");
       }
     } catch {
-      setSubmitError("submission failed. try again or email hi@ses.service");
+      setSubmitError("submission failed. try again or email hi@softwareevolutionservice.com");
     } finally {
       setSubmitting(false);
     }
