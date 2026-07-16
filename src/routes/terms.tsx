@@ -29,7 +29,7 @@ const sections: Array<{ title: string; body: string }> = [
   },
   {
     title: "2. What we deliver",
-    body: "Each week we deliver: a Health Score scan across four pillars (Performance, Security, Experience Quality, Code Health), a prioritized list of regressions, AI-generated pull requests with evidence attached, and a written changelog. Delivery cadence is weekly. SLA for PR delivery is 5 business days per cycle.",
+    body: "Each week we deliver: a Health Score scan across four pillars (Performance, Security, Reliability, Code Health), a prioritized list of regressions, AI-generated pull requests with evidence attached, and a written changelog. Delivery cadence is weekly. SLA for PR delivery is 5 business days per cycle.",
   },
   {
     title: "3. What we need from you",
