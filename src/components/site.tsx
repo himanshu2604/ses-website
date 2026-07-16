@@ -26,6 +26,7 @@ export function useInView<T extends HTMLElement>(threshold = 0.2) {
   return { ref, seen };
 }
 
+// ⚡ Bolt 2025-05-21: Use direct DOM manipulation for CountUp to avoid React re-renders while maintaining value across re-renders — expected impact: Reduces main-thread work by eliminating 60fps React reconciliation.
 export function CountUp({
   to,
   duration = 1400,
@@ -36,23 +37,28 @@ export function CountUp({
   className?: string;
 }) {
   const { ref, seen } = useInView<HTMLSpanElement>(0.4);
-  const [val, setVal] = useState(0);
+  const valueRef = useRef(0);
+
   useEffect(() => {
-    if (!seen) return;
+    if (!seen || !ref.current) return;
     const start = performance.now();
     let raf = 0;
+    const node = ref.current;
     const tick = (now: number) => {
       const p = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - p, 3);
-      setVal(Math.round(to * eased));
+      const current = Math.round(to * eased);
+      valueRef.current = current;
+      node.textContent = String(current);
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [seen, to, duration]);
+  }, [seen, to, duration, ref]);
+
   return (
     <span ref={ref} className={className}>
-      {val}
+      {valueRef.current}
     </span>
   );
 }
