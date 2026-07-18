@@ -1,10 +1,10 @@
 {
   "client": "Software Evolution Service (SES)",
-  "last_updated": "2026-07-11",
+  "last_updated": "2026-07-17",
   "performance_score": 0,
-  "security_score": 8,
+  "security_score": 14,
   "ux_score": 0,
   "maintainability_score": 0,
-  "overall_score": 2.4,
-  "week_summary": "Security score improved following the resolution of a high-severity vulnerability."
+  "overall_score": 4.2,
+  "week_summary": "Security score improved through the addition of strict HTTP security headers (HSTS) and enhanced Content Security Policy (CSP) protections."
 }
