@@ -401,28 +401,91 @@
   transform: scale(1.15);
 }
 
-/* 3. Pricing CTA Button Hovers */
-.btn-pricing-outline {
-  transition:
-    background-color 180ms ease-out,
-    border-color 180ms ease-out,
-    color 180ms ease-out;
-}
-.btn-pricing-outline:hover {
-  background-color: rgba(34, 197, 94, 0.1) !important;
-  border-color: #22c55e !important;
+/* 3. Terminal Pricing CTA Buttons */
+.terminal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-decoration: none;
+  font-family: var(--font-mono);
 }
 
-.btn-pricing-filled {
-  transition:
-    background-color 180ms ease-out,
-    transform 180ms ease-out,
-    box-shadow 180ms ease-out;
+/* Snappy and responsive click/press feedback */
+.terminal-btn:active {
+  transform: scale(0.97) !important;
+  transition: transform 80ms ease-out !important;
 }
-.btn-pricing-filled:hover {
-  background-color: #4ade80 !important; /* Slightly brighter fill */
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(34, 197, 94, 0.35);
+
+/* Blinking terminal cursor animation */
+@keyframes cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.cursor-char {
+  display: inline-block;
+  width: 1ch;
+  text-align: left;
+  opacity: 0;
+  color: inherit;
+  margin-left: 2px;
+}
+
+.terminal-btn:hover .cursor-char,
+.terminal-btn:focus-visible .cursor-char {
+  opacity: 1;
+  animation: cursor-blink 1.06s steps(1) infinite;
+}
+
+/* Outlined Buttons (--maintain, --compound) */
+.btn-pricing-outline {
+  border: 1px solid rgba(34, 197, 94, 0.3) !important; /* Dim state */
+  color: #22c55e !important;
+  background-color: transparent !important;
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out,
+    box-shadow 150ms ease-out,
+    transform 150ms ease-out !important;
+}
+
+.btn-pricing-outline:hover,
+.btn-pricing-outline:focus-visible {
+  border-color: #22c55e !important; /* Full accent brightness */
+  background-color: rgba(34, 197, 94, 0.08) !important;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.25) !important;
+}
+
+/* Filled Button (--growth) */
+.btn-pricing-filled {
+  background-color: #22c55e !important;
+  color: #0c0c0c !important;
+  border: 1px solid #22c55e !important;
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out,
+    border-color 150ms ease-out,
+    transform 150ms ease-out !important;
+}
+
+.btn-pricing-filled:hover,
+.btn-pricing-filled:focus-visible {
+  background-color: #15803d !important; /* Slightly darker green */
+  border-color: #15803d !important;
+  color: #f0f0f0 !important; /* White text for higher contrast */
+}
+
+/* Distinct Keyboard Focus Rings */
+.terminal-btn:focus-visible {
+  outline: 2px solid #22c55e !important;
+  outline-offset: 2px !important;
 }
 
 /* 4. "MOST CHOSEN" Badge Pulsing */
