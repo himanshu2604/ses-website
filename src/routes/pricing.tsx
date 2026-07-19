@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Nav, Footer, Eyebrow, VolLabel } from "@/components/site";
+import { Nav, Footer, Eyebrow, VolLabel, useInView } from "@/components/site";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -56,6 +56,8 @@ const FEATURES: FeatureRow[] = [
 ];
 
 function PricingPage() {
+  const { ref, seen } = useInView<HTMLDivElement>(0.15);
+
   return (
     <div className="min-h-screen bg-[#0c0c0c] text-[#f0f0f0]">
       <Nav />
@@ -85,7 +87,12 @@ function PricingPage() {
         </section>
 
         {/* Comparison Section */}
-        <section className="py-16 md:py-24 max-w-[1280px] mx-auto px-6 md:px-10">
+        <section
+          ref={ref}
+          className={`py-16 md:py-24 max-w-[1280px] mx-auto px-6 md:px-10 reveal ${
+            seen ? "in" : ""
+          }`}
+        >
           {/* Desktop Table: visible on md and up */}
           <div className="hidden md:block overflow-x-auto border border-[#1e1e1e] rounded-[3px] bg-[#111]">
             <table className="w-full text-left border-collapse">
@@ -101,7 +108,7 @@ function PricingPage() {
                     </div>
                   </th>
                   <th className="p-6 mono w-1/5 relative">
-                    <div className="absolute top-3 right-6 text-[9px] text-[#22c55e] border border-[#22c55e]/30 px-1.5 py-0.5 rounded-[2px] uppercase tracking-wider">
+                    <div className="absolute top-3 right-6 text-[9px] text-[#22c55e] border border-[#22c55e]/30 px-1.5 py-0.5 rounded-[2px] uppercase tracking-wider badge-pulse">
                       MOST CHOSEN
                     </div>
                     <div className="text-[12px] text-[#22c55e]">GROWTH</div>
@@ -117,13 +124,13 @@ function PricingPage() {
               </thead>
               <tbody className="divide-y divide-[#1e1e1e]">
                 {FEATURES.map((row) => (
-                  <tr key={row.name} className="hover:bg-[#161616] transition-colors">
+                  <tr key={row.name} className="pricing-row transition-colors">
                     <td className="p-6 text-[14px] text-[#888] font-medium font-sans">
                       {row.name}
                     </td>
                     <td className="p-6 mono text-[14px] tabular-nums">
                       {row.maintain === true ? (
-                        <span className="text-[#22c55e]">✓</span>
+                        <span className="text-[#22c55e] check-mark">✓</span>
                       ) : row.maintain === false ? (
                         <span className="text-[#444]">—</span>
                       ) : (
@@ -132,7 +139,7 @@ function PricingPage() {
                     </td>
                     <td className="p-6 mono text-[14px] tabular-nums">
                       {row.growth === true ? (
-                        <span className="text-[#22c55e]">✓</span>
+                        <span className="text-[#22c55e] check-mark">✓</span>
                       ) : row.growth === false ? (
                         <span className="text-[#444]">—</span>
                       ) : (
@@ -141,7 +148,7 @@ function PricingPage() {
                     </td>
                     <td className="p-6 mono text-[14px] tabular-nums">
                       {row.compound === true ? (
-                        <span className="text-[#22c55e]">✓</span>
+                        <span className="text-[#22c55e] check-mark">✓</span>
                       ) : row.compound === false ? (
                         <span className="text-[#444]">—</span>
                       ) : (
@@ -157,7 +164,7 @@ function PricingPage() {
                   <td className="p-6">
                     <Link
                       to="/#audit"
-                      className="block mono text-[12px] text-center px-4 py-3 rounded-[3px] border border-[#22c55e] text-[#22c55e] btn-outline"
+                      className="block mono text-[12px] text-center px-4 py-3 rounded-[3px] border border-[#22c55e] text-[#22c55e] btn-outline btn-pricing-outline cursor-pointer"
                     >
                       $ start --maintain
                     </Link>
@@ -165,7 +172,7 @@ function PricingPage() {
                   <td className="p-6">
                     <Link
                       to="/#audit"
-                      className="block mono text-[12px] text-center px-4 py-3 rounded-[3px] btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold"
+                      className="block mono text-[12px] text-center px-4 py-3 rounded-[3px] btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold btn-pricing-filled cursor-pointer"
                     >
                       $ start --growth
                     </Link>
@@ -173,7 +180,7 @@ function PricingPage() {
                   <td className="p-6">
                     <Link
                       to="/#audit"
-                      className="block mono text-[12px] text-center px-4 py-3 rounded-[3px] border border-[#22c55e] text-[#22c55e] btn-outline"
+                      className="block mono text-[12px] text-center px-4 py-3 rounded-[3px] border border-[#22c55e] text-[#22c55e] btn-outline btn-pricing-outline cursor-pointer"
                     >
                       $ start --compound
                     </Link>
@@ -230,12 +237,15 @@ function PricingPage() {
               >
                 <div className="flex items-center justify-between">
                   <span className="mono text-[14px] font-bold text-[#f0f0f0]">{tier.name}</span>
-                  <span
-                    className="mono text-[10px] tracking-[0.12em]"
-                    style={{ color: tier.featured ? "#22c55e" : "#444" }}
-                  >
-                    {tier.tag}
-                  </span>
+                  {tier.featured ? (
+                    <span className="mono text-[10px] tracking-[0.12em] text-[#22c55e] border border-[#22c55e]/30 px-1.5 py-0.5 rounded-[2px] badge-pulse">
+                      {tier.tag}
+                    </span>
+                  ) : (
+                    <span className="mono text-[10px] tracking-[0.12em] text-[#444]">
+                      {tier.tag}
+                    </span>
+                  )}
                 </div>
                 <div className="mt-3 mono text-[24px] font-semibold text-[#f0f0f0] tabular-nums">
                   {tier.price}
@@ -270,10 +280,10 @@ function PricingPage() {
                 <div className="mt-6">
                   <Link
                     to="/#audit"
-                    className={`block mono text-[12.5px] text-center px-4 py-3 rounded-[3px] ${
+                    className={`block mono text-[12.5px] text-center px-4 py-3 rounded-[3px] cursor-pointer ${
                       tier.featured
-                        ? "btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold"
-                        : "btn-outline border border-[#22c55e] text-[#22c55e]"
+                        ? "btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold btn-pricing-filled"
+                        : "btn-outline border border-[#22c55e] text-[#22c55e] btn-pricing-outline"
                     }`}
                   >
                     {tier.cta}
