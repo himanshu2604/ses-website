@@ -235,25 +235,25 @@ function PricingPage() {
                   <td className="p-6">
                     <Link
                       to="/#audit"
-                      className="block mono text-[12px] text-center px-4 py-3 rounded-[3px] border border-[#22c55e] text-[#22c55e] btn-outline btn-pricing-outline cursor-pointer"
+                      className="terminal-btn block mono text-[12px] text-center px-4 py-3 rounded-[3px] border text-[#22c55e] btn-outline btn-pricing-outline cursor-pointer"
                     >
-                      $ start --maintain
+                      $ start --maintain<span className="cursor-char">_</span>
                     </Link>
                   </td>
                   <td className="p-6 bg-[#22c55e]/[0.03]">
                     <Link
                       to="/#audit"
-                      className="block mono text-[12px] text-center px-4 py-3 rounded-[3px] btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold btn-pricing-filled cursor-pointer"
+                      className="terminal-btn block mono text-[12px] text-center px-4 py-3 rounded-[3px] btn-primary text-[#0c0c0c] font-semibold btn-pricing-filled cursor-pointer"
                     >
-                      $ start --growth
+                      $ start --growth<span className="cursor-char">_</span>
                     </Link>
                   </td>
                   <td className="p-6">
                     <Link
                       to="/#audit"
-                      className="block mono text-[12px] text-center px-4 py-3 rounded-[3px] border border-[#22c55e] text-[#22c55e] btn-outline btn-pricing-outline cursor-pointer"
+                      className="terminal-btn block mono text-[12px] text-center px-4 py-3 rounded-[3px] border text-[#22c55e] btn-outline btn-pricing-outline cursor-pointer"
                     >
-                      $ start --compound
+                      $ start --compound<span className="cursor-char">_</span>
                     </Link>
                   </td>
                 </tr>
@@ -361,13 +361,14 @@ function PricingPage() {
                 <div className="mt-6">
                   <Link
                     to="/#audit"
-                    className={`block mono text-[12.5px] text-center px-4 py-3 rounded-[3px] cursor-pointer ${
+                    className={`terminal-btn block mono text-[12.5px] text-center px-4 py-3 rounded-[3px] cursor-pointer ${
                       tier.featured
-                        ? "btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold btn-pricing-filled"
-                        : "btn-outline border border-[#22c55e] text-[#22c55e] btn-pricing-outline"
+                        ? "btn-primary text-[#0c0c0c] font-semibold btn-pricing-filled"
+                        : "btn-outline border text-[#22c55e] btn-pricing-outline"
                     }`}
                   >
                     {tier.cta}
+                    <span className="cursor-char">_</span>
                   </Link>
                 </div>
               </div>
