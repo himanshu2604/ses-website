@@ -336,10 +336,20 @@ function PricingPage() {
                       </div>
                       {group.features.map((f) => {
                         const hasFeature = f[tier.key];
+                        const isTextValue = typeof hasFeature === "string";
+                        const displayValue =
+                          isTextValue && hasFeature === "Uncapped via dedicated pod"
+                            ? "Uncapped ✓"
+                            : hasFeature;
+
                         return (
                           <div
                             key={f.name}
-                            className="flex items-center justify-between text-[13px]"
+                            className={`text-[13px] ${
+                              isTextValue
+                                ? "flex flex-col gap-1.5 items-start py-1"
+                                : "flex items-center justify-between"
+                            }`}
                           >
                             <span className="text-[#888]">{f.name}</span>
                             <span className="mono">
@@ -348,7 +358,9 @@ function PricingPage() {
                               ) : hasFeature === false ? (
                                 <span className="text-[#444]">—</span>
                               ) : (
-                                <span className="text-[#f0f0f0]">{hasFeature}</span>
+                                <span className="text-[#f0f0f0] border-l border-[#22c55e]/50 pl-2.5 ml-0.5 leading-relaxed block">
+                                  {displayValue}
+                                </span>
                               )}
                             </span>
                           </div>
