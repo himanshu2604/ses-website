@@ -44,8 +44,32 @@ const FEATURES: FeatureRow[] = [
   { name: "Weekly automated scan", maintain: true, growth: true, compound: true },
   { name: "Security patching", maintain: true, growth: true, compound: true },
   { name: "Monthly health report", maintain: true, growth: true, compound: true },
-  { name: "Up to 4 fixes/week", maintain: true, growth: false, compound: false },
-  { name: "Up to 12 fixes/week", maintain: false, growth: true, compound: true },
+  { name: "Cloud cost optimization (Fin)", maintain: false, growth: true, compound: true },
+  {
+    name: "Analytics & behavior intelligence (Pulse)",
+    maintain: false,
+    growth: true,
+    compound: true,
+  },
+  {
+    name: "Industry benchmarking (vs. HTTP Archive/CrUX data)",
+    maintain: false,
+    growth: true,
+    compound: true,
+  },
+  {
+    name: "Evolution Timeline (score history, visualized)",
+    maintain: false,
+    growth: true,
+    compound: true,
+  },
+  { name: "Up to 4 fixes/month", maintain: true, growth: false, compound: false },
+  {
+    name: "Up to 12 fixes/month",
+    maintain: false,
+    growth: true,
+    compound: "Uncapped via dedicated pod",
+  },
   { name: "AI-assisted engineering", maintain: false, growth: true, compound: true },
   { name: "Performance + reliability work", maintain: false, growth: true, compound: true },
   { name: "Weekly report + roadmap", maintain: false, growth: true, compound: true },
@@ -118,7 +142,9 @@ function PricingPage() {
                   </th>
                   <th className="p-6 mono w-1/5">
                     <div className="text-[12px] text-[#f0f0f0]">COMPOUND</div>
-                    <div className="text-[20px] font-semibold text-[#f0f0f0] mt-1">Custom</div>
+                    <div className="text-[20px] font-semibold text-[#f0f0f0] mt-1">
+                      Starting at $3,000/mo
+                    </div>
                   </th>
                 </tr>
               </thead>
@@ -221,7 +247,7 @@ function PricingPage() {
               },
               {
                 name: "COMPOUND",
-                price: "Custom",
+                price: "Starting at $3,000/mo",
                 tag: "FULL EVOLUTION",
                 featured: false,
                 key: "compound" as const,
