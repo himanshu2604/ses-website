@@ -839,6 +839,15 @@ function Pricing() {
             </div>
           ))}
         </div>
+
+        <div className="text-center">
+          <Link
+            to="/pricing"
+            className="inline-block mono text-[12.5px] text-[#666] hover:text-[#22c55e] transition-colors"
+          >
+            → See full plan details
+          </Link>
+        </div>
       </div>
     </section>
   );

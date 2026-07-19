@@ -13,6 +13,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StatusRouteImport } from './routes/status'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as EvidenceRouteImport } from './routes/evidence'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as AboutRouteImport } from './routes/about'
@@ -36,6 +37,11 @@ const SecurityRoute = SecurityRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EvidenceRoute = EvidenceRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/evidence': typeof EvidenceRoute
+  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
   '/status': typeof StatusRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/evidence': typeof EvidenceRoute
+  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
   '/status': typeof StatusRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
   '/evidence': typeof EvidenceRoute
+  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
   '/status': typeof StatusRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/evidence'
+    | '/pricing'
     | '/privacy'
     | '/security'
     | '/status'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/evidence'
+    | '/pricing'
     | '/privacy'
     | '/security'
     | '/status'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/audit'
     | '/evidence'
+    | '/pricing'
     | '/privacy'
     | '/security'
     | '/status'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuditRoute: typeof AuditRoute
   EvidenceRoute: typeof EvidenceRoute
+  PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   SecurityRoute: typeof SecurityRoute
   StatusRoute: typeof StatusRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/evidence': {
@@ -200,6 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuditRoute: AuditRoute,
   EvidenceRoute: EvidenceRoute,
+  PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   SecurityRoute: SecurityRoute,
   StatusRoute: StatusRoute,
