@@ -450,7 +450,7 @@ export function Footer() {
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkolddre";
 
 // 🎨 Palette 2025-05-14: Improve form accessibility — Links labels to inputs and adds ARIA attributes for validation states.
-export function AuditForm() {
+export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: boolean }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submittedUrl, setSubmittedUrl] = useState("");
@@ -739,6 +739,13 @@ export function AuditForm() {
           <div className="mono text-[11px] text-[#444] text-center">
             {"// no commitment required. response within 48h."}
           </div>
+          {showDedicatedLink && (
+            <div className="mono text-[11px] text-center pt-1">
+              <Link to="/audit" className="text-[#666] hover:text-[#22c55e] transition-colors">
+                {"// prefer a dedicated page? audit.ses.service →"}
+              </Link>
+            </div>
+          )}
         </form>
       )}
     </div>
