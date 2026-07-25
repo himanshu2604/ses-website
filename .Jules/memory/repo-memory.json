@@ -1,0 +1,121 @@
+{
+  "client": "ses-marketing-site",
+  "last_updated": "2026-07-24",
+  "version": "1.0",
+
+  "architecture": {
+    "framework": "TanStack Start v1 — full-stack React framework with file-based routing",
+    "runtime_libraries": "React 19",
+    "language": "TypeScript (strict mode)",
+    "build_tool": "Vite 7",
+    "package_manager": "Bun — use bun, not npm/pnpm/yarn, for install/test/lint/build commands",
+    "database": "none — static/marketing site, no DB currently",
+    "state_management": "none needed for most pages — the live 'health.json' widget likely uses local component state to render the animated/ticking Health Score display",
+    "styling": "Tailwind CSS v4 — via native CSS @theme tokens, not a tailwind.config.js-based token system",
+    "component_system": "shadcn/ui — components are vendored into the repo (copy-in, not npm-installed), so Dependency Police should not treat shadcn additions the same as adding a new package dependency",
+    "deployment": "Vercel",
+    "design_system": "Terminal Dark (Editorial) — see design-system section below. This is a hard constraint, not a suggestion: Palette must never introduce a color, font, or border-radius outside these tokens.",
+    "patterns": [
+      "Shared form component for the /audit and contact forms (consolidated 2026-07-24 — do not re-split these back into separate components)",
+      "A 'health.json' live-styled widget renders Health Score data with a terminal/CLI aesthetic ($ ses scan --deep, etc.) — this component previously had a CRITICAL code-injection vulnerability, patched 2026-07-11",
+      "Strict security headers (HSTS + CSP) deployed 2026-07-17 — any new third-party script/embed must be added to the CSP allowlist or it will silently break",
+      "File-based routing (TanStack Start convention) — pages observed: / (home), /pricing, /evidence, /audit, /about, /privacy, /terms, /security, /status"
+    ]
+  },
+
+  "design_system": {
+    "name": "Terminal Dark (Editorial)",
+    "vibe": "high-contrast, minimal, engineering-focused — like a dark IDE or terminal session",
+    "colors": {
+      "background": "#0c0c0c",
+      "primary_text": "#f0f0f0",
+      "accent": "#22c55e — terminal green, this is the ONLY accent color, do not introduce a second accent",
+      "borders": ["#1e1e1e", "#1a1a1a", "#1f1f1f"]
+    },
+    "border_radius": "max 3px — sharp, editorial, never rounded pills or cards",
+    "typography": {
+      "headlines": "Space Grotesk",
+      "body": "Inter",
+      "numbers_metrics_code": "JetBrains Mono"
+    },
+    "voice": "monospace code comments, volume labels ('VOL. I — THE PROBLEM'), CLI-style CTAs ('$ audit --free ↵')",
+    "core_line": "\"Software doesn't stay finished. It either evolves or decays.\"",
+    "note_for_agents": "three font families (Space Grotesk, Inter, JetBrains Mono) are loaded on this site — Bolt should check the font-loading strategy (font-display, preload, subsetting) as a real performance lever, not add or remove a font family without checking this section first."
+  },
+
+  "conventions": {
+    "component_structure": "[FILL IN]",
+    "naming": "[FILL IN]",
+    "imports": "[FILL IN]",
+    "testing": "none currently",
+    "type_safety": "TypeScript strict mode is already enabled — Architecture Guardian and Sentinel should treat any `any` type or `// @ts-ignore` introduced by a PR as a red flag, not business-as-usual"
+  },
+
+  "decisions": [],
+
+  "never_touch": [
+    ".env*",
+    "the audit/contact form submission handler — no test coverage yet, and it's the site's only lead-gen mechanism",
+    "the health.json live widget / chart rendering component — recently patched for a CRITICAL injection vulnerability, treat with extra scrutiny",
+    "CSP/HSTS header configuration — do not loosen without explicit reason logged here"
+  ],
+
+  "known_issues": [
+    {
+      "area": "site-wide performance",
+      "issue": "Performance pillar at 0/100 as of 2026-07-24 — no performance work done yet across any page, including the JS-heavy homepage animations and the /audit form",
+      "added": "2026-07-24",
+      "status": "open — flagged by Scribe as next cycle's priority"
+    },
+    {
+      "area": "site-wide code quality / maintainability",
+      "issue": "Maintainability pillar only at 3/100 — one round of dedup (contact/audit forms) done, rest of the codebase not yet reviewed for duplication or dead code",
+      "added": "2026-07-24",
+      "status": "open"
+    }
+  ],
+
+  "previous_prs": [
+    {
+      "date": "2026-07-11",
+      "agent": "Sentinel",
+      "change": "Patched a high-priority (CRITICAL) code-injection vulnerability in the chart/health-widget rendering component",
+      "impact": "Security score +8 (0 → 8)",
+      "skill_scores": {
+        "simplicity": "[not recorded pre-PR-Critic-adoption]",
+        "evidence": "[not recorded]",
+        "business_value": "[not recorded]",
+        "overall": "[not recorded — this PR predates the Evidence Block / PR Confidence Score format]"
+      },
+      "status": "merged"
+    },
+    {
+      "date": "2026-07-17",
+      "agent": "Sentinel",
+      "change": "Deployed strict HTTP security headers — HSTS and a robust Content Security Policy",
+      "impact": "Security score +6 (8 → 14)",
+      "skill_scores": {
+        "simplicity": "[not recorded]",
+        "evidence": "[not recorded]",
+        "business_value": "[not recorded]",
+        "overall": "[not recorded]"
+      },
+      "status": "merged"
+    },
+    {
+      "date": "2026-07-24",
+      "agent": "Palette",
+      "change": "Consolidated the contact and audit forms into a single shared component; standardized accessibility (linked form labels, screen-reader-friendly validation feedback) across all forms site-wide",
+      "impact": "Experience Quality score +4 (0 → 4), Maintainability score +3 (0 → 3)",
+      "skill_scores": {
+        "simplicity": "[not recorded]",
+        "evidence": "[not recorded]",
+        "business_value": "[not recorded]",
+        "overall": "[not recorded]"
+      },
+      "status": "merged"
+    }
+  ],
+
+  "rejected_solutions": []
+}

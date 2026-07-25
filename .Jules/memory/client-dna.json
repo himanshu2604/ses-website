@@ -1,0 +1,85 @@
+{
+  "client": "ses-marketing-site",
+  "last_updated": "2026-07-24",
+
+  "company": {
+    "name": "SES — Software Evolution Service",
+    "stage": "pre-launch / solo founder — building in public, this site is both the storefront and the flagship case study",
+    "industry": "B2B software maintenance-as-a-service (dev tooling, sold to SaaS founders and agencies)",
+    "team_size": 1,
+    "engineering_team_size": 1,
+    "founded": "2026",
+    "primary_market": "SaaS founders and agencies managing client software",
+    "revenue_model": "subscription (MRR) — three tiers: Maintain $650/mo, Growth $1,500/mo, Compound (custom)"
+  },
+
+  "engineering_context": {
+    "risk_appetite": "low",
+    "preferred_style": "minimal",
+    "deployment_cadence": "weekly",
+    "deployment_days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+    "deployment_time_utc": "[FILL IN: pick a low-traffic hour for your visitors]",
+    "release_manager": "founder",
+    "on_call": false,
+    "incident_process": "founder notified directly — no team channel yet",
+    "note": "This is the actual weekly 5-agent loop SES sells to clients (Palette Mon, Bolt Tue, Pulse Wed, Sentinel Thu, Scribe Fri) — running it on this site is the proof-of-product, not just internal maintenance."
+  },
+
+  "business_priorities": {
+    "primary_kpi": "free_audit_requests",
+    "current_free_audit_requests_per_month": "[FILL IN: your real number, or 'unknown — set up tracking first']",
+    "target_free_audit_requests_per_month": "[FILL IN]",
+    "secondary_kpi": "pricing_page_to_audit_conversion",
+    "revenue_driver": "audit requests converting to Maintain/Growth/Compound subscriptions",
+    "biggest_complaint_in_support": "none yet — pre-launch, no paying clients reported issues",
+    "upcoming_launch": "SES Dashboard — per the playbook's phased roadmap, currently at Phase 1 (email/PDF reports); do not build the real dashboard before ~10 paying clients validate demand via a Notion portal first"
+  },
+
+  "technical_constraints": {
+    "compliance_required": [],
+    "data_residency": "not applicable — marketing site, form submissions only, no sensitive client data stored here",
+    "approved_cloud_regions": ["[FILL IN: wherever Vercel deploys this project]"],
+    "approved_third_party_services": [
+      "Vercel",
+      "[FILL IN: email service handling audit/contact form notifications — e.g. Resend/SendGrid]"
+    ],
+    "requires_pen_test_before_deploy": false
+  },
+
+  "stakeholders": {
+    "technical_contact": "founder",
+    "report_recipient": "founder",
+    "approval_required_from": "founder",
+    "preferred_communication": "[FILL IN]",
+    "preferred_report_format": "executive"
+  },
+
+  "history": {
+    "previous_incidents": [
+      {
+        "date": "2026-07-11",
+        "description": "CRITICAL: chart/health-widget rendering component had a code-injection vulnerability — patched same cycle",
+        "lesson": "Any component that renders dynamic Health Score / evidence data client-side needs sanitization review before Palette or Bolt touch it again"
+      }
+    ],
+    "client_since": "2026-07-05",
+    "original_health_score": 0,
+    "current_health_score": 5.7
+  },
+
+  "data_retention": {
+    "retention_after_offboarding_days": 90,
+    "deletion_on_request": true,
+    "deletion_requested": false,
+    "deletion_requested_date": null,
+    "what_is_deleted": [
+      "client-dna.json",
+      "fingerprint.json",
+      "repo-memory.json history",
+      "GitHub token/access"
+    ],
+    "what_is_retained_anonymised": [
+      "patterns contributed to Engineering Knowledge Base, stripped of client-identifying detail"
+    ]
+  }
+}
