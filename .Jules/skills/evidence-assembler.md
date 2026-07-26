@@ -4,6 +4,8 @@ EVIDENCE ASSEMBLER SKILL
 Collect, verify, and format all evidence for a proposed
 change into the SES standard Evidence Block.
 
+Every numeric claim must be labeled either MEASURED (with the tool/method used) or ESTIMATED (with the reasoning).
+
 Read these files (if they exist):
 - .jules/reports/lighthouse-latest.json
 - .jules/reports/trivy-latest.json
