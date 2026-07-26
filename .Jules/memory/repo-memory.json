@@ -63,10 +63,28 @@
 
   "known_issues": [
     {
-      "area": "site-wide performance",
-      "issue": "Performance pillar at 0/100 as of 2026-07-24 — no performance work done yet across any page, including the JS-heavy homepage animations and the /audit form",
-      "added": "2026-07-24",
-      "status": "open — flagged by Scribe as next cycle's priority"
+      "area": "cold start / infrastructure — INVESTIGATED, closed as low-priority",
+      "issue": "Investigated across three rounds of evidence (Vercel request logs, deployment static-asset breakdown, Observability Functions dashboard). Findings: (1) index-CbnyoU4-.js (the file that spiked to 6.68s in the original test) is a STATIC ASSET served via CDN, not through the /__server function — so function-level metrics can't explain it, and it did not reproduce on a repeat test (clean 571ms load). Most likely a one-off local network/edge-cache anomaly. (2) The /__server function DOES show real (non-demo) cold starts — 13.6% Cold / 81.8% Hot / 4.5% Prewarmed over 22 invocations in 12h — but sample size is tiny (near-certainly founder's own test traffic) and even cold invocations show fast Active CPU (P95 154ms). (3) The Time-to-First-Byte panel that would show real user-perceived cold-start latency is Vercel-Hobby-plan 'Demo Data', not real — would need a Pro upgrade to see actual numbers, not worth doing pre-launch.",
+      "added": "2026-07-26",
+      "status": "CLOSED — not worth further investigation at current (near-zero) traffic levels. Revisit only if real post-launch traffic shows a pattern of slow first-loads via analytics/user reports. Not a priority for the next Bolt cycle."
+    },
+    {
+      "area": "site-wide performance — REAL BASELINE CAPTURED",
+      "issue": "Real Lighthouse audit run 2026-07-26 (incognito, cache disabled): Performance 98/100, Accessibility 96/100, Best Practices 100/100, SEO 100/100. FCP 0.8s, LCP 0.8s, TBT 0ms, CLS 0. This supersedes the earlier 'Performance pillar at 0/100' entry — 0 always meant 'unmeasured,' not 'bad,' and the real number is excellent. Remaining Bolt work is now small/incremental: 47.6 KiB of unused JS in index-CbnyoU4-.js, and the PR #24 Formspree preconnect is flagged by Lighthouse itself as 'Unused preconnect' — worth downgrading to dns-prefetch or removing.",
+      "added": "2026-07-26",
+      "status": "baseline established — no longer a priority gap, minor optimizations only"
+    },
+    {
+      "area": "accessibility — REAL FINDING",
+      "issue": "Lighthouse (2026-07-26) found text-[#666] on #0c0c0c background fails WCAG contrast requirements — affects eyebrow/label text site-wide ('THE PROBLEM', 'THE SERVICE', 'industry avg', etc.). The design_system block does not currently define an official WCAG-compliant secondary/muted-text color, so this needs a founder decision (pick and formally add a compliant gray, e.g. around #999) before Palette applies a fix — see fingerprint.json agent_behavior_modifiers.palette.",
+      "added": "2026-07-26",
+      "status": "open — next Palette cycle, pending founder's color choice"
+    },
+    {
+      "area": "site health widget — data integrity question, not a technical bug",
+      "issue": "The homepage's '● live' health.json widget displays 73. This doesn't match health-score.json's real Performance:0 (as of last Scribe report), a separately-observed 'Performance 67' in DevTools, or the real Lighthouse 98 captured 2026-07-26. Four different numbers suggest the homepage widget shows demo/illustrative content rather than data actually wired to health-score.json, despite the 'live' label implying otherwise.",
+      "added": "2026-07-26",
+      "status": "open — needs a deliberate founder decision (wire it to real data, or relabel/caveat it), not an agent fix. Worth resolving given the business's own 'evidence over opinion' positioning."
     },
     {
       "area": "site-wide code quality / maintainability",
@@ -117,15 +135,13 @@
       "status": "merged"
     },
     {
-      "date": "2026-07-26",
+      "date": "2026-08-01",
       "agent": "Bolt",
-      "change": "Replaced window scroll listener in Nav with IntersectionObserver sentinel for header background state toggle",
-      "impact": "Eliminates main-thread JS execution during scroll for header state — magnitude not independently profiled, evidence was estimate-based",
-      "note": "Diff size (+94/-84) was much larger than the described change due to JSX Fragment wrapping causing full reindentation below the insertion point — functionally a ~15-line change, verified manually by founder (scroll behavior confirmed working)",
-      "skill_scores": {
-        "overall": "100/100 (self-reported)"
-      },
-      "status": "merged"
+      "change": "Added preconnect hints for Plausible Analytics and Formspree, plus a rel=preload for the Google Fonts stylesheet, in the root route head config",
+      "impact": "Claimed ~150-250ms font latency reduction and ~200-400ms form-connection reduction — not labeled as measured vs. estimated (see note)",
+      "note": "Two real, useful facts surfaced by this diff and now confirmed in client-dna.json/fingerprint.json: (1) Plausible Analytics is installed — Pulse can potentially be enabled now; (2) Formspree is the form backend. Two open concerns not yet resolved: (a) the preload likely duplicates work the browser's preload scanner already did, since the stylesheet link was already present in initial HTML before this PR — verify in DevTools Network waterfall whether it actually changes request timing; (b) preconnecting to Formspree on every single page load has a real (small) cost paid by all visitors to benefit only those who submit a form — Business Impact Validator's 100/100 approval didn't weigh this tradeoff explicitly. Evidence-honesty issue from PR #23 (estimated numbers presented without labeling them as estimates) recurred here unchanged — flagging this once didn't fix it; needs to be enforced in .Jules/skills/evidence-assembler.md itself before the next cycle.",
+      "skill_scores": { "overall": "100/100 (self-reported)" },
+      "status": "merged — pending founder verification of the two open concerns above"
     }
   ],
 

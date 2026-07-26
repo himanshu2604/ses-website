@@ -14,23 +14,26 @@
     "framework_score": "[FILL IN: 0-100 — gut estimate is fine]",
     "testing_score": 5,
     "security_score": 14,
-    "performance_score": 0,
+    "performance_score": 98,
+    "accessibility_score_lighthouse": 96,
+    "best_practices_score": 100,
+    "seo_score": 100,
     "documentation_score": "[FILL IN]",
     "observability_score": "[FILL IN — do you know if the audit/contact form silently fails? If not, this is low]",
-    "devops_score": "[FILL IN — Vercel auto-deploy from git counts as CI/CD; do you have preview deploys per PR?]",
+    "devops_score": "~50 (up from unknown) — confirmed: git-push auto-deploy to Vercel production (branch: main), Vercel Fluid Compute enabled (reduces cold-start risk by design), multi-region edge routing observed (Mumbai edge → Washington D.C. function region). Not yet confirmed: preview/staging deployments per PR, rollback process beyond git revert.",
     "overall_maturity": "[FILL IN: rough average — currently very early, expect a low number]",
-    "note": "performance_score and security_score above are pulled directly from the current health-score.json (Performance 0/100, Security 14/100) rather than estimated, since Scribe has already produced real numbers for those two pillars. Bundle analysis for this stack is done via Vite's build output (`vite build` stats), not `.next/analyze` — Bolt's prompt was written assuming Next.js in one line and should read 'check package.json for the exact build/analyze command' generically instead."
+    "note": "REAL Lighthouse audit run 2026-07-26 (incognito, cache disabled): Performance 98, Accessibility 96, Best Practices 100, SEO 100. FCP 0.8s, LCP 0.8s, TBT 0ms, CLS 0. This supersedes all earlier '0 = unmeasured' placeholders for performance_score. Two real findings from this audit: (1) contrast failure on #666 text against #0c0c0c background — see fingerprint agent_behavior_modifiers.palette and repo-memory known_issues; (2) 47.6 KiB of 108.9 KiB in index-CbnyoU4-.js is unused JS — see known_issues. Network dependency tree also confirms font-loading chain adds ~2,143ms to critical path (validates PR #24's premise), but Lighthouse separately flags the Formspree preconnect as 'Unused preconnect' — worth downgrading to dns-prefetch or removing. Homepage's 'live' health widget shows 73, unrelated to and inconsistent with this real 98 and with health-score.json's real Performance:0 — likely demo/illustrative content, not wired to real data; worth a deliberate founder decision given the business's evidence-over-opinion positioning."
   },
 
   "characteristics": {
     "has_tests": false,
     "test_coverage_percent": 0,
     "has_ci_cd": true,
-    "has_staging_environment": "[FILL IN: true if Vercel preview deployments are enabled per-PR]",
+    "has_staging_environment": "[FILL IN: not confirmed by Vercel logs seen so far — only production/main branch deployments observed; check if PR branches get preview URLs]",
     "has_feature_flags": false,
     "has_monitoring": "partial",
     "has_error_tracking": "[FILL IN: true/false — e.g. Sentry]",
-    "has_analytics": "[FILL IN: true/false — needed before Pulse can run any cycle]",
+    "has_analytics": "true — Plausible Analytics (confirmed via preconnect in Bolt PR #24, 2026-08-01)",
     "database_migrations_present": false,
     "multi_service": false,
     "mobile_clients": false,
@@ -38,8 +41,8 @@
   },
 
   "agent_behavior_modifiers": {
-    "bolt": "prioritise load speed on the homepage and /audit page above all else — that's the top-of-funnel conversion path. Check the font-loading strategy first: three font families are loaded (Space Grotesk, Inter, JetBrains Mono) — font-display, preload, and subsetting are real, cheap wins here. The live 'health.json' widget and terminal-style animated sections are JS-heavy and worth profiling next. Use Vite's build output for bundle analysis, not a Next.js-specific tool. performance_score is currently 0/100 with zero work done, so almost anything here has room to move the needle.",
-    "palette": "the audit request form and contact form (already consolidated into one shared component as of 2026-07-24) are the highest-priority surface — they're literally the lead-gen mechanism for the whole business. HARD CONSTRAINT: this site uses a fixed Terminal Dark (Editorial) design system — background #0c0c0c, text #f0f0f0, the ONLY accent color is #22c55e, border-radius capped at 3px, and typography is locked to Space Grotesk/Inter/JetBrains Mono. Never introduce a new color, a rounded card, or a font outside this set, even if it would look 'nicer' by generic design standards — check the design_system section in repo-memory.json before touching any visual element. The pricing page's clarity across the three tiers (Maintain/Growth/Compound) is second priority.",
+    "bolt": "REAL Lighthouse baseline captured 2026-07-26: Performance 98/100 (FCP 0.8s, LCP 0.8s, TBT 0ms, CLS 0) — this is already excellent, so remaining work is incremental, not urgent. Two real, measured targets for the next cycle: (1) 'Reduce unused JavaScript' — 47.6 KiB of 108.9 KiB in index-CbnyoU4-.js is unused on the homepage; investigate code-splitting/lazy-loading. (2) Lighthouse's Network dependency tree confirms the font-loading chain adds ~2,143ms to critical path (validates PR #24's premise) BUT also flags 'Unused preconnect' on the Formspree origin specifically — the preconnect from PR #24 is opening a connection most page loads never use; consider downgrading it to dns-prefetch (cheaper, no early TLS handshake) or removing it. The earlier suspected cold-start issue remains closed (see known_issues) — do not re-open without new evidence.",
+    "palette": "the audit request form and contact form (already consolidated into one shared component as of 2026-07-24) are the highest-priority surface — they're literally the lead-gen mechanism for the whole business. REAL FINDING (Lighthouse, 2026-07-26): text-[#666] on #0c0c0c background fails WCAG contrast — affects labels like 'THE PROBLEM', 'THE SERVICE', and other eyebrow/muted text across the site. The design_system block does not currently define an official compliant secondary-text color, so do not silently pick one — flag it for the founder to approve a specific replacement (e.g. a lighter gray around #999, which typically clears AA on near-black) and add it to design_system as the official token before applying it site-wide. HARD CONSTRAINT otherwise unchanged: never introduce a new color, a rounded card, or a font outside the approved set. The pricing page's clarity across the three tiers (Maintain/Growth/Compound) is second priority.",
     "sentinel": "this codebase already had one CRITICAL code-injection vulnerability in the chart/health-widget rendering component — treat any component that renders dynamic Health Score, evidence, or benchmark data client-side as higher scrutiny than average. HSTS/CSP headers are already deployed (2026-07-17) — verify future changes don't loosen them. TypeScript strict mode is on, which removes a class of bugs by default — flag any new `any` or `@ts-ignore` as a regression worth fixing, not tolerating. shadcn/ui components are vendored (copied into the repo), not npm dependencies — audit them like first-party code, not like a third-party package.",
     "fin": "static/serverless hosting on Vercel — cloud cost surface is small. Don't force a monthly Fin cycle if there's nothing meaningful to find; a 'no savings opportunities' report is the honest and expected output here for now.",
     "general": "this site is the founder's own proof-of-product — every merged PR here is potential sales evidence for the /evidence page, so Evidence Blocks should be held to the same rigor SES promises its own future clients. Zero test coverage currently, so keep every PR small. Package manager is Bun — every verify/test/lint/build command any agent runs should use `bun`, not npm/pnpm/yarn."
