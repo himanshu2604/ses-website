@@ -4,7 +4,7 @@
   "last_updated": "2026-07-25",
 
   "classification": {
-    "type": "B2B SaaS marketing / lead-gen site (also the product's own dogfooding case study)",
+    "type": "B2B SaaS marketing / lead-gen site (also the product's own dogfooding case study) — TanStack Start v1 + React 19 + TypeScript strict + Vite 7 + Tailwind v4 + shadcn/ui, package-managed with Bun",
     "maturity": "early",
     "complexity": "low-medium",
     "risk_profile": "low — no auth, no payments, no user data beyond form submissions; but reputational risk is high since /evidence literally showcases before/after numbers to prospects"
@@ -19,7 +19,7 @@
     "observability_score": "[FILL IN — do you know if the audit/contact form silently fails? If not, this is low]",
     "devops_score": "[FILL IN — Vercel auto-deploy from git counts as CI/CD; do you have preview deploys per PR?]",
     "overall_maturity": "[FILL IN: rough average — currently very early, expect a low number]",
-    "note": "performance_score and security_score above are pulled directly from the current health-score.json (Performance 0/100, Security 14/100) rather than estimated, since Scribe has already produced real numbers for those two pillars"
+    "note": "performance_score and security_score above are pulled directly from the current health-score.json (Performance 0/100, Security 14/100) rather than estimated, since Scribe has already produced real numbers for those two pillars. Bundle analysis for this stack is done via Vite's build output (`vite build` stats), not `.next/analyze` — Bolt's prompt was written assuming Next.js in one line and should read 'check package.json for the exact build/analyze command' generically instead."
   },
 
   "characteristics": {
@@ -38,10 +38,10 @@
   },
 
   "agent_behavior_modifiers": {
-    "bolt": "prioritise load speed on the homepage and /audit page above all else — that's the top-of-funnel conversion path. The live 'health.json' widget and terminal-style animated sections are JS-heavy and worth profiling first; performance_score is currently 0/100 with zero work done, so almost anything here has room to move the needle.",
-    "palette": "the audit request form and contact form (already consolidated into one shared component as of 2026-07-24) are the highest-priority surface — they're literally the lead-gen mechanism for the whole business. The pricing page's clarity across the three tiers (Maintain/Growth/Compound) is second priority.",
-    "sentinel": "this codebase already had one CRITICAL code-injection vulnerability in the chart/health-widget rendering component — treat any component that renders dynamic Health Score, evidence, or benchmark data client-side as higher scrutiny than average. HSTS/CSP headers are already deployed (2026-07-17) — verify future changes don't loosen them.",
+    "bolt": "prioritise load speed on the homepage and /audit page above all else — that's the top-of-funnel conversion path. Check the font-loading strategy first: three font families are loaded (Space Grotesk, Inter, JetBrains Mono) — font-display, preload, and subsetting are real, cheap wins here. The live 'health.json' widget and terminal-style animated sections are JS-heavy and worth profiling next. Use Vite's build output for bundle analysis, not a Next.js-specific tool. performance_score is currently 0/100 with zero work done, so almost anything here has room to move the needle.",
+    "palette": "the audit request form and contact form (already consolidated into one shared component as of 2026-07-24) are the highest-priority surface — they're literally the lead-gen mechanism for the whole business. HARD CONSTRAINT: this site uses a fixed Terminal Dark (Editorial) design system — background #0c0c0c, text #f0f0f0, the ONLY accent color is #22c55e, border-radius capped at 3px, and typography is locked to Space Grotesk/Inter/JetBrains Mono. Never introduce a new color, a rounded card, or a font outside this set, even if it would look 'nicer' by generic design standards — check the design_system section in repo-memory.json before touching any visual element. The pricing page's clarity across the three tiers (Maintain/Growth/Compound) is second priority.",
+    "sentinel": "this codebase already had one CRITICAL code-injection vulnerability in the chart/health-widget rendering component — treat any component that renders dynamic Health Score, evidence, or benchmark data client-side as higher scrutiny than average. HSTS/CSP headers are already deployed (2026-07-17) — verify future changes don't loosen them. TypeScript strict mode is on, which removes a class of bugs by default — flag any new `any` or `@ts-ignore` as a regression worth fixing, not tolerating. shadcn/ui components are vendored (copied into the repo), not npm dependencies — audit them like first-party code, not like a third-party package.",
     "fin": "static/serverless hosting on Vercel — cloud cost surface is small. Don't force a monthly Fin cycle if there's nothing meaningful to find; a 'no savings opportunities' report is the honest and expected output here for now.",
-    "general": "this site is the founder's own proof-of-product — every merged PR here is potential sales evidence for the /evidence page, so Evidence Blocks should be held to the same rigor SES promises its own future clients. Zero test coverage currently, so keep every PR small."
+    "general": "this site is the founder's own proof-of-product — every merged PR here is potential sales evidence for the /evidence page, so Evidence Blocks should be held to the same rigor SES promises its own future clients. Zero test coverage currently, so keep every PR small. Package manager is Bun — every verify/test/lint/build command any agent runs should use `bun`, not npm/pnpm/yarn."
   }
 }

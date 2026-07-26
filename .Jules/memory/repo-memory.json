@@ -57,7 +57,8 @@
     ".env*",
     "the audit/contact form submission handler — no test coverage yet, and it's the site's only lead-gen mechanism",
     "the health.json live widget / chart rendering component — recently patched for a CRITICAL injection vulnerability, treat with extra scrutiny",
-    "CSP/HSTS header configuration — do not loosen without explicit reason logged here"
+    "CSP/HSTS header configuration — do not loosen without explicit reason logged here",
+    "the Tailwind v4 @theme token file / design-system CSS variables — colors, fonts, and border-radius are fixed to the Terminal Dark (Editorial) system; changes here require the founder's explicit sign-off, not an agent's judgment call"
   ],
 
   "known_issues": [
@@ -112,6 +113,17 @@
         "evidence": "[not recorded]",
         "business_value": "[not recorded]",
         "overall": "[not recorded]"
+      },
+      "status": "merged"
+    },
+    {
+      "date": "2026-07-26",
+      "agent": "Bolt",
+      "change": "Replaced window scroll listener in Nav with IntersectionObserver sentinel for header background state toggle",
+      "impact": "Eliminates main-thread JS execution during scroll for header state — magnitude not independently profiled, evidence was estimate-based",
+      "note": "Diff size (+94/-84) was much larger than the described change due to JSX Fragment wrapping causing full reindentation below the insertion point — functionally a ~15-line change, verified manually by founder (scroll behavior confirmed working)",
+      "skill_scores": {
+        "overall": "100/100 (self-reported)"
       },
       "status": "merged"
     }
