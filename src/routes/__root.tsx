@@ -87,7 +87,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "preconnect", href: "https://plausible.io" },
-      { rel: "preconnect", href: "https://formspree.io" },
+      // ⚡ Bolt 2026-08-12: Downgrade Formspree preconnect to dns-prefetch to resolve Lighthouse 'Unused preconnect' warning and avoid unnecessary early TLS handshakes — expected impact: Eliminates 'Unused preconnect' warning on page loads, saving connection overhead for non-submitting visitors.
+      { rel: "dns-prefetch", href: "https://formspree.io" },
       {
         rel: "preload",
         as: "style",
