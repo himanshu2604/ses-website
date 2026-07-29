@@ -27,7 +27,7 @@ export const Route = createFileRoute("/about")({
 function Block({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="border-l-2 border-[#1f1f1f] pl-6 md:pl-8 space-y-4">
-      <div className="mono text-[11px] uppercase tracking-[0.12em] text-[#666]">{label}</div>
+      <div className="mono text-[11px] uppercase tracking-[0.12em] text-[#999]">{label}</div>
       <div className="space-y-6">{children}</div>
     </div>
   );
@@ -48,7 +48,7 @@ function AboutPage() {
         <section className="py-16 md:py-24">
           <div className="max-w-[900px] mx-auto px-6 md:px-10 space-y-14">
             <Block label="// THE OBSERVATION">
-              <p className="text-[#666] text-[16px] md:text-[17px] leading-[1.7]">
+              <p className="text-[#999] text-[16px] md:text-[17px] leading-[1.7]">
                 Most software teams ship a product, celebrate the launch, and move on to the next
                 feature. Within months, the codebase that felt clean at launch is accumulating
                 dependency debt, unresolved CVEs, and performance regressions nobody has time to
@@ -58,7 +58,7 @@ function AboutPage() {
             </Block>
 
             <Block label="// THE RESPONSE">
-              <p className="text-[#666] text-[16px] md:text-[17px] leading-[1.7]">
+              <p className="text-[#999] text-[16px] md:text-[17px] leading-[1.7]">
                 SES exists to separate those two concerns. We run the improvement loop — scanning,
                 prioritizing, engineering, verifying — on a fixed weekly cadence so your team never
                 has to choose between building new things and keeping existing things healthy. Every
@@ -70,7 +70,7 @@ function AboutPage() {
               <blockquote className="mono text-[20px] md:text-[26px] leading-[1.4] text-[#f0f0f0]">
                 "Software doesn't stay finished. It either evolves or decays."
               </blockquote>
-              <p className="text-[#666] text-[16px] md:text-[17px] leading-[1.7]">
+              <p className="text-[#999] text-[16px] md:text-[17px] leading-[1.7]">
                 That line drives every decision we make about what to fix, how to prioritize it, and
                 how to prove it worked.
               </p>
