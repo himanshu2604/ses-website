@@ -28,11 +28,7 @@
       "background": "#0c0c0c",
       "primary_text": "#f0f0f0",
       "accent": "#22c55e \u2014 terminal green, this is the ONLY accent color, do not introduce a second accent",
-      "borders": [
-        "#1e1e1e",
-        "#1a1a1a",
-        "#1f1f1f"
-      ],
+      "borders": ["#1e1e1e", "#1a1a1a", "#1f1f1f"],
       "secondary_text": "#999999 \u2014 WCAG AA-compliant gray, replacing low-contrast #666666 for eyebrows and labels"
     },
     "border_radius": "max 3px \u2014 sharp, editorial, never rounded pills or cards",
