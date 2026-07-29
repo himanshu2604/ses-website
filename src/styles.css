@@ -1,3 +1,4 @@
+/* 🎨 Palette 2026-08-04: Resolve site-wide text contrast accessibility failures by upgrading secondary/muted-text to a WCAG AA-compliant gray (#999) — Elevates accessibility, bringing contrast ratio from 3.32:1 to 6.58:1. */
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -10,7 +11,7 @@
   --color-border-soft: #1a1a1a;
   --color-rule: #1f1f1f;
   --color-headline: #f0f0f0;
-  --color-body: #666666;
+  --color-body: #999999;
   --color-muted: #333333;
   --color-muted-2: #444444;
   --color-accent: #22c55e;
@@ -145,7 +146,7 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #666666;
+  color: #999999;
 }
 
 @utility headline {

@@ -87,7 +87,7 @@ function AuditPage() {
             />
           </div>
           <div className="max-w-[1280px] mx-auto px-6 md:px-10 mt-14">
-            <div className="italic text-[#666] text-[14px] mono border-l border-[#22c55e] pl-4 max-w-[720px]">
+            <div className="italic text-[#999] text-[14px] mono border-l border-[#22c55e] pl-4 max-w-[720px]">
               "Software doesn't stay finished. It either evolves or decays."
             </div>
           </div>

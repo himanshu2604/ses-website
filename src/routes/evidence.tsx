@@ -115,7 +115,7 @@ function HealthChart() {
             textAnchor="end"
             fontFamily="'JetBrains Mono', monospace"
             fontSize={10}
-            fill="#666"
+            fill="#999"
           >
             industry avg: 61
           </text>
@@ -129,7 +129,7 @@ function HealthChart() {
               textAnchor="end"
               fontFamily="'JetBrains Mono', monospace"
               fontSize={10}
-              fill="#666"
+              fill="#999"
             >
               {v}
             </text>
@@ -170,7 +170,7 @@ function HealthChart() {
             textAnchor="start"
             fontFamily="'JetBrains Mono', monospace"
             fontSize={10}
-            fill="#666"
+            fill="#999"
           >
             week 0
           </text>
@@ -180,7 +180,7 @@ function HealthChart() {
             textAnchor="end"
             fontFamily="'JetBrains Mono', monospace"
             fontSize={10}
-            fill="#666"
+            fill="#999"
           >
             week 12
           </text>
@@ -258,20 +258,20 @@ function SummaryCase({
         </span>
       </div>
       <div>
-        <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#666] font-medium">
+        <div className="mono text-[10px] tracking-[0.12em] uppercase text-[#999] font-medium">
           timeline: {timeline}
         </div>
         <h3 className="headline text-[22px] mt-3">{title}</h3>
       </div>
       <div className="flex items-baseline gap-4">
-        <span className="mono text-[#666] text-[16px] tabular-nums">{from}</span>
+        <span className="mono text-[#999] text-[16px] tabular-nums">{from}</span>
         <span className="mono text-[#444]">→</span>
         <span className="mono text-[#f0f0f0] text-[16px] tabular-nums">{to}</span>
         <span className="mono font-semibold tabular-nums text-[#22c55e] text-[36px] leading-none ml-auto">
           {delta}
         </span>
       </div>
-      <ul className="space-y-2.5 text-[13px] text-[#666] leading-[1.7]">
+      <ul className="space-y-2.5 text-[13px] text-[#999] leading-[1.7]">
         {wins.map((w, i) => (
           <li key={i}>{w}</li>
         ))}
@@ -353,7 +353,7 @@ function EvidencePage() {
 
             {/* What changed */}
             <div className="space-y-6">
-              <div className="mono text-[11px] tracking-[0.12em] text-[#666] uppercase font-medium">
+              <div className="mono text-[11px] tracking-[0.12em] text-[#999] uppercase font-medium">
                 {"// what changed"}
               </div>
               <div className="grid md:grid-cols-3 gap-6">
@@ -380,7 +380,7 @@ function EvidencePage() {
 
             {/* Chart */}
             <div className="space-y-5">
-              <div className="mono text-[11px] tracking-[0.12em] text-[#666] uppercase font-medium">
+              <div className="mono text-[11px] tracking-[0.12em] text-[#999] uppercase font-medium">
                 {"// 12-week health score progression"}
               </div>
               <HealthChart />

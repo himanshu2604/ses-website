@@ -1,3 +1,4 @@
+// 🎨 Palette 2026-08-04: Resolve site-wide text contrast accessibility failures by upgrading secondary/muted-text to a WCAG AA-compliant gray (#999) — Elevates accessibility, bringing contrast ratio from 3.32:1 to 6.58:1.
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useId } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -92,7 +93,7 @@ export function VolLabel({ vol, label }: { vol: string; label: string }) {
   return (
     <div className="mono text-[11px] tracking-[0.12em] text-[#444] uppercase font-medium">
       <span className="text-[#22c55e]">{vol}</span> <span className="text-[#444]">—</span>{" "}
-      <span className="text-[#666]">{label}</span>
+      <span className="text-[#999]">{label}</span>
     </div>
   );
 }
@@ -163,14 +164,14 @@ export function HealthCard({
     <div className="bg-[#111] border border-[#1e1e1e] rounded-[3px] p-6 md:p-8">
       <div className="flex items-center justify-between mono text-[11px]">
         <span className="text-[#444]">{file}</span>
-        <span className="flex items-center gap-2" style={{ color: archived ? "#666" : "#22c55e" }}>
+        <span className="flex items-center gap-2" style={{ color: archived ? "#999" : "#22c55e" }}>
           <span
             className={archived ? "" : "pulse-dot"}
             style={{
               width: 6,
               height: 6,
               borderRadius: 999,
-              background: archived ? "#666" : "#22c55e",
+              background: archived ? "#999" : "#22c55e",
               display: "inline-block",
             }}
           />
@@ -185,7 +186,7 @@ export function HealthCard({
           <CountUp to={score} />
         </span>
         {delta && (
-          <span className="mono text-[11px] text-[#666] font-medium tabular-nums">{delta}</span>
+          <span className="mono text-[11px] text-[#999] font-medium tabular-nums">{delta}</span>
         )}
       </div>
       <div className="mt-8 space-y-5">
@@ -404,7 +405,7 @@ export function Footer() {
               SES — Software Evolution Service
             </span>
           </div>
-          <p className="text-[#666] text-[13px] leading-[1.7] max-w-[260px]">
+          <p className="text-[#999] text-[13px] leading-[1.7] max-w-[260px]">
             Measurable software improvement, shipped every week. Backed by data, reports, and
             AI-assisted engineering.
           </p>
@@ -722,7 +723,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
             />
             <label
               htmlFor={gdprConsentId}
-              className="text-[#666] text-[13px] leading-relaxed font-sans cursor-pointer"
+              className="text-[#999] text-[13px] leading-relaxed font-sans cursor-pointer"
             >
               I agree to receive follow-up emails about my audit results and SES service updates.
               You can unsubscribe at any time.
@@ -751,7 +752,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
           </div>
           {showDedicatedLink && (
             <div className="mono text-[11px] text-center pt-1">
-              <Link to="/audit" className="text-[#666] hover:text-[#22c55e] transition-colors">
+              <Link to="/audit" className="text-[#999] hover:text-[#22c55e] transition-colors">
                 {"// prefer a dedicated page? audit.ses.service →"}
               </Link>
             </div>

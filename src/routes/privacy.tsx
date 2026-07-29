@@ -58,7 +58,7 @@ function PrivacyPage() {
           <div className="max-w-[820px] mx-auto px-6 md:px-10 space-y-5">
             <Eyebrow>{"// LEGAL"}</Eyebrow>
             <h1 className="headline text-[36px] md:text-[56px]">Privacy Policy</h1>
-            <p className="mono text-[13px] text-[#666]">Last updated: July 2026</p>
+            <p className="mono text-[13px] text-[#999]">Last updated: July 2026</p>
           </div>
         </section>
         <section className="py-16 md:py-24">
@@ -68,7 +68,7 @@ function PrivacyPage() {
                 <h2 className="font-sans font-semibold text-[20px] md:text-[22px] text-[#f0f0f0]">
                   {s.title}
                 </h2>
-                <p className="text-[#666] text-[15px] md:text-[16px] leading-[1.7]">{s.body}</p>
+                <p className="text-[#999] text-[15px] md:text-[16px] leading-[1.7]">{s.body}</p>
               </div>
             ))}
           </div>

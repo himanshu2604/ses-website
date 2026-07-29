@@ -2,117 +2,115 @@
   "client": "ses-marketing-site",
   "last_updated": "2026-07-24",
   "version": "1.0",
-
   "architecture": {
-    "framework": "TanStack Start v1 — full-stack React framework with file-based routing",
+    "framework": "TanStack Start v1 \u2014 full-stack React framework with file-based routing",
     "runtime_libraries": "React 19",
     "language": "TypeScript (strict mode)",
     "build_tool": "Vite 7",
-    "package_manager": "Bun — use bun, not npm/pnpm/yarn, for install/test/lint/build commands",
-    "database": "none — static/marketing site, no DB currently",
-    "state_management": "none needed for most pages — the live 'health.json' widget likely uses local component state to render the animated/ticking Health Score display",
-    "styling": "Tailwind CSS v4 — via native CSS @theme tokens, not a tailwind.config.js-based token system",
-    "component_system": "shadcn/ui — components are vendored into the repo (copy-in, not npm-installed), so Dependency Police should not treat shadcn additions the same as adding a new package dependency",
+    "package_manager": "Bun \u2014 use bun, not npm/pnpm/yarn, for install/test/lint/build commands",
+    "database": "none \u2014 static/marketing site, no DB currently",
+    "state_management": "none needed for most pages \u2014 the live 'health.json' widget likely uses local component state to render the animated/ticking Health Score display",
+    "styling": "Tailwind CSS v4 \u2014 via native CSS @theme tokens, not a tailwind.config.js-based token system",
+    "component_system": "shadcn/ui \u2014 components are vendored into the repo (copy-in, not npm-installed), so Dependency Police should not treat shadcn additions the same as adding a new package dependency",
     "deployment": "Vercel",
-    "design_system": "Terminal Dark (Editorial) — see design-system section below. This is a hard constraint, not a suggestion: Palette must never introduce a color, font, or border-radius outside these tokens.",
+    "design_system": "Terminal Dark (Editorial) \u2014 see design-system section below. This is a hard constraint, not a suggestion: Palette must never introduce a color, font, or border-radius outside these tokens.",
     "patterns": [
-      "Shared form component for the /audit and contact forms (consolidated 2026-07-24 — do not re-split these back into separate components)",
-      "A 'health.json' live-styled widget renders Health Score data with a terminal/CLI aesthetic ($ ses scan --deep, etc.) — this component previously had a CRITICAL code-injection vulnerability, patched 2026-07-11",
-      "Strict security headers (HSTS + CSP) deployed 2026-07-17 — any new third-party script/embed must be added to the CSP allowlist or it will silently break",
-      "File-based routing (TanStack Start convention) — pages observed: / (home), /pricing, /evidence, /audit, /about, /privacy, /terms, /security, /status"
+      "Shared form component for the /audit and contact forms (consolidated 2026-07-24 \u2014 do not re-split these back into separate components)",
+      "A 'health.json' live-styled widget renders Health Score data with a terminal/CLI aesthetic ($ ses scan --deep, etc.) \u2014 this component previously had a CRITICAL code-injection vulnerability, patched 2026-07-11",
+      "Strict security headers (HSTS + CSP) deployed 2026-07-17 \u2014 any new third-party script/embed must be added to the CSP allowlist or it will silently break",
+      "File-based routing (TanStack Start convention) \u2014 pages observed: / (home), /pricing, /evidence, /audit, /about, /privacy, /terms, /security, /status"
     ]
   },
-
   "design_system": {
     "name": "Terminal Dark (Editorial)",
-    "vibe": "high-contrast, minimal, engineering-focused — like a dark IDE or terminal session",
+    "vibe": "high-contrast, minimal, engineering-focused \u2014 like a dark IDE or terminal session",
     "colors": {
       "background": "#0c0c0c",
       "primary_text": "#f0f0f0",
-      "accent": "#22c55e — terminal green, this is the ONLY accent color, do not introduce a second accent",
-      "borders": ["#1e1e1e", "#1a1a1a", "#1f1f1f"]
+      "accent": "#22c55e \u2014 terminal green, this is the ONLY accent color, do not introduce a second accent",
+      "borders": [
+        "#1e1e1e",
+        "#1a1a1a",
+        "#1f1f1f"
+      ],
+      "secondary_text": "#999999 \u2014 WCAG AA-compliant gray, replacing low-contrast #666666 for eyebrows and labels"
     },
-    "border_radius": "max 3px — sharp, editorial, never rounded pills or cards",
+    "border_radius": "max 3px \u2014 sharp, editorial, never rounded pills or cards",
     "typography": {
       "headlines": "Space Grotesk",
       "body": "Inter",
       "numbers_metrics_code": "JetBrains Mono"
     },
-    "voice": "monospace code comments, volume labels ('VOL. I — THE PROBLEM'), CLI-style CTAs ('$ audit --free ↵')",
+    "voice": "monospace code comments, volume labels ('VOL. I \u2014 THE PROBLEM'), CLI-style CTAs ('$ audit --free \u21b5')",
     "core_line": "\"Software doesn't stay finished. It either evolves or decays.\"",
-    "note_for_agents": "three font families (Space Grotesk, Inter, JetBrains Mono) are loaded on this site — Bolt should check the font-loading strategy (font-display, preload, subsetting) as a real performance lever, not add or remove a font family without checking this section first."
+    "note_for_agents": "three font families (Space Grotesk, Inter, JetBrains Mono) are loaded on this site \u2014 Bolt should check the font-loading strategy (font-display, preload, subsetting) as a real performance lever, not add or remove a font family without checking this section first."
   },
-
   "conventions": {
     "component_structure": "[FILL IN]",
     "naming": "[FILL IN]",
     "imports": "[FILL IN]",
     "testing": "none currently",
-    "type_safety": "TypeScript strict mode is already enabled — Architecture Guardian and Sentinel should treat any `any` type or `// @ts-ignore` introduced by a PR as a red flag, not business-as-usual"
+    "type_safety": "TypeScript strict mode is already enabled \u2014 Architecture Guardian and Sentinel should treat any `any` type or `// @ts-ignore` introduced by a PR as a red flag, not business-as-usual"
   },
-
   "decisions": [],
-
   "never_touch": [
     ".env*",
-    "the audit/contact form submission handler — no test coverage yet, and it's the site's only lead-gen mechanism",
-    "the health.json live widget / chart rendering component — recently patched for a CRITICAL injection vulnerability, treat with extra scrutiny",
-    "CSP/HSTS header configuration — do not loosen without explicit reason logged here",
-    "the Tailwind v4 @theme token file / design-system CSS variables — colors, fonts, and border-radius are fixed to the Terminal Dark (Editorial) system; changes here require the founder's explicit sign-off, not an agent's judgment call"
+    "the audit/contact form submission handler \u2014 no test coverage yet, and it's the site's only lead-gen mechanism",
+    "the health.json live widget / chart rendering component \u2014 recently patched for a CRITICAL injection vulnerability, treat with extra scrutiny",
+    "CSP/HSTS header configuration \u2014 do not loosen without explicit reason logged here",
+    "the Tailwind v4 @theme token file / design-system CSS variables \u2014 colors, fonts, and border-radius are fixed to the Terminal Dark (Editorial) system; changes here require the founder's explicit sign-off, not an agent's judgment call"
   ],
-
   "known_issues": [
     {
-      "area": "cold start / infrastructure — INVESTIGATED, closed as low-priority",
-      "issue": "Investigated across three rounds of evidence (Vercel request logs, deployment static-asset breakdown, Observability Functions dashboard). Findings: (1) index-CbnyoU4-.js (the file that spiked to 6.68s in the original test) is a STATIC ASSET served via CDN, not through the /__server function — so function-level metrics can't explain it, and it did not reproduce on a repeat test (clean 571ms load). Most likely a one-off local network/edge-cache anomaly. (2) The /__server function DOES show real (non-demo) cold starts — 13.6% Cold / 81.8% Hot / 4.5% Prewarmed over 22 invocations in 12h — but sample size is tiny (near-certainly founder's own test traffic) and even cold invocations show fast Active CPU (P95 154ms). (3) The Time-to-First-Byte panel that would show real user-perceived cold-start latency is Vercel-Hobby-plan 'Demo Data', not real — would need a Pro upgrade to see actual numbers, not worth doing pre-launch.",
+      "area": "cold start / infrastructure \u2014 INVESTIGATED, closed as low-priority",
+      "issue": "Investigated across three rounds of evidence (Vercel request logs, deployment static-asset breakdown, Observability Functions dashboard). Findings: (1) index-CbnyoU4-.js (the file that spiked to 6.68s in the original test) is a STATIC ASSET served via CDN, not through the /__server function \u2014 so function-level metrics can't explain it, and it did not reproduce on a repeat test (clean 571ms load). Most likely a one-off local network/edge-cache anomaly. (2) The /__server function DOES show real (non-demo) cold starts \u2014 13.6% Cold / 81.8% Hot / 4.5% Prewarmed over 22 invocations in 12h \u2014 but sample size is tiny (near-certainly founder's own test traffic) and even cold invocations show fast Active CPU (P95 154ms). (3) The Time-to-First-Byte panel that would show real user-perceived cold-start latency is Vercel-Hobby-plan 'Demo Data', not real \u2014 would need a Pro upgrade to see actual numbers, not worth doing pre-launch.",
       "added": "2026-07-26",
-      "status": "CLOSED — not worth further investigation at current (near-zero) traffic levels. Revisit only if real post-launch traffic shows a pattern of slow first-loads via analytics/user reports. Not a priority for the next Bolt cycle."
+      "status": "CLOSED \u2014 not worth further investigation at current (near-zero) traffic levels. Revisit only if real post-launch traffic shows a pattern of slow first-loads via analytics/user reports. Not a priority for the next Bolt cycle."
     },
     {
-      "area": "site-wide performance — REAL BASELINE CAPTURED",
-      "issue": "Real Lighthouse audit run 2026-07-26 (incognito, cache disabled): Performance 98/100, Accessibility 96/100, Best Practices 100/100, SEO 100/100. FCP 0.8s, LCP 0.8s, TBT 0ms, CLS 0. This supersedes the earlier 'Performance pillar at 0/100' entry — 0 always meant 'unmeasured,' not 'bad,' and the real number is excellent. Remaining Bolt work is now small/incremental: 47.6 KiB of unused JS in index-CbnyoU4-.js, and the PR #24 Formspree preconnect is flagged by Lighthouse itself as 'Unused preconnect' — worth downgrading to dns-prefetch or removing.",
+      "area": "site-wide performance \u2014 REAL BASELINE CAPTURED",
+      "issue": "Real Lighthouse audit run 2026-07-26 (incognito, cache disabled): Performance 98/100, Accessibility 96/100, Best Practices 100/100, SEO 100/100. FCP 0.8s, LCP 0.8s, TBT 0ms, CLS 0. This supersedes the earlier 'Performance pillar at 0/100' entry \u2014 0 always meant 'unmeasured,' not 'bad,' and the real number is excellent. Remaining Bolt work is now small/incremental: 47.6 KiB of unused JS in index-CbnyoU4-.js, and the PR #24 Formspree preconnect is flagged by Lighthouse itself as 'Unused preconnect' \u2014 worth downgrading to dns-prefetch or removing.",
       "added": "2026-07-26",
-      "status": "baseline established — no longer a priority gap, minor optimizations only"
+      "status": "baseline established \u2014 no longer a priority gap, minor optimizations only"
     },
     {
-      "area": "accessibility — REAL FINDING",
-      "issue": "Lighthouse (2026-07-26) found text-[#666] on #0c0c0c background fails WCAG contrast requirements — affects eyebrow/label text site-wide ('THE PROBLEM', 'THE SERVICE', 'industry avg', etc.). The design_system block does not currently define an official WCAG-compliant secondary/muted-text color, so this needs a founder decision (pick and formally add a compliant gray, e.g. around #999) before Palette applies a fix — see fingerprint.json agent_behavior_modifiers.palette.",
+      "area": "accessibility \u2014 REAL FINDING",
+      "issue": "Lighthouse (2026-07-26) found text-[#666] on #0c0c0c background fails WCAG contrast requirements \u2014 affects eyebrow/label text site-wide ('THE PROBLEM', 'THE SERVICE', 'industry avg', etc.). The design_system block does not currently define an official WCAG-compliant secondary/muted-text color, so this needs a founder decision (pick and formally add a compliant gray, e.g. around #999) before Palette applies a fix \u2014 see fingerprint.json agent_behavior_modifiers.palette.",
       "added": "2026-07-26",
-      "status": "open — next Palette cycle, pending founder's color choice"
+      "status": "open \u2014 next Palette cycle, pending founder's color choice"
     },
     {
-      "area": "site health widget — data integrity question, not a technical bug",
-      "issue": "The homepage's '● live' health.json widget displays 73. This doesn't match health-score.json's real Performance:0 (as of last Scribe report), a separately-observed 'Performance 67' in DevTools, or the real Lighthouse 98 captured 2026-07-26. Four different numbers suggest the homepage widget shows demo/illustrative content rather than data actually wired to health-score.json, despite the 'live' label implying otherwise.",
+      "area": "site health widget \u2014 data integrity question, not a technical bug",
+      "issue": "The homepage's '\u25cf live' health.json widget displays 73. This doesn't match health-score.json's real Performance:0 (as of last Scribe report), a separately-observed 'Performance 67' in DevTools, or the real Lighthouse 98 captured 2026-07-26. Four different numbers suggest the homepage widget shows demo/illustrative content rather than data actually wired to health-score.json, despite the 'live' label implying otherwise.",
       "added": "2026-07-26",
-      "status": "open — needs a deliberate founder decision (wire it to real data, or relabel/caveat it), not an agent fix. Worth resolving given the business's own 'evidence over opinion' positioning."
+      "status": "open \u2014 needs a deliberate founder decision (wire it to real data, or relabel/caveat it), not an agent fix. Worth resolving given the business's own 'evidence over opinion' positioning."
     },
     {
       "area": "site-wide code quality / maintainability",
-      "issue": "Maintainability pillar only at 3/100 — one round of dedup (contact/audit forms) done, rest of the codebase not yet reviewed for duplication or dead code",
+      "issue": "Maintainability pillar only at 3/100 \u2014 one round of dedup (contact/audit forms) done, rest of the codebase not yet reviewed for duplication or dead code",
       "added": "2026-07-24",
       "status": "open"
     }
   ],
-
   "previous_prs": [
     {
       "date": "2026-07-11",
       "agent": "Sentinel",
       "change": "Patched a high-priority (CRITICAL) code-injection vulnerability in the chart/health-widget rendering component",
-      "impact": "Security score +8 (0 → 8)",
+      "impact": "Security score +8 (0 \u2192 8)",
       "skill_scores": {
         "simplicity": "[not recorded pre-PR-Critic-adoption]",
         "evidence": "[not recorded]",
         "business_value": "[not recorded]",
-        "overall": "[not recorded — this PR predates the Evidence Block / PR Confidence Score format]"
+        "overall": "[not recorded \u2014 this PR predates the Evidence Block / PR Confidence Score format]"
       },
       "status": "merged"
     },
     {
       "date": "2026-07-17",
       "agent": "Sentinel",
-      "change": "Deployed strict HTTP security headers — HSTS and a robust Content Security Policy",
-      "impact": "Security score +6 (8 → 14)",
+      "change": "Deployed strict HTTP security headers \u2014 HSTS and a robust Content Security Policy",
+      "impact": "Security score +6 (8 \u2192 14)",
       "skill_scores": {
         "simplicity": "[not recorded]",
         "evidence": "[not recorded]",
@@ -125,7 +123,7 @@
       "date": "2026-07-24",
       "agent": "Palette",
       "change": "Consolidated the contact and audit forms into a single shared component; standardized accessibility (linked form labels, screen-reader-friendly validation feedback) across all forms site-wide",
-      "impact": "Experience Quality score +4 (0 → 4), Maintainability score +3 (0 → 3)",
+      "impact": "Experience Quality score +4 (0 \u2192 4), Maintainability score +3 (0 \u2192 3)",
       "skill_scores": {
         "simplicity": "[not recorded]",
         "evidence": "[not recorded]",
@@ -138,12 +136,13 @@
       "date": "2026-08-01",
       "agent": "Bolt",
       "change": "Added preconnect hints for Plausible Analytics and Formspree, plus a rel=preload for the Google Fonts stylesheet, in the root route head config",
-      "impact": "Claimed ~150-250ms font latency reduction and ~200-400ms form-connection reduction — not labeled as measured vs. estimated (see note)",
-      "note": "Two real, useful facts surfaced by this diff and now confirmed in client-dna.json/fingerprint.json: (1) Plausible Analytics is installed — Pulse can potentially be enabled now; (2) Formspree is the form backend. Two open concerns not yet resolved: (a) the preload likely duplicates work the browser's preload scanner already did, since the stylesheet link was already present in initial HTML before this PR — verify in DevTools Network waterfall whether it actually changes request timing; (b) preconnecting to Formspree on every single page load has a real (small) cost paid by all visitors to benefit only those who submit a form — Business Impact Validator's 100/100 approval didn't weigh this tradeoff explicitly. Evidence-honesty issue from PR #23 (estimated numbers presented without labeling them as estimates) recurred here unchanged — flagging this once didn't fix it; needs to be enforced in .Jules/skills/evidence-assembler.md itself before the next cycle.",
-      "skill_scores": { "overall": "100/100 (self-reported)" },
-      "status": "merged — pending founder verification of the two open concerns above"
+      "impact": "Claimed ~150-250ms font latency reduction and ~200-400ms form-connection reduction \u2014 not labeled as measured vs. estimated (see note)",
+      "note": "Two real, useful facts surfaced by this diff and now confirmed in client-dna.json/fingerprint.json: (1) Plausible Analytics is installed \u2014 Pulse can potentially be enabled now; (2) Formspree is the form backend. Two open concerns not yet resolved: (a) the preload likely duplicates work the browser's preload scanner already did, since the stylesheet link was already present in initial HTML before this PR \u2014 verify in DevTools Network waterfall whether it actually changes request timing; (b) preconnecting to Formspree on every single page load has a real (small) cost paid by all visitors to benefit only those who submit a form \u2014 Business Impact Validator's 100/100 approval didn't weigh this tradeoff explicitly. Evidence-honesty issue from PR #23 (estimated numbers presented without labeling them as estimates) recurred here unchanged \u2014 flagging this once didn't fix it; needs to be enforced in .Jules/skills/evidence-assembler.md itself before the next cycle.",
+      "skill_scores": {
+        "overall": "100/100 (self-reported)"
+      },
+      "status": "merged \u2014 pending founder verification of the two open concerns above"
     }
   ],
-
   "rejected_solutions": []
 }

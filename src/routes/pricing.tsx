@@ -113,7 +113,7 @@ function PricingPage() {
             <div className="flex items-center">
               <Link
                 to="/"
-                className="inline-block mono text-[12px] text-[#666] hover:text-[#22c55e] transition-colors"
+                className="inline-block mono text-[12px] text-[#999] hover:text-[#22c55e] transition-colors"
               >
                 ← Back to home
               </Link>
@@ -143,16 +143,16 @@ function PricingPage() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-[#1e1e1e]">
-                  <th className="p-6 mono text-[11px] text-[#666] uppercase tracking-[0.12em] w-2/5 sticky top-[64px] z-30 bg-[#0c0c0c]">
+                  <th className="p-6 mono text-[11px] text-[#999] uppercase tracking-[0.12em] w-2/5 sticky top-[64px] z-30 bg-[#0c0c0c]">
                     Feature
                   </th>
                   <th className="p-6 mono w-1/5 sticky top-[64px] z-30 bg-[#0c0c0c]">
                     <div className="text-[12px] text-[#f0f0f0]">MAINTAIN</div>
-                    <div className="text-[11px] text-[#666] font-sans font-normal normal-case leading-snug mt-1 max-w-[150px]">
+                    <div className="text-[11px] text-[#999] font-sans font-normal normal-case leading-snug mt-1 max-w-[150px]">
                       For stable apps needing continuous security & monitoring.
                     </div>
                     <div className="text-[20px] font-semibold text-[#f0f0f0] mt-2 tabular-nums">
-                      $650<span className="text-[12px] text-[#666] font-normal">/mo</span>
+                      $650<span className="text-[12px] text-[#999] font-normal">/mo</span>
                     </div>
                   </th>
                   <th className="p-6 mono w-1/5 relative sticky top-[64px] z-30 bg-[#0d1510]">
@@ -160,16 +160,16 @@ function PricingPage() {
                       MOST CHOSEN
                     </div>
                     <div className="text-[12px] text-[#22c55e]">GROWTH</div>
-                    <div className="text-[11px] text-[#666] font-sans font-normal normal-case leading-snug mt-1 max-w-[150px]">
+                    <div className="text-[11px] text-[#999] font-sans font-normal normal-case leading-snug mt-1 max-w-[150px]">
                       For active products scaling and shipping features.
                     </div>
                     <div className="text-[20px] font-semibold text-[#f0f0f0] mt-2 tabular-nums">
-                      $1,500<span className="text-[12px] text-[#666] font-normal">/mo</span>
+                      $1,500<span className="text-[12px] text-[#999] font-normal">/mo</span>
                     </div>
                   </th>
                   <th className="p-6 mono w-1/5 sticky top-[64px] z-30 bg-[#0c0c0c]">
                     <div className="text-[12px] text-[#f0f0f0]">COMPOUND</div>
-                    <div className="text-[11px] text-[#666] font-sans font-normal normal-case leading-snug mt-1 max-w-[150px]">
+                    <div className="text-[11px] text-[#999] font-sans font-normal normal-case leading-snug mt-1 max-w-[150px]">
                       For complex platforms requiring custom modernization.
                     </div>
                     <div className="text-[20px] font-semibold text-[#f0f0f0] mt-2">
@@ -189,7 +189,7 @@ function PricingPage() {
                       >
                         <span className="text-[#22c55e]">GROUP</span>{" "}
                         <span className="text-[#444]">—</span>{" "}
-                        <span className="text-[#666]">{group.name}</span>
+                        <span className="text-[#999]">{group.name}</span>
                       </td>
                     </tr>
                     {group.features.map((row) => (
@@ -320,7 +320,7 @@ function PricingPage() {
                   )}
                 </div>
 
-                <div className="text-[11px] text-[#666] font-sans mt-1">{tier.description}</div>
+                <div className="text-[11px] text-[#999] font-sans mt-1">{tier.description}</div>
 
                 <div className="mt-3 mono text-[24px] font-semibold text-[#f0f0f0] tabular-nums">
                   {tier.price}
@@ -332,7 +332,7 @@ function PricingPage() {
                       <div className="mono text-[11px] tracking-[0.12em] text-[#444] uppercase font-medium border-b border-[#1e1e1e]/50 pb-1.5">
                         <span className="text-[#22c55e]">GROUP</span>{" "}
                         <span className="text-[#444]">—</span>{" "}
-                        <span className="text-[#666]">{group.name}</span>
+                        <span className="text-[#999]">{group.name}</span>
                       </div>
                       {group.features.map((f) => {
                         const hasFeature = f[tier.key];

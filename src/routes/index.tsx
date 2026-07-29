@@ -78,7 +78,7 @@ function Hero() {
               reliability, and code health — backed by data, reports, and AI-assisted engineering.
             </p>
           </div>
-          <div className="pt-2 italic text-[#666] text-[14px] mono border-l border-[#22c55e] pl-4">
+          <div className="pt-2 italic text-[#999] text-[14px] mono border-l border-[#22c55e] pl-4">
             "Software doesn't stay finished. It either evolves or decays."
           </div>
           <div className="flex items-center gap-5 pt-2 flex-wrap">
@@ -119,7 +119,7 @@ function Hero() {
               <div className="mono font-semibold tabular-nums text-[#22c55e] text-[32px] md:text-[40px] leading-none">
                 {s.num}
               </div>
-              <div className="mono text-[11px] text-[#666] mt-3 uppercase tracking-[0.12em]">
+              <div className="mono text-[11px] text-[#999] mt-3 uppercase tracking-[0.12em]">
                 {s.label}
               </div>
             </div>
@@ -199,7 +199,7 @@ function Problem() {
                   <Bar value={s.score} tone={s.tone} />
                   <div>
                     <div className="text-[#f0f0f0] text-[15px] font-semibold">{s.label}</div>
-                    <div className="text-[#666] text-[13px] leading-[1.6] mt-1.5">{s.desc}</div>
+                    <div className="text-[#999] text-[13px] leading-[1.6] mt-1.5">{s.desc}</div>
                   </div>
                 </div>
               );
@@ -219,7 +219,7 @@ function TerminalBlock({ lines }: { lines: string[] }) {
       {lines.map((line, i) => {
         const isCommand = line.startsWith("$ ");
         return (
-          <div key={i} className={isCommand ? "text-[#22c55e]" : "text-[#666]"}>
+          <div key={i} className={isCommand ? "text-[#22c55e]" : "text-[#999]"}>
             {line}
           </div>
         );
@@ -529,9 +529,9 @@ function Workflow() {
                       className="mono text-[28px] tabular-nums"
                       style={{
                         color: isMobile
-                          ? "#666"
+                          ? "#999"
                           : isTablet
-                            ? "#666"
+                            ? "#999"
                             : isActive
                               ? "#f0f0f0"
                               : "#333",
@@ -589,7 +589,7 @@ function Workflow() {
                           {s.desc}
                         </p>
                         {s.bullets.length > 0 && (
-                          <ul className="mt-4 space-y-1.5 mono text-[12px] text-[#666]">
+                          <ul className="mt-4 space-y-1.5 mono text-[12px] text-[#999]">
                             {s.bullets.map((b) => (
                               <li key={b}>— {b}</li>
                             ))}
@@ -600,7 +600,7 @@ function Workflow() {
                           <div className="mono text-[10px] uppercase tracking-[0.12em] text-[#22c55e]">
                             // did you know
                           </div>
-                          <p className="text-[#666] text-[12.5px] leading-[1.65] mt-1.5">
+                          <p className="text-[#999] text-[12.5px] leading-[1.65] mt-1.5">
                             {s.fact}
                           </p>
                         </div>
@@ -630,8 +630,8 @@ function Workflow() {
                 {pipelineStages.map((p) => {
                   const on = isLgUp && activeSet.has(p);
                   const itemOpacity = isTablet ? 1 : on ? 1 : 0.35;
-                  const dotColor = on ? "#22c55e" : isTablet ? "#666" : "#666";
-                  const textColor = on ? "#22c55e" : isTablet ? "#888" : "#666";
+                  const dotColor = on ? "#22c55e" : isTablet ? "#999" : "#999";
+                  const textColor = on ? "#22c55e" : isTablet ? "#888" : "#999";
                   return (
                     <div
                       key={p}
@@ -672,7 +672,7 @@ function Workflow() {
               <div className="hairline mt-6 pt-4 flex items-center justify-between mono text-[10px] text-[#444]">
                 <span>cadence: weekly · sla: 5 business days</span>
                 {isLgUp && (
-                  <span className="tabular-nums text-[#666]">
+                  <span className="tabular-nums text-[#999]">
                     {String(active + 1).padStart(2, "0")}/{String(steps.length).padStart(2, "0")}
                   </span>
                 )}
@@ -829,7 +829,7 @@ function Pricing() {
                   {p.price}
                 </span>
                 {p.unit && (
-                  <span className="mono text-[#666] text-[14px] tabular-nums">{p.unit}</span>
+                  <span className="mono text-[#999] text-[14px] tabular-nums">{p.unit}</span>
                 )}
               </div>
               <ul className="mt-7 space-y-3 text-[14px] text-[#888]">
@@ -857,7 +857,7 @@ function Pricing() {
         <div className="text-center">
           <Link
             to="/pricing"
-            className="inline-block mono text-[12.5px] text-[#666] hover:text-[#22c55e] transition-colors"
+            className="inline-block mono text-[12.5px] text-[#999] hover:text-[#22c55e] transition-colors"
           >
             → See full plan details
           </Link>
@@ -931,7 +931,7 @@ function Results() {
                 {it.num}
               </div>
               <div className="text-[#f0f0f0] text-[15px] font-semibold">{it.title}</div>
-              <div className="text-[#666] text-[13px] leading-[1.7]">{it.desc}</div>
+              <div className="text-[#999] text-[13px] leading-[1.7]">{it.desc}</div>
             </div>
           ))}
         </div>

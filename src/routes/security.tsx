@@ -33,7 +33,7 @@ function SecurityPage() {
           <div className="max-w-[820px] mx-auto px-6 md:px-10 space-y-6 border-l-2 border-[#1f1f1f] pl-6 md:pl-8">
             <Eyebrow>{"// SECURITY"}</Eyebrow>
             <h1 className="headline text-[36px] md:text-[56px]">Security</h1>
-            <p className="text-[#666] text-[16px] md:text-[17px] leading-[1.7] max-w-[640px]">
+            <p className="text-[#999] text-[16px] md:text-[17px] leading-[1.7] max-w-[640px]">
               To report a vulnerability or security concern related to SES — Software Evolution
               Service, email{" "}
               <a
