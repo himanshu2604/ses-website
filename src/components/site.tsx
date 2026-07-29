@@ -227,10 +227,12 @@ export function HealthCard({
 /* -------------------- Nav -------------------- */
 
 // ⚡ Bolt 2026-07-29: Replaced high-frequency scroll event listener with an IntersectionObserver sentinel to eliminate main-thread scroll jank — expected impact: 0 scroll event triggers from Nav, reducing scroll listener execution time to <1ms.
+// 🎨 Palette 2026-08-11: Enhance mobile navigation keyboard and interactive accessibility — Improves UX and keyboard interaction (WCAG AA-compliance).
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const navRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -242,6 +244,42 @@ export function Nav() {
     return () => obs.disconnect();
   }, []);
 
+  // Escape key and click-outside listeners to automatically close the mobile menu
+  useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
+
+  // Lock body scrolling when the mobile menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const links: Array<{ href: string; label: string; kind: "hash" | "route" }> = [
     { href: "/#process", label: "process", kind: "hash" },
     { href: "/#results", label: "results", kind: "hash" },
@@ -252,6 +290,7 @@ export function Nav() {
     <>
       <div ref={sentinelRef} className="absolute top-0 left-0 right-0 h-20 pointer-events-none" />
       <nav
+        ref={navRef}
         className="fixed top-0 inset-x-0 z-50 border-b transition-colors sticky-element"
         style={{
           background: scrolled || open ? "rgba(12,12,12,0.92)" : "#0c0c0c",
@@ -302,6 +341,7 @@ export function Nav() {
               type="button"
               aria-label="Toggle menu"
               aria-expanded={open}
+              aria-controls="mobile-menu"
               onClick={() => setOpen((v) => !v)}
               className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-[3px] border border-[#1e1e1e] text-[#f0f0f0] hover:border-[#22c55e] focus:outline-none focus:ring-2 focus:ring-[#22c55e]/40"
             >
@@ -313,7 +353,7 @@ export function Nav() {
           </div>
         </div>
         {open && (
-          <div className="md:hidden border-t border-[#1a1a1a]">
+          <div id="mobile-menu" className="md:hidden border-t border-[#1a1a1a]">
             <div className="max-w-[1280px] mx-auto px-6 py-4 flex flex-col mono text-[14px]">
               {links.map((l) =>
                 l.kind === "route" ? (
