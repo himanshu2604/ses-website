@@ -7,3 +7,8 @@
 
 **Learning:** When using direct DOM manipulation (e.g., `node.textContent`) to optimize animations and bypass React re-renders, it's critical to also maintain the current value in a `useRef`. Otherwise, if the component re-renders via its parent, React's reconciliation will overwrite the manually updated DOM with the stale value from the VDOM (often "0" or an initial state).
 **Action:** When bypassing React state for animations, always store the "truth" in a ref and render that ref in the JSX to ensure persistence across re-renders.
+
+## 2026-08-14 - Reduced Unused JS via Route & Section-level Code Splitting
+
+**Learning:** Large marketing homepages with many interactive below-the-fold sections (such as Workflow, Evidence, Pricing, Results) can bundle a significant amount of JavaScript that is unused on initial paint. Moving these sections to separate chunk files and importing them dynamically using `React.lazy()` with `Suspense` allows the critical path shell (Hero, Problem, Nav) to load instantly, reducing initial load JavaScript overhead and eliminating Lighthouse unused JS warnings.
+**Action:** Extract below-the-fold interactive components into lazy-loaded sections. Wrap them in Suspense with matching-height, stable-styled fallbacks to prevent layout shifts.
