@@ -36,8 +36,8 @@ export const Route = createFileRoute("/")({
           "Your software is getting worse every week. We fix that. Weekly AI-assisted improvements, measured by your Health Score.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://softwareevolutionservice.com" },
-      { property: "og:image", content: "https://softwareevolutionservice.com/og.svg" },
+      { property: "og:url", content: "https://www.softwareevolutionservice.com" },
+      { property: "og:image", content: "https://www.softwareevolutionservice.com/og.svg" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "SES — Software Evolution Service" },
       {
@@ -45,9 +45,9 @@ export const Route = createFileRoute("/")({
         content:
           "Your software is getting worse every week. We fix that. Weekly AI-assisted improvements, measured by your Health Score.",
       },
-      { name: "twitter:image", content: "https://softwareevolutionservice.com/og.svg" },
+      { name: "twitter:image", content: "https://www.softwareevolutionservice.com/og.svg" },
     ],
-    links: [{ rel: "canonical", href: "https://softwareevolutionservice.com" }],
+    links: [{ rel: "canonical", href: "https://www.softwareevolutionservice.com" }],
   }),
   component: Index,
 });
@@ -280,7 +280,7 @@ function Index() {
             "@type": "Organization",
             name: "Software Evolution Service",
             alternateName: "SES",
-            url: "https://softwareevolutionservice.com",
+            url: "https://www.softwareevolutionservice.com",
             description:
               "Weekly AI-assisted software improvement service. We ship measurable improvements to your product every week — performance, security, and code quality.",
             contactPoint: {
