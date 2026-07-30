@@ -86,7 +86,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // ⚡ Bolt 2026-08-01: Preconnect to critical domains and preload Google Fonts CSS to eliminate render blocks and accelerate conversion flows — expected impact: Reduces font loading latency by ~150-250ms and reduces form submit connection delays by ~200-400ms.
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "preconnect", href: "https://plausible.io" },
       // ⚡ Bolt 2026-08-12: Downgrade Formspree preconnect to dns-prefetch to resolve Lighthouse 'Unused preconnect' warning and avoid unnecessary early TLS handshakes — expected impact: Eliminates 'Unused preconnect' warning on page loads, saving connection overhead for non-submitting visitors.
       { rel: "dns-prefetch", href: "https://formspree.io" },
       {
@@ -111,10 +110,16 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PCRZ6KWWL" />
         <script
-          defer
-          data-domain="softwareevolutionservice.com"
-          src="https://plausible.io/js/script.js"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-4PCRZ6KWWL');
+            `,
+          }}
         />
       </head>
       <body>
