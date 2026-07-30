@@ -12,3 +12,8 @@
 
 **Learning:** Large marketing homepages with many interactive below-the-fold sections (such as Workflow, Evidence, Pricing, Results) can bundle a significant amount of JavaScript that is unused on initial paint. Moving these sections to separate chunk files and importing them dynamically using `React.lazy()` with `Suspense` allows the critical path shell (Hero, Problem, Nav) to load instantly, reducing initial load JavaScript overhead and eliminating Lighthouse unused JS warnings.
 **Action:** Extract below-the-fold interactive components into lazy-loaded sections. Wrap them in Suspense with matching-height, stable-styled fallbacks to prevent layout shifts.
+
+## 2026-08-21 - Mathematical SVG Path Length Calculation
+
+**Learning:** SVG chart line-draw animations frequently query `path.getTotalLength()` on mount to set `stroke-dasharray`. However, querying this DOM property forces a synchronous layout calculation (reflow), and storing its value in React state triggers a second render pass immediately after mount. Because the path coordinates are derived from static or calculated layout coordinates, we can compute the exact Euclidean length of the straight-line segments mathematically in pure JS during render. This completely avoids DOM querying and cuts the mount render cycle from 2 passes to 1.
+**Action:** For SVG chart animations with deterministic line-segments, calculate the path length mathematically in render instead of using `useRef` and `path.getTotalLength()` on mount.
