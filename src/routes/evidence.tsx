@@ -53,20 +53,22 @@ function HealthChart() {
     .join(" ");
   const avgY = y(61);
 
-  const pathRef = useRef<SVGPathElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(false);
-  const [lineLen, setLineLen] = useState(2000);
 
-  useEffect(() => {
-    if (pathRef.current) {
-      try {
-        setLineLen(Math.ceil(pathRef.current.getTotalLength()));
-      } catch {
-        /* noop */
-      }
-    }
-  }, []);
+  // ⚡ Bolt 2026-08-21: Calculate SVG path length mathematically instead of querying DOM .getTotalLength() — expected impact: Eliminates synchronous layout/reflow on mount and reduces initial React re-renders by 100%.
+  const lineLen = Math.ceil(
+    scores.reduce((acc, v, i) => {
+      if (i === 0) return 0;
+      const x1 = x(i - 1);
+      const y1 = y(scores[i - 1]);
+      const x2 = x(i);
+      const y2 = y(v);
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      return acc + Math.sqrt(dx * dx + dy * dy);
+    }, 0),
+  );
 
   useEffect(() => {
     if (!wrapRef.current || inView) return;
@@ -137,7 +139,6 @@ function HealthChart() {
 
           {/* line — animated left-to-right on view */}
           <path
-            ref={pathRef}
             d={pathD}
             stroke="#22c55e"
             strokeWidth={2}
