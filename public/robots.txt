@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://softwareevolutionservice.com/sitemap.xml
+Sitemap: https://www.softwareevolutionservice.com/sitemap.xml
