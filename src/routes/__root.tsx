@@ -132,6 +132,22 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = router.subscribe("onResolved", ({ toLocation }) => {
+      if (typeof window !== "undefined") {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const win = window as any;
+        if (typeof win.gtag === "function") {
+          win.gtag("event", "page_view", {
+            page_path: toLocation.pathname,
+          });
+        }
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>
