@@ -234,7 +234,8 @@ function PricingPage() {
                   <td className="p-6"></td>
                   <td className="p-6">
                     <Link
-                      to="/#audit"
+                      to="/"
+                      hash="audit"
                       className="terminal-btn block mono text-[12px] text-center px-4 py-3 rounded-[3px] border text-[#22c55e] btn-outline btn-pricing-outline cursor-pointer"
                     >
                       $ start --maintain<span className="cursor-char">_</span>
@@ -242,7 +243,8 @@ function PricingPage() {
                   </td>
                   <td className="p-6 bg-[#22c55e]/[0.03]">
                     <Link
-                      to="/#audit"
+                      to="/"
+                      hash="audit"
                       className="terminal-btn block mono text-[12px] text-center px-4 py-3 rounded-[3px] btn-primary text-[#0c0c0c] font-semibold btn-pricing-filled cursor-pointer"
                     >
                       $ start --growth<span className="cursor-char">_</span>
@@ -250,7 +252,8 @@ function PricingPage() {
                   </td>
                   <td className="p-6">
                     <Link
-                      to="/#audit"
+                      to="/"
+                      hash="audit"
                       className="terminal-btn block mono text-[12px] text-center px-4 py-3 rounded-[3px] border text-[#22c55e] btn-outline btn-pricing-outline cursor-pointer"
                     >
                       $ start --compound<span className="cursor-char">_</span>
@@ -372,7 +375,8 @@ function PricingPage() {
 
                 <div className="mt-6">
                   <Link
-                    to="/#audit"
+                    to="/"
+                    hash="audit"
                     className={`terminal-btn block mono text-[12.5px] text-center px-4 py-3 rounded-[3px] cursor-pointer ${
                       tier.featured
                         ? "btn-primary text-[#0c0c0c] font-semibold btn-pricing-filled"

@@ -88,5 +88,8 @@
     "postcss": "^8.5.24",
     "js-yaml": "^4.3.0",
     "@babel/core": "^7.29.7"
+  },
+  "patchedDependencies": {
+    "minimatch@10.2.5": "patches/minimatch@10.2.5.patch"
   }
 }

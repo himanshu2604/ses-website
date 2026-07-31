@@ -1,3 +1,4 @@
+// 🛡️ Sentinel 2026-07-31: Privacy Compliance — Align privacy policy cookie statement with active GA4 tracking usage
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav, Footer, Eyebrow } from "@/components/site";
 
@@ -36,8 +37,8 @@ const sections: Array<{ title: string; body: string }> = [
     body: "Your data is stored securely. Audit submissions are retained for up to 24 months to allow comparison across engagements. You may request deletion at any time by emailing hi@softwareevolutionservice.com.",
   },
   {
-    title: "4. Cookies",
-    body: "This site uses no tracking cookies and no third-party analytics. We do not use Google Analytics, Meta Pixel, or any behavioral tracking. The only cookies present are those strictly necessary for the site to function.",
+    title: "4. Cookies and analytics",
+    body: "This site uses Google Analytics 4 (GA4) to measure site traffic and pageviews to help us improve our service. We do not use any other third-party tracking pixels (such as Meta Pixel) or any behavioral tracking. The cookies present are strictly necessary for the site to function and for Google Analytics to measure performance.",
   },
   {
     title: "5. Your rights",
