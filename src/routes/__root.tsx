@@ -83,6 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
       // ⚡ Bolt 2026-08-01: Preconnect to critical domains and preload Google Fonts CSS to eliminate render blocks and accelerate conversion flows — expected impact: Reduces font loading latency by ~150-250ms and reduces form submit connection delays by ~200-400ms.
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
