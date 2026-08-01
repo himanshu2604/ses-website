@@ -63,7 +63,7 @@ cloud_off_limits:
 
 # Scribe updates this automatically. Operator can also add entries.
 
-completed: ["🛡️ Sentinel: [HIGH] Fix XSS vulnerability in ChartStyle component", "🎨 Palette: Eliminate form duplication and elevate accessibility", "🎨 Palette: Resolve site-wide text contrast accessibility failures with WCAG AA-compliant gray token"]
+completed: ["🛡️ Sentinel: [HIGH] Fix XSS vulnerability in ChartStyle component", "🎨 Palette: Eliminate form duplication and elevate accessibility", "🎨 Palette: Resolve site-wide text contrast accessibility failures with WCAG AA-compliant gray token", "⚡ Bolt: Eliminate scroll listener overhead with IntersectionObserver", "🛡️ Sentinel: Align cookie and privacy policy disclosures for GA4 compliance"]
 
 ## Report format preference
 
