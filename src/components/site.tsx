@@ -504,7 +504,7 @@ export function Footer() {
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkolddre";
 
-// 🎨 Palette 2025-05-14: Improve form accessibility — Links labels to inputs and adds ARIA attributes for validation states.
+// 🎨 Palette 2026-08-11: Enhance lead-gen AuditForm with pricing plan context bridging — Reads plan context safely from URL on client mount, displays customized selected plan badge, and adapts the CLI submit button micro-interaction to reflect selected plan.
 export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: boolean }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -518,6 +518,17 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
   const [concern, setConcern] = useState("");
   const [spend, setSpend] = useState("Prefer not to say");
   const [gdprConsent, setGdprConsent] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const plan = params.get("plan");
+      if (plan && ["maintain", "growth", "compound"].includes(plan.toLowerCase())) {
+        setSelectedPlan(plan.toLowerCase());
+      }
+    }
+  }, []);
 
   const baseId = useId();
   const nameId = `${baseId}-name`;
@@ -594,7 +605,8 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
           biggestConcern: concern,
           cloudSpend: spend,
           gdprConsent,
-          _subject: `New audit request — ${url}`,
+          selectedPlan: selectedPlan || "none",
+          _subject: `New audit request ${selectedPlan ? `(${selectedPlan}) ` : ""}— ${url}`,
           _replyto: email,
         }),
       });
@@ -647,6 +659,19 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
         </div>
       ) : (
         <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+          {selectedPlan && (
+            <div className="mono text-[12px] bg-[#22c55e]/10 border border-[#22c55e]/30 text-[#22c55e] px-3.5 py-2.5 rounded-[3px] flex items-center justify-between">
+              <span>{`[ selected plan: ${selectedPlan} ]`}</span>
+              <button
+                type="button"
+                onClick={() => setSelectedPlan(null)}
+                className="text-[#999] hover:text-[#ef4444] transition-colors text-[10px] uppercase font-mono tracking-wider cursor-pointer"
+                aria-label="Clear selected plan"
+              >
+                clear
+              </button>
+            </div>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label
@@ -782,7 +807,11 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
               cursor: submitting || (attempted && hasErrors) ? "not-allowed" : "pointer",
             }}
           >
-            {submitting ? "// processing..." : "$ request --audit ↵"}
+            {submitting
+              ? "// processing..."
+              : selectedPlan
+                ? `$ request --audit --${selectedPlan} ↵`
+                : "$ request --audit ↵"}
           </button>
 
           {submitError && (

@@ -14,3 +14,8 @@
 
 **Learning:** Low-contrast muted/secondary text elements (like eyebrows and section descriptions) are easily overlooked during rapid development, causing severe WCAG AA accessibility contrast failures on dark backgrounds (#0c0c0c background + #666666 text gives only 3.32:1). Standardizing a secondary/muted-text color token (#999999 or #999) ensures all text elements achieve compliant high-contrast (6.58:1 ratio) while fully preserving the dark IDE/monospace terminal aesthetic.
 **Action:** Formalize compliant color tokens within the design_system and apply them site-wide, replacing hardcoded low-contrast values in JSX files to ensure systemic accessibility alignment.
+
+## 2026-08-11 - Bridging Selected Plan Context to Lead-Gen Forms Safely with SSR
+
+**Learning:** Passing a selected plan context (e.g. from `/pricing`) via URL parameters to a shared form on `/` vastly enhances conversion rates and intent alignment. To avoid SSR hydration mismatches in frameworks like TanStack Start, query param parsing must be deferred until client-side mount (e.g. via `useEffect`). Adapting CLI-style submit buttons dynamically (e.g. `$ request --audit --growth ↵`) reinforces user confidence. Adding `sr-only` descriptions to visual elements (like `✓` checkmarks and `—` dashes) is critical to make comparison tables WCAG AA screen-reader compliant.
+**Action:** Always defer URL parsing to client-side lifecycle hooks, customize CTAs dynamically to match user selections, and systematically decorate visual symbols with hidden descriptive tags for screen reader robustness.
