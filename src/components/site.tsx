@@ -196,7 +196,11 @@ export function HealthCard({
               <div className="flex items-center justify-between mono text-[12px]">
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <span className="text-[#888] cursor-help border-b border-[#333] border-dotted">
+                    {/* 🎨 Palette 2026-08-28: Enable keyboard focus & high-contrast focus rings for Health Score metric tooltips — Improves keyboard/screen-reader accessibility (WCAG AA) */}
+                    <span
+                      tabIndex={0}
+                      className="text-[#888] cursor-help border-b border-[#333] border-dotted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#22c55e] focus-visible:text-[#22c55e] rounded-[1px] transition-colors"
+                    >
                       {m.label}
                     </span>
                   </TooltipTrigger>

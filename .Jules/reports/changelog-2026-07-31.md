@@ -10,13 +10,13 @@
 
 ## Health Score update
 
-| Pillar          | Score           | Change     |
-| --------------- | --------------- | ---------- |
-| Performance     | 4/100           | +4         |
-| Security        | 16/100          | +2         |
-| User Experience | 4/100           | +0         |
-| Maintainability | 3/100           | +0         |
-| **Overall**     | **7.5/100**     | **+1.8**   |
+| Pillar          | Score       | Change   |
+| --------------- | ----------- | -------- |
+| Performance     | 4/100       | +4       |
+| Security        | 16/100      | +2       |
+| User Experience | 4/100       | +0       |
+| Maintainability | 3/100       | +0       |
+| **Overall**     | **7.5/100** | **+1.8** |
 
 ## Next week
 
