@@ -199,27 +199,39 @@ function PricingPage() {
                         </td>
                         <td className="p-6 mono text-[14px] tabular-nums">
                           {row.maintain === true ? (
-                            <span className="text-[#22c55e] check-mark">✓</span>
+                            <span className="text-[#22c55e] check-mark">
+                              <span className="sr-only">Included</span>✓
+                            </span>
                           ) : row.maintain === false ? (
-                            <span className="text-[#444]">—</span>
+                            <span className="text-[#444]">
+                              <span className="sr-only">Not included</span>—
+                            </span>
                           ) : (
                             <span className="text-[#f0f0f0]">{row.maintain}</span>
                           )}
                         </td>
                         <td className="p-6 mono text-[14px] tabular-nums bg-[#22c55e]/[0.03]">
                           {row.growth === true ? (
-                            <span className="text-[#22c55e] check-mark">✓</span>
+                            <span className="text-[#22c55e] check-mark">
+                              <span className="sr-only">Included</span>✓
+                            </span>
                           ) : row.growth === false ? (
-                            <span className="text-[#444]">—</span>
+                            <span className="text-[#444]">
+                              <span className="sr-only">Not included</span>—
+                            </span>
                           ) : (
                             <span className="text-[#f0f0f0]">{row.growth}</span>
                           )}
                         </td>
                         <td className="p-6 mono text-[14px] tabular-nums">
                           {row.compound === true ? (
-                            <span className="text-[#22c55e] check-mark">✓</span>
+                            <span className="text-[#22c55e] check-mark">
+                              <span className="sr-only">Included</span>✓
+                            </span>
                           ) : row.compound === false ? (
-                            <span className="text-[#444]">—</span>
+                            <span className="text-[#444]">
+                              <span className="sr-only">Not included</span>—
+                            </span>
                           ) : (
                             <span className="text-[#f0f0f0]">{row.compound}</span>
                           )}
@@ -236,6 +248,7 @@ function PricingPage() {
                     <Link
                       to="/"
                       hash="audit"
+                      search={{ plan: "maintain" }}
                       className="terminal-btn block mono text-[12px] text-center px-4 py-3 rounded-[3px] border text-[#22c55e] btn-outline btn-pricing-outline cursor-pointer"
                     >
                       $ start --maintain<span className="cursor-char">_</span>
@@ -245,6 +258,7 @@ function PricingPage() {
                     <Link
                       to="/"
                       hash="audit"
+                      search={{ plan: "growth" }}
                       className="terminal-btn block mono text-[12px] text-center px-4 py-3 rounded-[3px] btn-primary text-[#0c0c0c] font-semibold btn-pricing-filled cursor-pointer"
                     >
                       $ start --growth<span className="cursor-char">_</span>
@@ -254,6 +268,7 @@ function PricingPage() {
                     <Link
                       to="/"
                       hash="audit"
+                      search={{ plan: "compound" }}
                       className="terminal-btn block mono text-[12px] text-center px-4 py-3 rounded-[3px] border text-[#22c55e] btn-outline btn-pricing-outline cursor-pointer"
                     >
                       $ start --compound<span className="cursor-char">_</span>
@@ -357,9 +372,13 @@ function PricingPage() {
                             <span className="text-[#888]">{f.name}</span>
                             <span className="mono">
                               {hasFeature === true ? (
-                                <span className="text-[#22c55e]">✓</span>
+                                <span className="text-[#22c55e]">
+                                  <span className="sr-only">Included</span>✓
+                                </span>
                               ) : hasFeature === false ? (
-                                <span className="text-[#444]">—</span>
+                                <span className="text-[#444]">
+                                  <span className="sr-only">Not included</span>—
+                                </span>
                               ) : (
                                 <span className="text-[#f0f0f0] border-l border-[#22c55e]/50 pl-2.5 ml-0.5 leading-relaxed block">
                                   {displayValue}
@@ -377,6 +396,7 @@ function PricingPage() {
                   <Link
                     to="/"
                     hash="audit"
+                    search={{ plan: tier.key }}
                     className={`terminal-btn block mono text-[12.5px] text-center px-4 py-3 rounded-[3px] cursor-pointer ${
                       tier.featured
                         ? "btn-primary text-[#0c0c0c] font-semibold btn-pricing-filled"
