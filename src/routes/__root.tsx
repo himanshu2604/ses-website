@@ -87,8 +87,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // ⚡ Bolt 2026-08-01: Preconnect to critical domains and preload Google Fonts CSS to eliminate render blocks and accelerate conversion flows — expected impact: Reduces font loading latency by ~150-250ms and reduces form submit connection delays by ~200-400ms.
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      // ⚡ Bolt 2026-08-12: Downgrade Formspree preconnect to dns-prefetch to resolve Lighthouse 'Unused preconnect' warning and avoid unnecessary early TLS handshakes — expected impact: Eliminates 'Unused preconnect' warning on page loads, saving connection overhead for non-submitting visitors.
-      { rel: "dns-prefetch", href: "https://formspree.io" },
       {
         rel: "preload",
         as: "style",
@@ -111,7 +109,6 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PCRZ6KWWL" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -136,6 +133,18 @@ function RootComponent() {
   const router = useRouter();
 
   useEffect(() => {
+    // ⚡ Bolt 2026-09-02: Defer GTM script injection to post-hydration client mount — expected impact: Improves initial paint time by removing third-party script loading from the critical rendering path.
+    if (typeof window !== "undefined") {
+      const scriptId = "gtm-script";
+      if (!document.getElementById(scriptId)) {
+        const script = document.createElement("script");
+        script.id = scriptId;
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-4PCRZ6KWWL";
+        document.head.appendChild(script);
+      }
+    }
+
     const unsubscribe = router.subscribe("onResolved", ({ toLocation }) => {
       if (typeof window !== "undefined") {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
