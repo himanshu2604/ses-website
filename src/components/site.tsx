@@ -530,6 +530,17 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
     }
   }, []);
 
+  // ⚡ Bolt 2026-09-02: Warm up Formspree connection dynamically on high-intent user interactions — expected impact: Saves ~200-400ms on submit without wasting connection overhead for passive scrolling-only visitors.
+  const [isWarmed, setIsWarmed] = useState(false);
+  const warmConnection = () => {
+    if (isWarmed || typeof window === "undefined") return;
+    setIsWarmed(true);
+    const link = document.createElement("link");
+    link.rel = "preconnect";
+    link.href = "https://formspree.io";
+    document.head.appendChild(link);
+  };
+
   const baseId = useId();
   const nameId = `${baseId}-name`;
   const emailId = `${baseId}-email`;
@@ -639,7 +650,11 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
     "field" + (invalid ? " field-invalid" : "");
 
   return (
-    <div className="border border-[#1e1e1e] rounded-[3px] bg-[#111] p-7 md:p-9">
+    <div
+      className="border border-[#1e1e1e] rounded-[3px] bg-[#111] p-7 md:p-9"
+      onMouseEnter={warmConnection}
+      onTouchStart={warmConnection}
+    >
       {submitted ? (
         <div className="mono text-[13px] space-y-2">
           <div className="text-[#22c55e]">{"> audit requested."}</div>
@@ -686,6 +701,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
                 placeholder="ada lovelace"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                onFocus={warmConnection}
                 aria-required="true"
                 aria-invalid={!!showError("name")}
                 aria-describedby={showError("name") ? nameErrId : undefined}
@@ -706,6 +722,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
                 placeholder="you@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onFocus={warmConnection}
                 aria-required="true"
                 aria-invalid={!!showError("email")}
                 aria-describedby={showError("email") ? emailErrId : undefined}
@@ -725,6 +742,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               onBlur={normalizeUrl}
+              onFocus={warmConnection}
               className={fieldClass(showError("url"))}
               placeholder="https://your-product.com"
               aria-required="true"
@@ -745,6 +763,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
               className={`${fieldClass(showError("concern"))} ${!concern ? "text-[#444444]" : "text-[#f0f0f0]"}`}
               value={concern}
               onChange={(e) => setConcern(e.target.value)}
+              onFocus={warmConnection}
               aria-required="true"
               aria-invalid={!!showError("concern")}
               aria-describedby={showError("concern") ? concernErrId : undefined}
@@ -772,6 +791,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
               className={`field ${spend === "Prefer not to say" ? "text-[#444444]" : "text-[#f0f0f0]"}`}
               value={spend}
               onChange={(e) => setSpend(e.target.value)}
+              onFocus={warmConnection}
             >
               <option>Prefer not to say</option>
               <option>Under $500</option>
@@ -788,6 +808,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
               name="gdprConsent"
               checked={gdprConsent}
               onChange={(e) => setGdprConsent(e.target.checked)}
+              onFocus={warmConnection}
               className="mt-1 w-4 h-4 rounded-sm border border-[#1e1e1e] bg-[#111111] accent-[#22c55e] cursor-pointer flex-shrink-0"
             />
             <label
