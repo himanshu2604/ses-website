@@ -21,7 +21,7 @@
         },
         {
           "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), midi=(), screen-wake-lock=(), accelerometer=(), gyroscope=(), magnetometer=(), gamepad=()"
         },
         {
           "key": "Strict-Transport-Security",
