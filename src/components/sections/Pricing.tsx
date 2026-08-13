@@ -1,4 +1,5 @@
 // ⚡ Bolt 2026-08-14: Reduce unused JavaScript on initial homepage load via lazy loading below-the-fold sections — expected impact: removes 16.96 kB (7.05 kB gzipped) of unused JS from the initial page load bundle
+// 🎨 Palette 2026-09-08: Bridge selection context from homepage pricing cards directly to lead-gen AuditForm — Improves same-page activation flow and intent alignment by pre-selecting plan.
 import { Link } from "@tanstack/react-router";
 import { SectionHead } from "@/components/site";
 
@@ -96,16 +97,18 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              <a
-                href="#audit"
-                className={`mt-8 mono text-[12px] text-center px-4 py-3 rounded-[3px] ${
+              <Link
+                to="/"
+                hash="audit"
+                search={{ plan: p.name.toLowerCase() }}
+                className={`mt-8 mono text-[12px] text-center px-4 py-3 rounded-[3px] cursor-pointer ${
                   p.filled
                     ? "btn-primary bg-[#22c55e] text-[#0c0c0c] font-semibold"
                     : "btn-outline border border-[#22c55e] text-[#22c55e]"
                 }`}
               >
                 {p.cta}
-              </a>
+              </Link>
             </div>
           ))}
         </div>

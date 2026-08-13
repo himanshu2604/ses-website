@@ -19,3 +19,8 @@
 
 **Learning:** Passing a selected plan context (e.g. from `/pricing`) via URL parameters to a shared form on `/` vastly enhances conversion rates and intent alignment. To avoid SSR hydration mismatches in frameworks like TanStack Start, query param parsing must be deferred until client-side mount (e.g. via `useEffect`). Adapting CLI-style submit buttons dynamically (e.g. `$ request --audit --growth ↵`) reinforces user confidence. Adding `sr-only` descriptions to visual elements (like `✓` checkmarks and `—` dashes) is critical to make comparison tables WCAG AA screen-reader compliant.
 **Action:** Always defer URL parsing to client-side lifecycle hooks, customize CTAs dynamically to match user selections, and systematically decorate visual symbols with hidden descriptive tags for screen reader robustness.
+
+## 2026-09-08 - TanStack Router Reactivity & Search Params Validation
+
+**Learning:** In TanStack Router, `router.state` is always up to date but *non-reactive*; referencing it directly in a component body or hook dependencies will not trigger a React update/re-render. Instead, `useRouterState` must be leveraged. Furthermore, query parameters (e.g., `?plan=growth`) will be stripped out of the parsed state at runtime unless explicitly validated using the `validateSearch` option on the corresponding route definition.
+**Action:** Always use `useRouterState({ select: ... })` to obtain reactive location objects, and define explicit query parameter schemas inside route definitions using `validateSearch` to prevent parameters from being filtered out.

@@ -21,6 +21,11 @@ const Pricing = lazy(() => import("@/components/sections/Pricing"));
 const Results = lazy(() => import("@/components/sections/Results"));
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      plan: typeof search.plan === "string" ? search.plan : undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "SES — Software Evolution Service | Weekly AI-Assisted Software Improvement" },
