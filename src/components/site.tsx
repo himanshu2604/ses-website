@@ -1,5 +1,5 @@
 // 🎨 Palette 2026-08-04: Resolve site-wide text contrast accessibility failures by upgrading secondary/muted-text to a WCAG AA-compliant gray (#999) — Elevates accessibility, bringing contrast ratio from 3.32:1 to 6.58:1.
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useId } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -519,16 +519,19 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
   const [spend, setSpend] = useState("Prefer not to say");
   const [gdprConsent, setGdprConsent] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const location = useRouterState({ select: (s) => s.location });
 
+  // 🎨 Palette 2026-09-08: Bridge selection context dynamically by listening reactively to URL search param updates — Ensures same-page and cross-page navigation selection propagates instantly
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      const plan = params.get("plan");
-      if (plan && ["maintain", "growth", "compound"].includes(plan.toLowerCase())) {
-        setSelectedPlan(plan.toLowerCase());
-      }
+    const searchParams = location.search as Record<string, unknown>;
+    const plan = searchParams.plan;
+    if (plan && ["maintain", "growth", "compound"].includes(String(plan).toLowerCase())) {
+      setSelectedPlan(String(plan).toLowerCase());
+    } else {
+      setSelectedPlan(null);
     }
-  }, []);
+  }, [location.search]);
 
   // ⚡ Bolt 2026-09-02: Warm up Formspree connection dynamically on high-intent user interactions — expected impact: Saves ~200-400ms on submit without wasting connection overhead for passive scrolling-only visitors.
   const [isWarmed, setIsWarmed] = useState(false);
@@ -679,8 +682,17 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
               <span>{`[ selected plan: ${selectedPlan} ]`}</span>
               <button
                 type="button"
-                onClick={() => setSelectedPlan(null)}
-                className="text-[#999] hover:text-[#ef4444] transition-colors text-[10px] uppercase font-mono tracking-wider cursor-pointer"
+                onClick={() => {
+                  setSelectedPlan(null);
+                  navigate({
+                    search: (prev: Record<string, unknown>) => {
+                      const { plan, ...rest } = prev;
+                      return rest;
+                    },
+                    hash: "audit",
+                  });
+                }}
+                className="text-[#999] hover:text-[#ef4444] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#ef4444] focus-visible:text-[#ef4444] rounded-[1px] transition-colors text-[10px] uppercase font-mono tracking-wider cursor-pointer"
                 aria-label="Clear selected plan"
               >
                 clear
