@@ -84,14 +84,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
-      // ⚡ Bolt 2026-08-01: Preconnect to critical domains and preload Google Fonts CSS to eliminate render blocks and accelerate conversion flows — expected impact: Reduces font loading latency by ~150-250ms and reduces form submit connection delays by ~200-400ms.
+      // ⚡ Bolt 2026-09-09: Remove redundant preload and pre-resolve third-party analytics domains to streamline critical path and accelerate post-hydration GA4 script load — expected impact: Saves ~50-100ms on dynamic script downloads and avoids potential duplicate font stylesheets downloads.
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "preload",
-        as: "style",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap",
-      },
+      { rel: "dns-prefetch", href: "https://www.googletagmanager.com" },
+      { rel: "dns-prefetch", href: "https://www.google-analytics.com" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap",
