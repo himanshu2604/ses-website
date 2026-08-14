@@ -1,0 +1,6 @@
+# 🛡️ Sentinel 2026-08-14: Security RFC 9116 — Add security.txt to establish standardized vulnerability disclosure channel
+Contact: mailto:hi@softwareevolutionservice.com
+Expires: 2027-08-14T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://www.softwareevolutionservice.com/.well-known/security.txt
+Policy: https://www.softwareevolutionservice.com/security
