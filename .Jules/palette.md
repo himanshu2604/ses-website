@@ -22,5 +22,5 @@
 
 ## 2026-09-08 - TanStack Router Reactivity & Search Params Validation
 
-**Learning:** In TanStack Router, `router.state` is always up to date but *non-reactive*; referencing it directly in a component body or hook dependencies will not trigger a React update/re-render. Instead, `useRouterState` must be leveraged. Furthermore, query parameters (e.g., `?plan=growth`) will be stripped out of the parsed state at runtime unless explicitly validated using the `validateSearch` option on the corresponding route definition.
+**Learning:** In TanStack Router, `router.state` is always up to date but _non-reactive_; referencing it directly in a component body or hook dependencies will not trigger a React update/re-render. Instead, `useRouterState` must be leveraged. Furthermore, query parameters (e.g., `?plan=growth`) will be stripped out of the parsed state at runtime unless explicitly validated using the `validateSearch` option on the corresponding route definition.
 **Action:** Always use `useRouterState({ select: ... })` to obtain reactive location objects, and define explicit query parameter schemas inside route definitions using `validateSearch` to prevent parameters from being filtered out.
