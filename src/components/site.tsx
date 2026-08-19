@@ -237,6 +237,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const navRef = useRef<HTMLElement | null>(null);
+  const toggleBtnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -248,13 +249,14 @@ export function Nav() {
     return () => obs.disconnect();
   }, []);
 
-  // Escape key and click-outside listeners to automatically close the mobile menu
+  // Escape key and click-outside listeners to automatically close the mobile menu, returning focus to toggle button
   useEffect(() => {
     if (!open) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setOpen(false);
+        toggleBtnRef.current?.focus();
       }
     };
 
@@ -342,6 +344,7 @@ export function Nav() {
             </Link>
 
             <button
+              ref={toggleBtnRef}
               type="button"
               aria-label="Toggle menu"
               aria-expanded={open}
