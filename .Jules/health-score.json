@@ -1,12 +1,12 @@
 {
   "client": "Software Evolution Service (SES)",
-  "last_updated": "2026-08-14",
+  "last_updated": "2026-08-21",
   "performance_score": 4,
-  "security_score": 20,
+  "security_score": 22,
   "experience_quality_score": 4,
   "code_quality_score": 3,
   "ux_score": 4,
   "maintainability_score": 3,
-  "overall_score": 8.6,
-  "week_summary": "Security score increased by deploying RFC 9116 compliant security.txt files to establish a standardized vulnerability disclosure channel."
+  "overall_score": 9.25,
+  "week_summary": "Security score increased by hardening HTTP security headers with COOP (same-origin) and X-Permitted-Cross-Domain-Policies (none)."
 }
