@@ -657,6 +657,19 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
   const fieldClass = (invalid: boolean | null | undefined | string) =>
     "field" + (invalid ? " field-invalid" : "");
 
+  // 🎨 Palette 2026-08-26: Enhance AuditForm success state accessibility and reset usability — Adds polite live region and keyboard-accessible reset action.
+  const handleReset = () => {
+    setSubmitted(false);
+    setAttempted(false);
+    setSubmittedUrl("");
+    setName("");
+    setEmail("");
+    setUrl("");
+    setConcern("");
+    setSpend("Prefer not to say");
+    setGdprConsent(false);
+  };
+
   return (
     <div
       className="border border-[#1e1e1e] rounded-[3px] bg-[#111] p-7 md:p-9"
@@ -664,20 +677,29 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
       onTouchStart={warmConnection}
     >
       {submitted ? (
-        <div className="mono text-[13px] space-y-2">
-          <div className="text-[#22c55e]">{"> audit requested."}</div>
+        <div role="status" aria-live="polite" className="mono text-[13px] space-y-3">
+          <div className="text-[#22c55e] font-semibold">{"> audit requested successfully."}</div>
           <div className="text-[#888]">
             scanning: <span className="text-[#f0f0f0]">{submittedUrl}</span>
           </div>
           <div className="text-[#888]">
             expected delivery: <span className="text-[#f0f0f0]">48h</span>
           </div>
-          <div className="flex items-center gap-2 pt-2">
+          <div className="flex items-center gap-2 pt-1">
             <span
               className="pulse-dot"
               style={{ width: 6, height: 6, borderRadius: 999, background: "#22c55e" }}
             />
             <span className="text-[#22c55e]">queued</span>
+          </div>
+          <div className="pt-3 border-t border-[#1e1e1e]">
+            <button
+              type="button"
+              onClick={handleReset}
+              className="btn-outline mono text-[12px] px-3.5 py-2 rounded-[3px] border border-[#22c55e] text-[#22c55e] hover:bg-[#22c55e]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22c55e] transition-colors cursor-pointer"
+            >
+              $ request another audit ↵
+            </button>
           </div>
         </div>
       ) : (
