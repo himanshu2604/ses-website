@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Nav, Footer, HealthCard, VolLabel, Eyebrow } from "@/components/site";
 
 export const Route = createFileRoute("/evidence")({
@@ -34,8 +34,10 @@ export const Route = createFileRoute("/evidence")({
 
 /* -------------------- 12-week chart -------------------- */
 
+const SCORES = [44, 48, 52, 55, 58, 61, 65, 69, 72, 76, 81, 85, 88];
+
 function HealthChart() {
-  const scores = [44, 48, 52, 55, 58, 61, 65, 69, 72, 76, 81, 85, 88];
+  const scores = SCORES;
   const w = 700;
   const h = 260;
   const padL = 44;
@@ -46,29 +48,32 @@ function HealthChart() {
   const innerH = h - padT - padB;
   const min = 30;
   const max = 100;
-  const x = (i: number) => padL + (i / (scores.length - 1)) * innerW;
-  const y = (v: number) => padT + innerH - ((v - min) / (max - min)) * innerH;
-  const pathD = scores
-    .map((v, i) => `${i === 0 ? "M" : "L"} ${x(i).toFixed(1)} ${y(v).toFixed(1)}`)
-    .join(" ");
-  const avgY = y(61);
+
+  // ⚡ Bolt 2026-09-16: Memoize SVG chart path geometry and Euclidean length calculation — expected impact: Eliminates redundant arithmetic calculations on component re-renders.
+  const { x, y, pathD, avgY, lineLen } = useMemo(() => {
+    const getX = (i: number) => padL + (i / (scores.length - 1)) * innerW;
+    const getY = (v: number) => padT + innerH - ((v - min) / (max - min)) * innerH;
+    const d = scores
+      .map((v, i) => `${i === 0 ? "M" : "L"} ${getX(i).toFixed(1)} ${getY(v).toFixed(1)}`)
+      .join(" ");
+    const averageY = getY(61);
+    const len = Math.ceil(
+      scores.reduce((acc, v, i) => {
+        if (i === 0) return 0;
+        const x1 = getX(i - 1);
+        const y1 = getY(scores[i - 1]);
+        const x2 = getX(i);
+        const y2 = getY(v);
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        return acc + Math.sqrt(dx * dx + dy * dy);
+      }, 0),
+    );
+    return { x: getX, y: getY, pathD: d, avgY: averageY, lineLen: len };
+  }, [scores, innerW, innerH]);
 
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(false);
-
-  // ⚡ Bolt 2026-08-21: Calculate SVG path length mathematically instead of querying DOM .getTotalLength() — expected impact: Eliminates synchronous layout/reflow on mount and reduces initial React re-renders by 100%.
-  const lineLen = Math.ceil(
-    scores.reduce((acc, v, i) => {
-      if (i === 0) return 0;
-      const x1 = x(i - 1);
-      const y1 = y(scores[i - 1]);
-      const x2 = x(i);
-      const y2 = y(v);
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      return acc + Math.sqrt(dx * dx + dy * dy);
-    }, 0),
-  );
 
   useEffect(() => {
     if (!wrapRef.current || inView) return;
