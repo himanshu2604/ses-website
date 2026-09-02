@@ -1,4 +1,4 @@
-// 🎨 Palette 2026-08-04: Resolve site-wide text contrast accessibility failures by upgrading secondary/muted-text to a WCAG AA-compliant gray (#999) — Elevates accessibility, bringing contrast ratio from 3.32:1 to 6.58:1.
+// 🎨 Palette 2026-09-23: Upgrade AuditForm labels and footer text contrast to WCAG AA #999 and add semantic progressbar ARIA to Bar component — Elevates accessibility and lead-gen form legibility.
 import { Link, useRouter, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useId } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -70,15 +70,25 @@ export function Bar({
   value,
   max = 100,
   tone = "green",
+  label,
 }: {
   value: number;
   max?: number;
   tone?: "green" | "amber" | "red";
+  label?: string;
 }) {
   const { ref, seen } = useInView<HTMLDivElement>(0.3);
   const pct = Math.min(100, (value / max) * 100);
   return (
-    <div ref={ref} className="bar-track mt-2">
+    <div
+      ref={ref}
+      role="progressbar"
+      aria-valuenow={value}
+      aria-valuemin={0}
+      aria-valuemax={max}
+      aria-label={label ? `${label} score` : undefined}
+      className="bar-track mt-2"
+    >
       <div
         className={`bar-fill ${tone === "amber" ? "amber" : tone === "red" ? "red" : ""}`}
         style={{ width: seen ? `${pct}%` : 0 }}
@@ -216,6 +226,7 @@ export function HealthCard({
               </div>
               <Bar
                 value={m.score}
+                label={m.label}
                 tone={m.tone || (m.score >= 70 ? "green" : m.score >= 50 ? "amber" : "red")}
               />
             </div>
@@ -464,7 +475,7 @@ export function Footer() {
         </div>
         {cols.map((col) => (
           <div key={col.title}>
-            <div className="mono text-[10px] uppercase tracking-[0.14em] text-[#444] mb-4">
+            <div className="mono text-[10px] uppercase tracking-[0.14em] text-[#999] mb-4">
               {col.title}
             </div>
             <ul className="space-y-2.5">
@@ -486,7 +497,7 @@ export function Footer() {
         ))}
       </div>
       <div className="border-t border-[#1a1a1a]">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex flex-wrap items-center justify-between gap-3 mono text-[11px] text-[#444]">
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex flex-wrap items-center justify-between gap-3 mono text-[11px] text-[#999]">
           <span className="min-w-0">
             {
               "// © 2026 SES — Software Evolution Service — software evolution service. all systems operational. · no tracking cookies."
@@ -730,7 +741,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
             <div>
               <label
                 htmlFor={nameId}
-                className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2"
+                className="mono text-[10px] text-[#999] uppercase tracking-[0.12em] block mb-2"
               >
                 name
               </label>
@@ -750,7 +761,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
             <div>
               <label
                 htmlFor={emailId}
-                className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2"
+                className="mono text-[10px] text-[#999] uppercase tracking-[0.12em] block mb-2"
               >
                 work email
               </label>
@@ -772,7 +783,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
           <div>
             <label
               htmlFor={urlId}
-              className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2"
+              className="mono text-[10px] text-[#999] uppercase tracking-[0.12em] block mb-2"
             >
               product url
             </label>
@@ -793,7 +804,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
           <div>
             <label
               htmlFor={concernId}
-              className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2"
+              className="mono text-[10px] text-[#999] uppercase tracking-[0.12em] block mb-2"
             >
               biggest concern
             </label>
@@ -821,7 +832,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
           <div>
             <label
               htmlFor={spendId}
-              className="mono text-[10px] text-[#444] uppercase tracking-[0.12em] block mb-2"
+              className="mono text-[10px] text-[#999] uppercase tracking-[0.12em] block mb-2"
             >
               monthly cloud spend (optional)
             </label>
@@ -880,7 +891,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
               {submitError}
             </div>
           )}
-          <div className="mono text-[11px] text-[#444] text-center">
+          <div className="mono text-[11px] text-[#999] text-center">
             {"// no commitment required. response within 48h."}
           </div>
           {showDedicatedLink && (
