@@ -3,12 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SectionHead, VolLabel } from "@/components/site";
 
+// ⚡ Bolt 2026-09-23: Streamline useIsLgUp to read mql.matches directly from event object and initial state — expected impact: Avoids redundant evaluation and layout recalculations on resize.
 function useIsLgUp() {
   const [isLg, setIsLg] = useState(false);
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 1024px)");
-    const on = () => setIsLg(mql.matches);
-    on();
+    const on = (e: MediaQueryListEvent) => setIsLg(e.matches);
+    setIsLg(mql.matches);
     mql.addEventListener("change", on);
     return () => mql.removeEventListener("change", on);
   }, []);
