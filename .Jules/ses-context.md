@@ -63,7 +63,7 @@ cloud_off_limits:
 
 # Scribe updates this automatically. Operator can also add entries.
 
-completed: ["🛡️ Sentinel: [HIGH] Fix XSS vulnerability in ChartStyle component", "🎨 Palette: Eliminate form duplication and elevate accessibility", "🎨 Palette: Resolve site-wide text contrast accessibility failures with WCAG AA-compliant gray token", "⚡ Bolt: Eliminate scroll listener overhead with IntersectionObserver", "🛡️ Sentinel: Align cookie and privacy policy disclosures for GA4 compliance", "🛡️ Sentinel: Harden Permissions-Policy security header", "🛡️ Sentinel: Add RFC 9116 security.txt for standardized vulnerability disclosure channel", "🛡️ Sentinel: Harden HTTP security headers with COOP & X-Permitted-Cross-Domain-Policies", "🛡️ Sentinel: Harden Cross-Origin-Resource-Policy HTTP header"]
+completed: ["🛡️ Sentinel: [HIGH] Fix XSS vulnerability in ChartStyle component", "🎨 Palette: Eliminate form duplication and elevate accessibility", "🎨 Palette: Resolve site-wide text contrast accessibility failures with WCAG AA-compliant gray token", "⚡ Bolt: Eliminate scroll listener overhead with IntersectionObserver", "🛡️ Sentinel: Align cookie and privacy policy disclosures for GA4 compliance", "🛡️ Sentinel: Harden Permissions-Policy security header", "🛡️ Sentinel: Add RFC 9116 security.txt for standardized vulnerability disclosure channel", "🛡️ Sentinel: Harden HTTP security headers with COOP & X-Permitted-Cross-Domain-Policies", "🛡️ Sentinel: Harden Cross-Origin-Resource-Policy HTTP header", "🎨 Palette: Upgrade form label contrast & progressbar ARIA semantics"]
 
 ## Report format preference
 
