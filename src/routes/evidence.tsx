@@ -319,7 +319,8 @@ function EvidencePage() {
 
             <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-8 items-center">
               <div className="space-y-3">
-                <div className="mono text-[11px] text-[#444] uppercase tracking-[0.12em] font-medium">
+                {/* 🎨 Palette 2026-09-23: Upgrade BEFORE label text contrast to WCAG AA #999 — Elevates label legibility and WCAG AA compliance. */}
+                <div className="mono text-[11px] text-[#999] uppercase tracking-[0.12em] font-medium">
                   BEFORE — Week 0
                 </div>
                 <HealthCard

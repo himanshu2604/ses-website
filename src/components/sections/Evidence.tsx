@@ -1,4 +1,5 @@
 // ⚡ Bolt 2026-08-14: Reduce unused JavaScript on initial homepage load via lazy loading below-the-fold sections — expected impact: removes 16.96 kB (7.05 kB gzipped) of unused JS from the initial page load bundle
+// 🎨 Palette 2026-09-23: Upgrade BEFORE label text contrast to WCAG AA #999 — Elevates label legibility and WCAG AA compliance.
 import { SectionHead, HealthCard } from "@/components/site";
 
 export default function Evidence() {
@@ -14,7 +15,7 @@ export default function Evidence() {
 
         <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-8 items-center">
           <div className="space-y-3">
-            <div className="mono text-[11px] text-[#444] uppercase tracking-[0.12em] font-medium">
+            <div className="mono text-[11px] text-[#999] uppercase tracking-[0.12em] font-medium">
               BEFORE — Week 0
             </div>
             <HealthCard
