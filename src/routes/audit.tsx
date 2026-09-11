@@ -1,7 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav, Footer, VolLabel, Eyebrow, AuditForm } from "@/components/site";
 
+// 🛡️ Sentinel 2026-09-11: Input Validation — Enforce strict search parameter whitelist validation for plan selection on /audit route
+const ALLOWED_PLANS = ["maintain", "growth", "compound"] as const;
+type Plan = (typeof ALLOWED_PLANS)[number];
+
 export const Route = createFileRoute("/audit")({
+  validateSearch: (search: Record<string, unknown>): { plan?: Plan } => {
+    const rawPlan = typeof search.plan === "string" ? search.plan.toLowerCase() : undefined;
+    const plan = ALLOWED_PLANS.includes(rawPlan as Plan) ? (rawPlan as Plan) : undefined;
+    return { plan };
+  },
   head: () => ({
     meta: [
       { title: "Free Baseline Audit — SES Software Evolution Service" },

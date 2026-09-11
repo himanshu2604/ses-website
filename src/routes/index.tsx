@@ -20,11 +20,15 @@ const Evidence = lazy(() => import("@/components/sections/Evidence"));
 const Pricing = lazy(() => import("@/components/sections/Pricing"));
 const Results = lazy(() => import("@/components/sections/Results"));
 
+// 🛡️ Sentinel 2026-09-11: Input Validation — Enforce strict search parameter whitelist validation for plan selection on / route
+const ALLOWED_PLANS = ["maintain", "growth", "compound"] as const;
+type Plan = (typeof ALLOWED_PLANS)[number];
+
 export const Route = createFileRoute("/")({
-  validateSearch: (search: Record<string, unknown>) => {
-    return {
-      plan: typeof search.plan === "string" ? search.plan : undefined,
-    };
+  validateSearch: (search: Record<string, unknown>): { plan?: Plan } => {
+    const rawPlan = typeof search.plan === "string" ? search.plan.toLowerCase() : undefined;
+    const plan = ALLOWED_PLANS.includes(rawPlan as Plan) ? (rawPlan as Plan) : undefined;
+    return { plan };
   },
   head: () => ({
     meta: [
