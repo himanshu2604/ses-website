@@ -15,13 +15,13 @@
 
 ## Health Score update
 
-| Pillar              | Score           | Change     |
-| ------------------- | --------------- | ---------- |
-| Performance         | 4/100           | +0         |
-| Security            | 26/100          | +2         |
-| Experience Quality  | 7/100           | +0         |
-| Code Quality        | 3/100           | +0         |
-| **Overall**         | **11.20/100**   | **+0.60**  |
+| Pillar             | Score         | Change    |
+| ------------------ | ------------- | --------- |
+| Performance        | 4/100         | +0        |
+| Security           | 26/100        | +2        |
+| Experience Quality | 7/100         | +0        |
+| Code Quality       | 3/100         | +0        |
+| **Overall**        | **11.20/100** | **+0.60** |
 
 ## Next week
 
