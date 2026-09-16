@@ -1,3 +1,4 @@
+// 🎨 Palette 2026-09-23: Upgrade /status contrast to WCAG AA #999 and add aria-hidden/aria-label semantics — Elevates status page accessibility.
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav, Footer, Eyebrow } from "@/components/site";
 
@@ -36,6 +37,7 @@ function StatusPage() {
               <h1 className="headline text-[32px] md:text-[52px]">All systems operational.</h1>
               <span
                 className="pulse-dot"
+                aria-hidden="true"
                 style={{
                   width: 14,
                   height: 14,
@@ -45,17 +47,24 @@ function StatusPage() {
                 }}
               />
             </div>
-            <ul className="mono text-[14px] md:text-[15px] space-y-3 pt-4">
+            <ul
+              aria-label="System status"
+              className="mono text-[14px] md:text-[15px] space-y-3 pt-4"
+            >
               {systems.map((s) => (
                 <li key={s} className="flex items-center gap-3 text-[#888]">
-                  <span className="text-[#22c55e]">●</span>
+                  <span className="text-[#22c55e]" aria-hidden="true">
+                    ●
+                  </span>
                   <span>{s}</span>
-                  <span className="text-[#444]">—</span>
+                  <span className="text-[#999]" aria-hidden="true">
+                    —
+                  </span>
                   <span className="text-[#22c55e]">operational</span>
                 </li>
               ))}
             </ul>
-            <p className="mono text-[12px] text-[#444] pt-6">Last checked: updated automatically</p>
+            <p className="mono text-[12px] text-[#999] pt-6">Last checked: updated automatically</p>
           </div>
         </section>
       </main>
