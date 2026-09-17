@@ -17,3 +17,8 @@
 
 **Learning:** SVG chart line-draw animations frequently query `path.getTotalLength()` on mount to set `stroke-dasharray`. However, querying this DOM property forces a synchronous layout calculation (reflow), and storing its value in React state triggers a second render pass immediately after mount. Because the path coordinates are derived from static or calculated layout coordinates, we can compute the exact Euclidean length of the straight-line segments mathematically in pure JS during render. This completely avoids DOM querying and cuts the mount render cycle from 2 passes to 1.
 **Action:** For SVG chart animations with deterministic line-segments, calculate the path length mathematically in render instead of using `useRef` and `path.getTotalLength()` on mount.
+
+## 2026-09-23 - Pre-computed Scroll Progress Denominator
+
+**Learning:** Reading `window.innerHeight` inside high-frequency scroll animation frame (`requestAnimationFrame`) callbacks forces window/DOM property queries on every scroll frame. Pre-computing and caching the denominator `(rect.height - window.innerHeight)` in an `updateCache` helper during resize and intersection events allows the scroll handler to compute progress using pre-calculated values without querying DOM properties during active scrolling.
+**Action:** Always pre-calculate layout geometry and viewport dimensions in resize/intersection callbacks rather than reading `window.innerHeight` or `getBoundingClientRect()` inside high-frequency scroll handlers.
