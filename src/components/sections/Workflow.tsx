@@ -166,27 +166,26 @@ export default function Workflow() {
 
   const sectionRef = useRef<HTMLElement>(null);
 
+  // ⚡ Bolt 2026-09-23: Pre-compute and cache scroll denominator in updateCache to eliminate window.innerHeight DOM property reads on high-frequency scroll RAF frames — expected impact: Reduces scroll RAF frame computation time and avoids unnecessary DOM/window layout queries.
   useEffect(() => {
     let ticking = false;
     const section = sectionRef.current;
     let cachedSectionTop = 0;
-    let cachedSectionHeight = 0;
+    let cachedDenom = 0;
 
     const updateCache = () => {
       if (!section) return;
       const rect = section.getBoundingClientRect();
       cachedSectionTop = rect.top + window.scrollY;
-      cachedSectionHeight = rect.height;
+      cachedDenom = rect.height - window.innerHeight;
     };
 
     const onScroll = () => {
       if (ticking || !section) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const viewportHeight = window.innerHeight;
         const scrollY = window.scrollY;
-        const denom = cachedSectionHeight - viewportHeight;
-        const progress = denom > 0 ? (scrollY - cachedSectionTop) / denom : 0;
+        const progress = cachedDenom > 0 ? (scrollY - cachedSectionTop) / cachedDenom : 0;
         const fill = Math.max(0, Math.min(1, progress)) * 100;
         section.style.setProperty("--section-fill", `${fill}%`);
         ticking = false;
