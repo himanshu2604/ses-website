@@ -24,3 +24,8 @@
 
 **Learning:** In TanStack Router, `router.state` is always up to date but _non-reactive_; referencing it directly in a component body or hook dependencies will not trigger a React update/re-render. Instead, `useRouterState` must be leveraged. Furthermore, query parameters (e.g., `?plan=growth`) will be stripped out of the parsed state at runtime unless explicitly validated using the `validateSearch` option on the corresponding route definition.
 **Action:** Always use `useRouterState({ select: ... })` to obtain reactive location objects, and define explicit query parameter schemas inside route definitions using `validateSearch` to prevent parameters from being filtered out.
+
+## 2026-09-30 - Standardizing Focus Rings on Custom Styled Form Inputs
+
+**Learning:** Custom input fields using `outline: none` relying solely on `box-shadow` or `border-color` can fail WCAG 2.4.7 / WCAG 1.4.11 accessibility requirements, particularly in OS high-contrast / forced-colors modes where box shadows are suppressed. Standardizing `outline: 2px solid [color]` with `outline-offset: 1px` ensures distinct visual focus indication across all user environments.
+**Action:** Always pair `border-color` / `box-shadow` updates with an explicit `outline` and `outline-offset` on focus states for custom input controls.

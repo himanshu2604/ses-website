@@ -1,4 +1,4 @@
-/* 🎨 Palette 2026-08-04: Resolve site-wide text contrast accessibility failures by upgrading secondary/muted-text to a WCAG AA-compliant gray (#999) — Elevates accessibility, bringing contrast ratio from 3.32:1 to 6.58:1. */
+/* 🎨 Palette 2026-09-30: Enhance form input focus ring visibility for WCAG 2.1 AA keyboard accessibility — Ensures distinct high-contrast focus outline on form fields. */
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -233,7 +233,8 @@
     box-shadow 0.2s;
 }
 .field:focus {
-  outline: none;
+  outline: 2px solid #22c55e;
+  outline-offset: 1px;
   border-color: #22c55e;
   box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
 }
@@ -244,6 +245,8 @@
   border-color: #ef4444;
 }
 .field-invalid:focus {
+  outline: 2px solid #ef4444;
+  outline-offset: 1px;
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
 }
