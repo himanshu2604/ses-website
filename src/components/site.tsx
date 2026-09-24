@@ -5,23 +5,27 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 /* -------------------- hooks & primitives -------------------- */
 
+// ⚡ Bolt 2026-09-24: Auto-disconnect IntersectionObserver once element intersects and unobserve target — expected impact: Frees observer memory and eliminates lingering callbacks across all count-up and progressbar instances.
 export function useInView<T extends HTMLElement>(threshold = 0.2) {
   const ref = useRef<T | null>(null);
   const [seen, setSeen] = useState(false);
   useEffect(() => {
-    if (!ref.current || seen) return;
+    const node = ref.current;
+    if (!node || seen) return;
     const obs = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
+        for (const e of entries) {
           if (e.isIntersecting) {
             setSeen(true);
+            obs.unobserve(e.target);
             obs.disconnect();
+            break;
           }
-        });
+        }
       },
       { threshold },
     );
-    obs.observe(ref.current);
+    obs.observe(node);
     return () => obs.disconnect();
   }, [seen, threshold]);
   return { ref, seen };
