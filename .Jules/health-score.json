@@ -1,12 +1,12 @@
 {
   "client": "Software Evolution Service (SES)",
-  "last_updated": "2026-09-18",
+  "last_updated": "2026-09-25",
   "performance_score": 4,
-  "security_score": 28,
+  "security_score": 30,
   "experience_quality_score": 7,
   "code_quality_score": 3,
   "ux_score": 7,
   "maintainability_score": 3,
-  "overall_score": 11.8,
-  "week_summary": "Security score increased by hardening Content-Security-Policy with frame-src directive to prevent framing and clickjacking attacks."
+  "overall_score": 12.4,
+  "week_summary": "Security score increased by hardening X-DNS-Prefetch-Control header in vercel.json to prevent domain pre-resolution privacy leaks."
 }
