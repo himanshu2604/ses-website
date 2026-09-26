@@ -1,6 +1,6 @@
 {
   "client": "ses-marketing-site",
-  "last_updated": "2026-08-21",
+  "last_updated": "2026-09-25",
   "version": "1.0",
   "architecture": {
     "framework": "TanStack Start v1 — full-stack React framework with file-based routing",
@@ -144,6 +144,16 @@
       "agent": "Sentinel",
       "change": "Hardened HTTP security headers in vercel.json with COOP (same-origin) and X-Permitted-Cross-Domain-Policies (none)",
       "impact": "Security score +2 (20 → 22)",
+      "skill_scores": {
+        "overall": "100/100"
+      },
+      "status": "merged"
+    },
+    {
+      "date": "2026-09-25",
+      "agent": "Sentinel",
+      "change": "Hardened X-DNS-Prefetch-Control security header in vercel.json",
+      "impact": "Security score +2 (28 → 30)",
       "skill_scores": {
         "overall": "100/100"
       },
