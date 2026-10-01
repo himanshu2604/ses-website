@@ -29,3 +29,8 @@
 
 **Learning:** Custom input fields using `outline: none` relying solely on `box-shadow` or `border-color` can fail WCAG 2.4.7 / WCAG 1.4.11 accessibility requirements, particularly in OS high-contrast / forced-colors modes where box shadows are suppressed. Standardizing `outline: 2px solid [color]` with `outline-offset: 1px` ensures distinct visual focus indication across all user environments.
 **Action:** Always pair `border-color` / `box-shadow` updates with an explicit `outline` and `outline-offset` on focus states for custom input controls.
+
+## 2026-10-02 - Active Navigation State & Screen Reader Landmark Semantics via TanStack Router
+
+**Learning:** Navigation links without explicit active state indicators leave users confused about their current location on multi-page SPAs, while screen reader users lack location context without `aria-current="page"`. Passing `activeProps` to TanStack Router's `<Link>` component declaratively applies both visual accent styles and `aria-current="page"` semantics when the current route matches, ensuring WCAG 2.1 AA compliant navigation.
+**Action:** Always utilize `activeProps={{ className: "...", "aria-current": "page" }}` on TanStack Router `<Link>` elements for persistent site navigation links across desktop and mobile views.

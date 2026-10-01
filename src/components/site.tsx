@@ -249,6 +249,7 @@ export function HealthCard({
 
 // ⚡ Bolt 2026-07-29: Replaced high-frequency scroll event listener with an IntersectionObserver sentinel to eliminate main-thread scroll jank — expected impact: 0 scroll event triggers from Nav, reducing scroll listener execution time to <1ms.
 // 🎨 Palette 2026-08-11: Enhance mobile navigation keyboard and interactive accessibility — Improves UX and keyboard interaction (WCAG AA-compliance).
+// 🎨 Palette 2026-10-02: Add active state indicator & aria-current="page" to navigation links — Improves visual feedback & screen reader navigation accessibility.
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -342,7 +343,15 @@ export function Nav() {
           <div className="hidden md:flex items-center gap-7 mono text-[12px]">
             {links.map((l) =>
               l.kind === "route" ? (
-                <Link key={l.href} to={l.href} className="nav-link">
+                <Link
+                  key={l.href}
+                  to={l.href}
+                  className="nav-link"
+                  activeProps={{
+                    className: "nav-link text-[#22c55e] font-medium",
+                    "aria-current": "page",
+                  }}
+                >
                   {l.label}
                 </Link>
               ) : (
@@ -356,6 +365,11 @@ export function Nav() {
             <Link
               to="/audit"
               className="btn-outline hidden sm:inline-block mono text-[12px] px-3.5 py-1.5 rounded-[3px] border border-[#22c55e] text-[#22c55e]"
+              activeProps={{
+                className:
+                  "btn-outline hidden sm:inline-block mono text-[12px] px-3.5 py-1.5 rounded-[3px] border border-[#22c55e] bg-[#22c55e]/10 text-[#22c55e] font-medium",
+                "aria-current": "page",
+              }}
             >
               audit --free
             </Link>
@@ -386,6 +400,11 @@ export function Nav() {
                     to={l.href}
                     onClick={() => setOpen(false)}
                     className="py-3 text-[#888] hover:text-[#22c55e] border-b border-[#1a1a1a] last:border-b-0"
+                    activeProps={{
+                      className:
+                        "py-3 text-[#22c55e] font-medium border-b border-[#1a1a1a] last:border-b-0",
+                      "aria-current": "page",
+                    }}
                   >
                     {l.label}
                   </Link>
