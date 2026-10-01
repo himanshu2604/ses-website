@@ -1,45 +1,48 @@
 // ⚡ Bolt 2026-08-14: Reduce unused JavaScript on initial homepage load via lazy loading below-the-fold sections — expected impact: removes 16.96 kB (7.05 kB gzipped) of unused JS from the initial page load bundle
 import { SectionHead } from "@/components/site";
 
+// ⚡ Bolt 2026-10-07: Hoist static outcomes data to module scope — expected impact: Eliminates object array allocations on component re-renders.
+const ITEMS = [
+  {
+    type: "PERF",
+    num: "-1.8s",
+    title: "Cut largest contentful paint",
+    desc: "Replaced a render-blocking bundle with route-level code splitting and edge caching.",
+  },
+  {
+    type: "RELIABILITY",
+    num: "99.98%",
+    title: "Uptime over 90 days",
+    desc: "Added circuit breakers, retries with backoff, and graceful degradation on the payment path.",
+  },
+  {
+    type: "PERF",
+    num: "+3.2x",
+    title: "Faster API throughput",
+    desc: "Introduced connection pooling and a read replica for the hottest query paths.",
+  },
+  {
+    type: "SECURITY",
+    num: "17",
+    title: "Critical CVEs resolved",
+    desc: "Patched cascading vulnerabilities across the dependency graph and locked transitive versions.",
+  },
+  {
+    type: "COST",
+    num: "-41%",
+    title: "Cloud infrastructure spend",
+    desc: "Right-sized compute, archived cold storage, and consolidated redundant queues.",
+  },
+  {
+    type: "CODE HEALTH",
+    num: "+38",
+    title: "Maintainability index",
+    desc: "Eliminated dead code, extracted shared modules, and added contract tests on critical paths.",
+  },
+];
+
 export default function Results() {
-  const items = [
-    {
-      type: "PERF",
-      num: "-1.8s",
-      title: "Cut largest contentful paint",
-      desc: "Replaced a render-blocking bundle with route-level code splitting and edge caching.",
-    },
-    {
-      type: "RELIABILITY",
-      num: "99.98%",
-      title: "Uptime over 90 days",
-      desc: "Added circuit breakers, retries with backoff, and graceful degradation on the payment path.",
-    },
-    {
-      type: "PERF",
-      num: "+3.2x",
-      title: "Faster API throughput",
-      desc: "Introduced connection pooling and a read replica for the hottest query paths.",
-    },
-    {
-      type: "SECURITY",
-      num: "17",
-      title: "Critical CVEs resolved",
-      desc: "Patched cascading vulnerabilities across the dependency graph and locked transitive versions.",
-    },
-    {
-      type: "COST",
-      num: "-41%",
-      title: "Cloud infrastructure spend",
-      desc: "Right-sized compute, archived cold storage, and consolidated redundant queues.",
-    },
-    {
-      type: "CODE HEALTH",
-      num: "+38",
-      title: "Maintainability index",
-      desc: "Eliminated dead code, extracted shared modules, and added contract tests on critical paths.",
-    },
-  ];
+  const items = ITEMS;
   return (
     <section id="results" className="py-16 md:py-30 border-b border-[#1a1a1a]">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 space-y-14">

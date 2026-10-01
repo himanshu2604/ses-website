@@ -3,56 +3,59 @@
 import { Link } from "@tanstack/react-router";
 import { SectionHead } from "@/components/site";
 
+// ⚡ Bolt 2026-10-07: Hoist static plans data to module scope — expected impact: Eliminates object array allocations on component re-renders.
+const PLANS = [
+  {
+    name: "MAINTAIN",
+    tag: "HOLD THE LINE",
+    price: "$650",
+    unit: "/mo",
+    features: [
+      "Weekly automated scan",
+      "Up to 4 fixes/week",
+      "Security patching",
+      "Monthly health report",
+    ],
+    cta: "$ start --maintain",
+    filled: false,
+    featured: false,
+  },
+  {
+    name: "GROWTH",
+    tag: "MOST CHOSEN",
+    price: "$1,500",
+    unit: "/mo",
+    features: [
+      "Everything in Maintain",
+      "Up to 12 fixes/week",
+      "AI-assisted engineering",
+      "Performance + reliability work",
+      "Weekly report + roadmap",
+    ],
+    cta: "$ start --growth",
+    filled: true,
+    featured: true,
+  },
+  {
+    name: "COMPOUND",
+    tag: "FULL EVOLUTION",
+    price: "Custom",
+    unit: "",
+    features: [
+      "Everything in Growth",
+      "Dedicated engineering pod",
+      "Architecture modernization",
+      "SLA-backed response times",
+      "Quarterly strategy review",
+    ],
+    cta: "$ start --compound",
+    filled: false,
+    featured: false,
+  },
+];
+
 export default function Pricing() {
-  const plans = [
-    {
-      name: "MAINTAIN",
-      tag: "HOLD THE LINE",
-      price: "$650",
-      unit: "/mo",
-      features: [
-        "Weekly automated scan",
-        "Up to 4 fixes/week",
-        "Security patching",
-        "Monthly health report",
-      ],
-      cta: "$ start --maintain",
-      filled: false,
-      featured: false,
-    },
-    {
-      name: "GROWTH",
-      tag: "MOST CHOSEN",
-      price: "$1,500",
-      unit: "/mo",
-      features: [
-        "Everything in Maintain",
-        "Up to 12 fixes/week",
-        "AI-assisted engineering",
-        "Performance + reliability work",
-        "Weekly report + roadmap",
-      ],
-      cta: "$ start --growth",
-      filled: true,
-      featured: true,
-    },
-    {
-      name: "COMPOUND",
-      tag: "FULL EVOLUTION",
-      price: "Custom",
-      unit: "",
-      features: [
-        "Everything in Growth",
-        "Dedicated engineering pod",
-        "Architecture modernization",
-        "SLA-backed response times",
-        "Quarterly strategy review",
-      ],
-      cta: "$ start --compound",
-      filled: false,
-      featured: false,
-    },
-  ];
+  const plans = PLANS;
   return (
     <section id="pricing" className="py-16 md:py-30 border-b border-[#1a1a1a]">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 space-y-14">
