@@ -3,18 +3,122 @@ import { useEffect, useRef, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SectionHead, VolLabel } from "@/components/site";
 
-// ⚡ Bolt 2026-09-23: Streamline useIsLgUp to read mql.matches directly from event object and initial state — expected impact: Avoids redundant evaluation and layout recalculations on resize.
+// ⚡ Bolt 2026-10-07: Hoist static workflow data, pre-compute pipeline sets, and eliminate redundant useIsLgUp state updates — expected impact: Eliminates object/Set allocation GC pressure on scroll and removes extra mount re-render on desktop.
 function useIsLgUp() {
-  const [isLg, setIsLg] = useState(false);
+  const [isLg, setIsLg] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia("(min-width: 1024px)").matches : false,
+  );
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 1024px)");
     const on = (e: MediaQueryListEvent) => setIsLg(e.matches);
-    setIsLg(mql.matches);
+    if (mql.matches !== isLg) {
+      setIsLg(mql.matches);
+    }
     mql.addEventListener("change", on);
     return () => mql.removeEventListener("change", on);
-  }, []);
+  }, [isLg]);
   return isLg;
 }
+
+const PIPELINE_STAGES = [
+  "GitHub",
+  "Jules Agents",
+  "Pull Requests",
+  "Review",
+  "Deploy",
+  "Health Score",
+  "Monthly Report",
+];
+
+const STEPS = [
+  {
+    n: "01",
+    cmd: "$ ses scan --deep",
+    title: "Scan",
+    sub: "Automated audit",
+    desc: "Every Monday we run a deep scan across performance, security, dependencies, and code health. Output: fresh health score + ranked list of regressions.",
+    bullets: ["Lighthouse + load profiling", "CVE & dependency diff", "Static analysis pass"],
+    output: [
+      "$ ses scan --deep",
+      "> scanning 14 services...",
+      "> performance: 3 regressions found",
+      "> security: 2 CVEs flagged (1 critical)",
+      "> code quality: 8 stale dependencies",
+      "> scan complete — 6.2s",
+    ],
+    fact: "The average production codebase accumulates a new dependency vulnerability roughly every nine days without active monitoring.",
+    pipeline: ["GitHub"],
+    pipelineSet: new Set(["GitHub"]),
+  },
+  {
+    n: "02",
+    cmd: "$ ses prioritize",
+    title: "Prioritize",
+    sub: "AI-ranked findings",
+    desc: "AI ranks findings by impact. Operator selects top items for the week's loop.",
+    bullets: [],
+    output: [
+      "$ ses prioritize",
+      "> ranking 13 findings by impact x effort",
+      "> top 4 selected for this week's loop",
+      "> est. health score impact: +6 to +9 points",
+    ],
+    fact: "Teams that triage by impact-vs-effort consistently ship more fixes per sprint than teams working tickets in reported order.",
+    pipeline: ["Jules Agents"],
+    pipelineSet: new Set(["Jules Agents"]),
+  },
+  {
+    n: "03",
+    cmd: "$ ses engineer",
+    title: "Engineer",
+    sub: "PRs with evidence",
+    desc: "AI generates pull requests with full evidence attached — benchmarks, traces, before/after.",
+    bullets: [],
+    output: [
+      "$ ses engineer",
+      '> PR #482 opened: "Add connection pooling to /api/orders"',
+      '> PR #483 opened: "Patch CVE-2026-1142 in auth middleware"',
+      "> evidence attached: benchmarks, traces, diff summary",
+    ],
+    fact: "PRs that ship with before/after evidence attached get reviewed and merged noticeably faster than PRs with description text alone.",
+    pipeline: ["Pull Requests"],
+    pipelineSet: new Set(["Pull Requests"]),
+  },
+  {
+    n: "04",
+    cmd: "$ ses verify",
+    title: "Verify",
+    sub: "Tests + staging + review",
+    desc: "Tests run, staging deploy, human review before production merge.",
+    bullets: [],
+    output: [
+      "$ ses verify",
+      "> running test suite... 412/412 passed",
+      "> staging deploy successful",
+      "> awaiting human review — 1 reviewer assigned",
+    ],
+    fact: "Most production incidents trace back to changes that skipped staging validation — not to missing tests.",
+    pipeline: ["Review", "Deploy"],
+    pipelineSet: new Set(["Review", "Deploy"]),
+  },
+  {
+    n: "05",
+    cmd: "$ ses report",
+    title: "Report",
+    sub: "Changelog + score update",
+    desc: "Changelog generated, Health Score updated, client notified.",
+    bullets: [],
+    output: [
+      "$ ses report",
+      "> changelog generated (4 entries)",
+      "> health score updated: 73 → 79",
+      "> client notified — report sent",
+    ],
+    fact: "Clients who can watch their Health Score trend over time are far less likely to churn than those who only receive a monthly PDF.",
+    pipeline: ["Health Score", "Monthly Report"],
+    pipelineSet: new Set(["Health Score", "Monthly Report"]),
+  },
+];
 
 function TerminalBlock({ lines }: { lines: string[] }) {
   return (
@@ -32,100 +136,8 @@ function TerminalBlock({ lines }: { lines: string[] }) {
 }
 
 export default function Workflow() {
-  const steps = [
-    {
-      n: "01",
-      cmd: "$ ses scan --deep",
-      title: "Scan",
-      sub: "Automated audit",
-      desc: "Every Monday we run a deep scan across performance, security, dependencies, and code health. Output: fresh health score + ranked list of regressions.",
-      bullets: ["Lighthouse + load profiling", "CVE & dependency diff", "Static analysis pass"],
-      output: [
-        "$ ses scan --deep",
-        "> scanning 14 services...",
-        "> performance: 3 regressions found",
-        "> security: 2 CVEs flagged (1 critical)",
-        "> code quality: 8 stale dependencies",
-        "> scan complete — 6.2s",
-      ],
-      fact: "The average production codebase accumulates a new dependency vulnerability roughly every nine days without active monitoring.",
-      pipeline: ["GitHub"],
-    },
-    {
-      n: "02",
-      cmd: "$ ses prioritize",
-      title: "Prioritize",
-      sub: "AI-ranked findings",
-      desc: "AI ranks findings by impact. Operator selects top items for the week's loop.",
-      bullets: [],
-      output: [
-        "$ ses prioritize",
-        "> ranking 13 findings by impact x effort",
-        "> top 4 selected for this week's loop",
-        "> est. health score impact: +6 to +9 points",
-      ],
-      fact: "Teams that triage by impact-vs-effort consistently ship more fixes per sprint than teams working tickets in reported order.",
-      pipeline: ["Jules Agents"],
-    },
-    {
-      n: "03",
-      cmd: "$ ses engineer",
-      title: "Engineer",
-      sub: "PRs with evidence",
-      desc: "AI generates pull requests with full evidence attached — benchmarks, traces, before/after.",
-      bullets: [],
-      output: [
-        "$ ses engineer",
-        '> PR #482 opened: "Add connection pooling to /api/orders"',
-        '> PR #483 opened: "Patch CVE-2026-1142 in auth middleware"',
-        "> evidence attached: benchmarks, traces, diff summary",
-      ],
-      fact: "PRs that ship with before/after evidence attached get reviewed and merged noticeably faster than PRs with description text alone.",
-      pipeline: ["Pull Requests"],
-    },
-    {
-      n: "04",
-      cmd: "$ ses verify",
-      title: "Verify",
-      sub: "Tests + staging + review",
-      desc: "Tests run, staging deploy, human review before production merge.",
-      bullets: [],
-      output: [
-        "$ ses verify",
-        "> running test suite... 412/412 passed",
-        "> staging deploy successful",
-        "> awaiting human review — 1 reviewer assigned",
-      ],
-      fact: "Most production incidents trace back to changes that skipped staging validation — not to missing tests.",
-      pipeline: ["Review", "Deploy"],
-    },
-    {
-      n: "05",
-      cmd: "$ ses report",
-      title: "Report",
-      sub: "Changelog + score update",
-      desc: "Changelog generated, Health Score updated, client notified.",
-      bullets: [],
-      output: [
-        "$ ses report",
-        "> changelog generated (4 entries)",
-        "> health score updated: 73 → 79",
-        "> client notified — report sent",
-      ],
-      fact: "Clients who can watch their Health Score trend over time are far less likely to churn than those who only receive a monthly PDF.",
-      pipeline: ["Health Score", "Monthly Report"],
-    },
-  ];
-
-  const pipelineStages = [
-    "GitHub",
-    "Jules Agents",
-    "Pull Requests",
-    "Review",
-    "Deploy",
-    "Health Score",
-    "Monthly Report",
-  ];
+  const steps = STEPS;
+  const pipelineStages = PIPELINE_STAGES;
 
   const stepRefs = useRef<Array<HTMLDivElement | null>>([]);
 
@@ -160,7 +172,7 @@ export default function Workflow() {
     return () => obs.disconnect();
   }, [isLgUp]);
 
-  const activeSet = new Set(steps[active].pipeline);
+  const activeSet = steps[active].pipelineSet;
   const ease = "cubic-bezier(0.22, 1, 0.36, 1)";
   const easeIn = "cubic-bezier(0.4, 0, 1, 1)";
 
