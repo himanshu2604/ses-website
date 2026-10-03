@@ -1,12 +1,12 @@
 {
   "client": "Software Evolution Service (SES)",
-  "last_updated": "2026-09-25",
+  "last_updated": "2026-10-02",
   "performance_score": 4,
-  "security_score": 30,
+  "security_score": 32,
   "experience_quality_score": 7,
   "code_quality_score": 3,
   "ux_score": 7,
   "maintainability_score": 3,
-  "overall_score": 12.4,
-  "week_summary": "Security score increased by hardening X-DNS-Prefetch-Control header in vercel.json to prevent domain pre-resolution privacy leaks."
+  "overall_score": 13,
+  "week_summary": "Security score increased by hardening Cross-Origin-Embedder-Policy header in vercel.json to prevent cross-origin resource leaks."
 }
