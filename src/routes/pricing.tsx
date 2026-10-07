@@ -1,3 +1,4 @@
+// 🎨 Palette 2026-10-07: Standardize pricing table scope ARIA semantics and elevate tier badge text contrast to WCAG AA #999 — Improves screen reader navigation and visual contrast.
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Nav, Footer, VolLabel, useInView } from "@/components/site";
 import { Fragment } from "react";
@@ -143,10 +144,13 @@ function PricingPage() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-[#1e1e1e]">
-                  <th className="p-6 mono text-[11px] text-[#999] uppercase tracking-[0.12em] w-2/5 sticky top-[64px] z-30 bg-[#0c0c0c]">
+                  <th
+                    scope="col"
+                    className="p-6 mono text-[11px] text-[#999] uppercase tracking-[0.12em] w-2/5 sticky top-[64px] z-30 bg-[#0c0c0c]"
+                  >
                     Feature
                   </th>
-                  <th className="p-6 mono w-1/5 sticky top-[64px] z-30 bg-[#0c0c0c]">
+                  <th scope="col" className="p-6 mono w-1/5 sticky top-[64px] z-30 bg-[#0c0c0c]">
                     <div className="text-[12px] text-[#f0f0f0]">MAINTAIN</div>
                     <div className="text-[11px] text-[#999] font-sans font-normal normal-case leading-snug mt-1 max-w-[150px]">
                       For stable apps needing continuous security & monitoring.
@@ -155,7 +159,10 @@ function PricingPage() {
                       $650<span className="text-[12px] text-[#999] font-normal">/mo</span>
                     </div>
                   </th>
-                  <th className="p-6 mono w-1/5 relative sticky top-[64px] z-30 bg-[#0d1510]">
+                  <th
+                    scope="col"
+                    className="p-6 mono w-1/5 relative sticky top-[64px] z-30 bg-[#0d1510]"
+                  >
                     <div className="absolute top-3 right-6 text-[9px] text-[#22c55e] border border-[#22c55e]/30 px-1.5 py-0.5 rounded-[2px] uppercase tracking-wider badge-pulse">
                       MOST CHOSEN
                     </div>
@@ -167,7 +174,7 @@ function PricingPage() {
                       $1,500<span className="text-[12px] text-[#999] font-normal">/mo</span>
                     </div>
                   </th>
-                  <th className="p-6 mono w-1/5 sticky top-[64px] z-30 bg-[#0c0c0c]">
+                  <th scope="col" className="p-6 mono w-1/5 sticky top-[64px] z-30 bg-[#0c0c0c]">
                     <div className="text-[12px] text-[#f0f0f0]">COMPOUND</div>
                     <div className="text-[11px] text-[#999] font-sans font-normal normal-case leading-snug mt-1 max-w-[150px]">
                       For complex platforms requiring custom modernization.
@@ -185,18 +192,21 @@ function PricingPage() {
                     <tr className="bg-[#161616]/60">
                       <td
                         colSpan={4}
-                        className="p-4 pl-6 mono text-[11px] tracking-[0.12em] text-[#444] uppercase font-medium"
+                        className="p-4 pl-6 mono text-[11px] tracking-[0.12em] text-[#999] uppercase font-medium"
                       >
                         <span className="text-[#22c55e]">GROUP</span>{" "}
-                        <span className="text-[#444]">—</span>{" "}
+                        <span className="text-[#999]">—</span>{" "}
                         <span className="text-[#999]">{group.name}</span>
                       </td>
                     </tr>
                     {group.features.map((row) => (
                       <tr key={row.name} className="pricing-row transition-colors">
-                        <td className="p-6 text-[14px] text-[#888] font-medium font-sans">
+                        <th
+                          scope="row"
+                          className="p-6 text-[14px] text-[#888] font-medium font-sans text-left font-normal"
+                        >
                           {row.name}
-                        </td>
+                        </th>
                         <td className="p-6 mono text-[14px] tabular-nums">
                           {row.maintain === true ? (
                             <span className="text-[#22c55e] check-mark">
@@ -332,7 +342,7 @@ function PricingPage() {
                       {tier.tag}
                     </span>
                   ) : (
-                    <span className="mono text-[10px] tracking-[0.12em] text-[#444]">
+                    <span className="mono text-[10px] tracking-[0.12em] text-[#999]">
                       {tier.tag}
                     </span>
                   )}
@@ -347,9 +357,9 @@ function PricingPage() {
                 <div className="mt-6 border-t border-[#1e1e1e] pt-4 space-y-6 flex-grow">
                   {FEATURE_GROUPS.map((group) => (
                     <div key={group.name} className="space-y-3">
-                      <div className="mono text-[11px] tracking-[0.12em] text-[#444] uppercase font-medium border-b border-[#1e1e1e]/50 pb-1.5">
+                      <div className="mono text-[11px] tracking-[0.12em] text-[#999] uppercase font-medium border-b border-[#1e1e1e]/50 pb-1.5">
                         <span className="text-[#22c55e]">GROUP</span>{" "}
-                        <span className="text-[#444]">—</span>{" "}
+                        <span className="text-[#999]">—</span>{" "}
                         <span className="text-[#999]">{group.name}</span>
                       </div>
                       {group.features.map((f) => {
