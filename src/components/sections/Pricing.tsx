@@ -79,7 +79,7 @@ export default function Pricing() {
                 <div className="mono text-[12px] text-[#f0f0f0]">{p.name}</div>
                 <div
                   className="mono text-[10px] tracking-[0.12em]"
-                  style={{ color: p.featured ? "#22c55e" : "#444" }}
+                  style={{ color: p.featured ? "#22c55e" : "#999" }}
                 >
                   {p.tag}
                 </div>
