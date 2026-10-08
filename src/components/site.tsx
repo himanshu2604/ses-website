@@ -250,6 +250,14 @@ export function HealthCard({
 // ⚡ Bolt 2026-07-29: Replaced high-frequency scroll event listener with an IntersectionObserver sentinel to eliminate main-thread scroll jank — expected impact: 0 scroll event triggers from Nav, reducing scroll listener execution time to <1ms.
 // 🎨 Palette 2026-08-11: Enhance mobile navigation keyboard and interactive accessibility — Improves UX and keyboard interaction (WCAG AA-compliance).
 // 🎨 Palette 2026-10-02: Add active state indicator & aria-current="page" to navigation links — Improves visual feedback & screen reader navigation accessibility.
+// ⚡ Bolt 2026-10-14: Hoist static data structures and validation functions to module scope — expected impact: Eliminates object/function allocations and GC pressure on component re-renders and form input.
+const NAV_LINKS: Array<{ href: string; label: string; kind: "hash" | "route" }> = [
+  { href: "/#process", label: "process", kind: "hash" },
+  { href: "/#results", label: "results", kind: "hash" },
+  { href: "/#pricing", label: "pricing", kind: "hash" },
+  { href: "/evidence", label: "evidence", kind: "route" },
+];
+
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -304,12 +312,6 @@ export function Nav() {
     };
   }, [open]);
 
-  const links: Array<{ href: string; label: string; kind: "hash" | "route" }> = [
-    { href: "/#process", label: "process", kind: "hash" },
-    { href: "/#results", label: "results", kind: "hash" },
-    { href: "/#pricing", label: "pricing", kind: "hash" },
-    { href: "/evidence", label: "evidence", kind: "route" },
-  ];
   return (
     <>
       <div ref={sentinelRef} className="absolute top-0 left-0 right-0 h-20 pointer-events-none" />
@@ -341,7 +343,7 @@ export function Nav() {
             </span>
           </Link>
           <div className="hidden md:flex items-center gap-7 mono text-[12px]">
-            {links.map((l) =>
+            {NAV_LINKS.map((l) =>
               l.kind === "route" ? (
                 <Link
                   key={l.href}
@@ -393,7 +395,7 @@ export function Nav() {
         {open && (
           <div id="mobile-menu" className="md:hidden border-t border-[#1a1a1a]">
             <div className="max-w-[1280px] mx-auto px-6 py-4 flex flex-col mono text-[14px]">
-              {links.map((l) =>
+              {NAV_LINKS.map((l) =>
                 l.kind === "route" ? (
                   <Link
                     key={l.href}
@@ -436,39 +438,40 @@ export function Nav() {
 
 /* -------------------- Footer -------------------- */
 
+const FOOTER_COLS: Array<{
+  title: string;
+  links: Array<{ label: string; to?: string; href?: string }>;
+}> = [
+  {
+    title: "Service",
+    links: [
+      { label: "Process", href: "/#process" },
+      { label: "Pricing", href: "/#pricing" },
+      { label: "Evidence", to: "/evidence" },
+      { label: "Free audit", to: "/audit" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About", to: "/about" },
+      { label: "Engineering blog", to: "/about" },
+      { label: "Changelog", to: "/evidence" },
+      { label: "Careers", href: "mailto:hi@softwareevolutionservice.com?subject=Careers at SES" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy", to: "/privacy" },
+      { label: "Terms", to: "/terms" },
+      { label: "Security", to: "/security" },
+      { label: "Status", to: "/status" },
+    ],
+  },
+];
+
 export function Footer() {
-  const cols: Array<{
-    title: string;
-    links: Array<{ label: string; to?: string; href?: string }>;
-  }> = [
-    {
-      title: "Service",
-      links: [
-        { label: "Process", href: "/#process" },
-        { label: "Pricing", href: "/#pricing" },
-        { label: "Evidence", to: "/evidence" },
-        { label: "Free audit", to: "/audit" },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        { label: "About", to: "/about" },
-        { label: "Engineering blog", to: "/about" },
-        { label: "Changelog", to: "/evidence" },
-        { label: "Careers", href: "mailto:hi@softwareevolutionservice.com?subject=Careers at SES" },
-      ],
-    },
-    {
-      title: "Legal",
-      links: [
-        { label: "Privacy", to: "/privacy" },
-        { label: "Terms", to: "/terms" },
-        { label: "Security", to: "/security" },
-        { label: "Status", to: "/status" },
-      ],
-    },
-  ];
   return (
     <footer style={{ background: "#0a0a0a" }} className="border-t border-[#1a1a1a]">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-16 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -496,7 +499,7 @@ export function Footer() {
             "Software doesn't stay finished. It either evolves or decays."
           </p>
         </div>
-        {cols.map((col) => (
+        {FOOTER_COLS.map((col) => (
           <div key={col.title}>
             <div className="mono text-[10px] uppercase tracking-[0.14em] text-[#999] mb-4">
               {col.title}
@@ -542,6 +545,32 @@ export function Footer() {
 /* -------------------- Audit Form (shared) -------------------- */
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkolddre";
+const PERSONAL_DOMAINS = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"];
+
+function validateName(v: string): string | null {
+  if (!v.trim()) return "name required";
+  if (v.trim().length < 2) return "name must be at least 2 characters";
+  return null;
+}
+function validateEmail(v: string): string | null {
+  const t = v.trim();
+  if (!t) return "work email required";
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!re.test(t)) return "valid email required";
+  const domain = t.split("@")[1]?.toLowerCase() ?? "";
+  if (PERSONAL_DOMAINS.includes(domain)) return "please use your work email";
+  return null;
+}
+function validateUrl(v: string): string | null {
+  const t = v.trim();
+  if (!t) return "product URL required";
+  if (!/^https:\/\/.+\..+/i.test(t)) return "valid URL required (https://...)";
+  return null;
+}
+function validateConcern(v: string): string | null {
+  if (!v) return "please select a concern";
+  return null;
+}
 
 // 🎨 Palette 2026-08-11: Enhance lead-gen AuditForm with pricing plan context bridging — Reads plan context safely from URL on client mount, displays customized selected plan badge, and adapts the CLI submit button micro-interaction to reflect selected plan.
 export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: boolean }) {
@@ -594,33 +623,6 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
   const emailErrId = `${emailId}-error`;
   const urlErrId = `${urlId}-error`;
   const concernErrId = `${concernId}-error`;
-
-  const personalDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"];
-
-  function validateName(v: string): string | null {
-    if (!v.trim()) return "name required";
-    if (v.trim().length < 2) return "name must be at least 2 characters";
-    return null;
-  }
-  function validateEmail(v: string): string | null {
-    const t = v.trim();
-    if (!t) return "work email required";
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!re.test(t)) return "valid email required";
-    const domain = t.split("@")[1]?.toLowerCase() ?? "";
-    if (personalDomains.includes(domain)) return "please use your work email";
-    return null;
-  }
-  function validateUrl(v: string): string | null {
-    const t = v.trim();
-    if (!t) return "product URL required";
-    if (!/^https:\/\/.+\..+/i.test(t)) return "valid URL required (https://...)";
-    return null;
-  }
-  function validateConcern(v: string): string | null {
-    if (!v) return "please select a concern";
-    return null;
-  }
 
   const errors = {
     name: validateName(name),

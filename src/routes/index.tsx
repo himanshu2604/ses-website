@@ -136,44 +136,46 @@ function Hero() {
 
 /* -------------------- Problem / Decay timeline -------------------- */
 
+// ⚡ Bolt 2026-10-14: Hoist static decay stages data structure to module scope — expected impact: Eliminates object array allocations on component re-renders.
+const PROBLEM_STAGES = [
+  {
+    when: "Week 0",
+    score: 88,
+    label: "Launch",
+    desc: "Clean codebase, current dependencies, fast.",
+    tone: "green" as const,
+  },
+  {
+    when: "Month 3",
+    score: 76,
+    label: "Drift",
+    desc: "Patches stack up. Edge cases multiply.",
+    tone: "green" as const,
+  },
+  {
+    when: "Month 9",
+    score: 61,
+    label: "Rot",
+    desc: "Deps go stale. Latency creeps upward.",
+    tone: "amber" as const,
+  },
+  {
+    when: "Year 1",
+    score: 44,
+    label: "Risk",
+    desc: "CVEs unaddressed. Incidents recur.",
+    tone: "amber" as const,
+  },
+  {
+    when: "Year 2",
+    score: 28,
+    label: "Liability",
+    desc: "Rewrites get proposed. Velocity stalls.",
+    tone: "red" as const,
+  },
+];
+
 function Problem() {
-  const stages = [
-    {
-      when: "Week 0",
-      score: 88,
-      label: "Launch",
-      desc: "Clean codebase, current dependencies, fast.",
-      tone: "green" as const,
-    },
-    {
-      when: "Month 3",
-      score: 76,
-      label: "Drift",
-      desc: "Patches stack up. Edge cases multiply.",
-      tone: "green" as const,
-    },
-    {
-      when: "Month 9",
-      score: 61,
-      label: "Rot",
-      desc: "Deps go stale. Latency creeps upward.",
-      tone: "amber" as const,
-    },
-    {
-      when: "Year 1",
-      score: 44,
-      label: "Risk",
-      desc: "CVEs unaddressed. Incidents recur.",
-      tone: "amber" as const,
-    },
-    {
-      when: "Year 2",
-      score: 28,
-      label: "Liability",
-      desc: "Rewrites get proposed. Velocity stalls.",
-      tone: "red" as const,
-    },
-  ];
   return (
     <section className="py-16 md:py-30 border-b border-[#1a1a1a]">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 space-y-14">
@@ -186,7 +188,7 @@ function Problem() {
 
         <div className="border border-[#1e1e1e] rounded-[3px] p-6 md:p-10">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-[#1e1e1e]">
-            {stages.map((s, i) => {
+            {PROBLEM_STAGES.map((s, i) => {
               const color =
                 s.tone === "green" ? "#22c55e" : s.tone === "amber" ? "#d97706" : "#b91c1c";
               return (
