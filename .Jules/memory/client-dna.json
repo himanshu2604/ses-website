@@ -1,6 +1,6 @@
 {
   "client": "ses-marketing-site",
-  "last_updated": "2026-10-02",
+  "last_updated": "2026-10-09",
 
   "company": {
     "name": "SES — Software Evolution Service",
@@ -64,7 +64,7 @@
     ],
     "client_since": "2026-07-05",
     "original_health_score": 0,
-    "current_health_score": 13.0
+    "current_health_score": 13.6
   },
 
   "data_retention": {

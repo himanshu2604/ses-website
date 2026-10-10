@@ -1,12 +1,12 @@
 {
   "client": "Software Evolution Service (SES)",
-  "last_updated": "2026-10-02",
+  "last_updated": "2026-10-09",
   "performance_score": 4,
-  "security_score": 32,
+  "security_score": 34,
   "experience_quality_score": 7,
   "code_quality_score": 3,
   "ux_score": 7,
   "maintainability_score": 3,
-  "overall_score": 13,
-  "week_summary": "Security score increased by hardening Cross-Origin-Embedder-Policy header in vercel.json to prevent cross-origin resource leaks."
+  "overall_score": 13.6,
+  "week_summary": "Security score increased by hardening Content-Security-Policy header in vercel.json with worker-src and media-src restrictions."
 }
