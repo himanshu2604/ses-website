@@ -1,4 +1,4 @@
-// 🎨 Palette 2026-09-23: Upgrade AuditForm labels and footer text contrast to WCAG AA #999 and add semantic progressbar ARIA to Bar component — Elevates accessibility and lead-gen form legibility.
+// 🎨 Palette 2026-10-14: Elevate form placeholder, select dropdown text, and chevron contrast to WCAG AA #999 — Enhances lead-gen form legibility and accessibility.
 import { Link, useRouter, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useId } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -835,7 +835,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
             </label>
             <select
               id={concernId}
-              className={`${fieldClass(showError("concern"))} ${!concern ? "text-[#444444]" : "text-[#f0f0f0]"}`}
+              className={`${fieldClass(showError("concern"))} ${!concern ? "text-[#999999]" : "text-[#f0f0f0]"}`}
               value={concern}
               onChange={(e) => setConcern(e.target.value)}
               onFocus={warmConnection}
@@ -863,7 +863,7 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
             </label>
             <select
               id={spendId}
-              className={`field ${spend === "Prefer not to say" ? "text-[#444444]" : "text-[#f0f0f0]"}`}
+              className={`field ${spend === "Prefer not to say" ? "text-[#999999]" : "text-[#f0f0f0]"}`}
               value={spend}
               onChange={(e) => setSpend(e.target.value)}
               onFocus={warmConnection}
