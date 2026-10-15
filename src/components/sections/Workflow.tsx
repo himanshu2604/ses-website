@@ -1,23 +1,25 @@
 // ⚡ Bolt 2026-08-14: Reduce unused JavaScript on initial homepage load via lazy loading below-the-fold sections — expected impact: removes 16.96 kB (7.05 kB gzipped) of unused JS from the initial page load bundle
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SectionHead, VolLabel } from "@/components/site";
 
-// ⚡ Bolt 2026-10-07: Hoist static workflow data, pre-compute pipeline sets, and eliminate redundant useIsLgUp state updates — expected impact: Eliminates object/Set allocation GC pressure on scroll and removes extra mount re-render on desktop.
+// ⚡ Bolt 2026-10-21: Use React native useSyncExternalStore for media query subscription — expected impact: Safe SSR hydration, zero state lag, and zero redundant re-renders on breakpoint transitions.
+function subscribeLg(callback: () => void) {
+  const mql = window.matchMedia("(min-width: 1024px)");
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+}
+
+function getLgSnapshot() {
+  return window.matchMedia("(min-width: 1024px)").matches;
+}
+
+function getLgServerSnapshot() {
+  return false;
+}
+
 function useIsLgUp() {
-  const [isLg, setIsLg] = useState(() =>
-    typeof window !== "undefined" ? window.matchMedia("(min-width: 1024px)").matches : false,
-  );
-  useEffect(() => {
-    const mql = window.matchMedia("(min-width: 1024px)");
-    const on = (e: MediaQueryListEvent) => setIsLg(e.matches);
-    if (mql.matches !== isLg) {
-      setIsLg(mql.matches);
-    }
-    mql.addEventListener("change", on);
-    return () => mql.removeEventListener("change", on);
-  }, [isLg]);
-  return isLg;
+  return useSyncExternalStore(subscribeLg, getLgSnapshot, getLgServerSnapshot);
 }
 
 const PIPELINE_STAGES = [
