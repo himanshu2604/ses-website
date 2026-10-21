@@ -84,14 +84,18 @@ function AboutPage() {
         >
           <div className="max-w-[900px] mx-auto px-6 md:px-10 space-y-8">
             <h2 className="headline text-[28px] md:text-[40px]">See where your product stands.</h2>
+            {/* 🎨 Palette 2026-10-21: Enhance /about CTA button focus visibility & interaction feedback — Ensures WCAG 2.1 AA focus visibility and design system alignment. */}
             <div className="flex flex-wrap items-center gap-5">
               <Link
                 to="/audit"
-                className="btn-primary mono text-[13px] bg-[#22c55e] text-[#0c0c0c] px-5 py-3 rounded-[3px] font-semibold"
+                className="btn-primary mono text-[13px] bg-[#22c55e] text-[#0c0c0c] px-5 py-3 rounded-[3px] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22c55e] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a] transition-all"
               >
                 $ request --audit ↵
               </Link>
-              <Link to="/evidence" className="nav-link mono text-[13px] text-[#22c55e]">
+              <Link
+                to="/evidence"
+                className="nav-link mono text-[13px] text-[#22c55e] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#22c55e] rounded-[1px]"
+              >
                 view the evidence →
               </Link>
             </div>
