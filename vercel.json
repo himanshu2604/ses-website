@@ -8,6 +8,10 @@
           "value": "off"
         },
         {
+          "key": "X-Download-Options",
+          "value": "noopen"
+        },
+        {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
         },
