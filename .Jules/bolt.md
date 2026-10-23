@@ -22,3 +22,8 @@
 
 **Learning:** Reading `window.innerHeight` inside high-frequency scroll animation frame (`requestAnimationFrame`) callbacks forces window/DOM property queries on every scroll frame. Pre-computing and caching the denominator `(rect.height - window.innerHeight)` in an `updateCache` helper during resize and intersection events allows the scroll handler to compute progress using pre-calculated values without querying DOM properties during active scrolling.
 **Action:** Always pre-calculate layout geometry and viewport dimensions in resize/intersection callbacks rather than reading `window.innerHeight` or `getBoundingClientRect()` inside high-frequency scroll handlers.
+
+## 2026-10-28 - Pre-compute static SVG chart geometry & hoist UI arrays to module scope
+
+**Learning:** SVG chart geometry, point coordinates, and Euclidean path length calculations for deterministic static datasets do not need to run inside React component render functions or `useMemo` hooks on mount/render. Moving the math calculations and static UI arrays to module scope pre-computes them at module load time, eliminating component render arithmetic overhead and object/array allocations during re-renders.
+**Action:** Always hoist deterministic static data structures and invariant graphic geometry calculations to module scope outside React component definitions.

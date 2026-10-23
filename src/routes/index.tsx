@@ -63,6 +63,13 @@ export const Route = createFileRoute("/")({
 
 /* -------------------- Hero -------------------- */
 
+// ⚡ Bolt 2026-10-28: Hoist static hero stats array to module scope — expected impact: Prevents object array allocations on component re-renders.
+const HERO_STATS = [
+  { num: "11", label: "improvements deployed this week" },
+  { num: "$214", label: "cloud costs saved this month" },
+  { num: "top 32%", label: "in your industry" },
+];
+
 function Hero() {
   return (
     <section id="top" className="relative pt-28 pb-16 md:pt-36 md:pb-30 border-b border-[#1a1a1a]">
@@ -114,11 +121,7 @@ function Hero() {
 
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 mt-20">
         <div className="grid grid-cols-1 md:grid-cols-3 border border-[#1e1e1e] rounded-[3px] divide-y md:divide-y-0 md:divide-x divide-[#1e1e1e]">
-          {[
-            { num: "11", label: "improvements deployed this week" },
-            { num: "$214", label: "cloud costs saved this month" },
-            { num: "top 32%", label: "in your industry" },
-          ].map((s) => (
+          {HERO_STATS.map((s) => (
             <div key={s.label} className="p-6 md:p-8 border-l-2 border-[#1f1f1f]">
               <div className="mono font-semibold tabular-nums text-[#22c55e] text-[32px] md:text-[40px] leading-none">
                 {s.num}

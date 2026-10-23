@@ -47,6 +47,37 @@ type FeatureGroup = {
   features: FeatureRow[];
 };
 
+// ⚡ Bolt 2026-10-28: Hoist static mobile pricing tiers array to module scope — expected impact: Prevents object array allocations on component re-renders.
+const MOBILE_TIERS = [
+  {
+    name: "MAINTAIN",
+    price: "$650/mo",
+    description: "For stable apps needing continuous security & monitoring.",
+    tag: "HOLD THE LINE",
+    featured: false,
+    key: "maintain" as const,
+    cta: "$ start --maintain",
+  },
+  {
+    name: "GROWTH",
+    price: "$1,500/mo",
+    description: "For active products scaling and shipping features.",
+    tag: "MOST CHOSEN",
+    featured: true,
+    key: "growth" as const,
+    cta: "$ start --growth",
+  },
+  {
+    name: "COMPOUND",
+    price: "Starting at $3,000/mo",
+    description: "For complex platforms requiring custom modernization.",
+    tag: "FULL EVOLUTION",
+    featured: false,
+    key: "compound" as const,
+    cta: "$ start --compound",
+  },
+];
+
 const FEATURE_GROUPS: FeatureGroup[] = [
   {
     name: "Delivery",
@@ -300,35 +331,7 @@ function PricingPage() {
 
           {/* Mobile Stacked View: visible on smaller viewports */}
           <div className="block md:hidden space-y-8">
-            {[
-              {
-                name: "MAINTAIN",
-                price: "$650/mo",
-                description: "For stable apps needing continuous security & monitoring.",
-                tag: "HOLD THE LINE",
-                featured: false,
-                key: "maintain" as const,
-                cta: "$ start --maintain",
-              },
-              {
-                name: "GROWTH",
-                price: "$1,500/mo",
-                description: "For active products scaling and shipping features.",
-                tag: "MOST CHOSEN",
-                featured: true,
-                key: "growth" as const,
-                cta: "$ start --growth",
-              },
-              {
-                name: "COMPOUND",
-                price: "Starting at $3,000/mo",
-                description: "For complex platforms requiring custom modernization.",
-                tag: "FULL EVOLUTION",
-                featured: false,
-                key: "compound" as const,
-                cta: "$ start --compound",
-              },
-            ].map((tier) => (
+            {MOBILE_TIERS.map((tier) => (
               <div
                 key={tier.name}
                 className={`rounded-[3px] p-6 border flex flex-col ${

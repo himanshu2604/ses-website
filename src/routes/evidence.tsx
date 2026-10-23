@@ -34,44 +34,50 @@ export const Route = createFileRoute("/evidence")({
 
 /* -------------------- 12-week chart -------------------- */
 
+// ⚡ Bolt 2026-10-28: Pre-compute static SVG chart geometry at module scope — expected impact: Eliminates runtime geometry math & useMemo overhead on component mount and re-renders.
 const SCORES = [44, 48, 52, 55, 58, 61, 65, 69, 72, 76, 81, 85, 88];
+const CHART_W = 700;
+const CHART_H = 260;
+const CHART_PAD_L = 44;
+const CHART_PAD_R = 20;
+const CHART_PAD_T = 24;
+const CHART_PAD_B = 36;
+const CHART_INNER_W = CHART_W - CHART_PAD_L - CHART_PAD_R;
+const CHART_INNER_H = CHART_H - CHART_PAD_T - CHART_PAD_B;
+const CHART_MIN = 30;
+const CHART_MAX = 100;
+
+const getChartX = (i: number) => CHART_PAD_L + (i / (SCORES.length - 1)) * CHART_INNER_W;
+const getChartY = (v: number) =>
+  CHART_PAD_T + CHART_INNER_H - ((v - CHART_MIN) / (CHART_MAX - CHART_MIN)) * CHART_INNER_H;
+
+const CHART_PATH_D = SCORES.map(
+  (v, i) => `${i === 0 ? "M" : "L"} ${getChartX(i).toFixed(1)} ${getChartY(v).toFixed(1)}`,
+).join(" ");
+
+const CHART_AVG_Y = getChartY(61);
+
+const CHART_LINE_LEN = Math.ceil(
+  SCORES.reduce((acc, v, i) => {
+    if (i === 0) return 0;
+    const x1 = getChartX(i - 1);
+    const y1 = getChartY(SCORES[i - 1]);
+    const x2 = getChartX(i);
+    const y2 = getChartY(v);
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    return acc + Math.sqrt(dx * dx + dy * dy);
+  }, 0),
+);
+
+const CHART_POINTS = SCORES.map((v, i) => ({
+  val: v,
+  cx: getChartX(i),
+  cy: getChartY(v),
+  r: i === 0 || i === SCORES.length - 1 ? 4 : 2.5,
+}));
 
 function HealthChart() {
-  const scores = SCORES;
-  const w = 700;
-  const h = 260;
-  const padL = 44;
-  const padR = 20;
-  const padT = 24;
-  const padB = 36;
-  const innerW = w - padL - padR;
-  const innerH = h - padT - padB;
-  const min = 30;
-  const max = 100;
-
-  // ⚡ Bolt 2026-09-16: Memoize SVG chart path geometry and Euclidean length calculation — expected impact: Eliminates redundant arithmetic calculations on component re-renders.
-  const { x, y, pathD, avgY, lineLen } = useMemo(() => {
-    const getX = (i: number) => padL + (i / (scores.length - 1)) * innerW;
-    const getY = (v: number) => padT + innerH - ((v - min) / (max - min)) * innerH;
-    const d = scores
-      .map((v, i) => `${i === 0 ? "M" : "L"} ${getX(i).toFixed(1)} ${getY(v).toFixed(1)}`)
-      .join(" ");
-    const averageY = getY(61);
-    const len = Math.ceil(
-      scores.reduce((acc, v, i) => {
-        if (i === 0) return 0;
-        const x1 = getX(i - 1);
-        const y1 = getY(scores[i - 1]);
-        const x2 = getX(i);
-        const y2 = getY(v);
-        const dx = x2 - x1;
-        const dy = y2 - y1;
-        return acc + Math.sqrt(dx * dx + dy * dy);
-      }, 0),
-    );
-    return { x: getX, y: getY, pathD: d, avgY: averageY, lineLen: len };
-  }, [scores, innerW, innerH]);
-
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(false);
 
@@ -100,7 +106,7 @@ function HealthChart() {
       </div>
       <div className="w-full overflow-x-auto">
         <svg
-          viewBox={`0 0 ${w} ${h}`}
+          viewBox={`0 0 ${CHART_W} ${CHART_H}`}
           className="w-full h-auto min-w-[560px] overflow-visible"
           style={{ overflow: "visible" }}
           role="img"
@@ -108,17 +114,17 @@ function HealthChart() {
         >
           {/* industry avg horizontal rule */}
           <line
-            x1={padL}
-            x2={w - padR}
-            y1={avgY}
-            y2={avgY}
+            x1={CHART_PAD_L}
+            x2={CHART_W - CHART_PAD_R}
+            y1={CHART_AVG_Y}
+            y2={CHART_AVG_Y}
             stroke="#333"
             strokeDasharray="3 4"
             strokeWidth={1}
           />
           <text
-            x={w - padR}
-            y={avgY - 6}
+            x={CHART_W - CHART_PAD_R}
+            y={CHART_AVG_Y - 6}
             textAnchor="end"
             fontFamily="'JetBrains Mono', monospace"
             fontSize={10}
@@ -131,8 +137,8 @@ function HealthChart() {
           {[44, 61, 88].map((v) => (
             <text
               key={v}
-              x={padL - 10}
-              y={y(v) + 3}
+              x={CHART_PAD_L - 10}
+              y={getChartY(v) + 3}
               textAnchor="end"
               fontFamily="'JetBrains Mono', monospace"
               fontSize={10}
@@ -144,23 +150,23 @@ function HealthChart() {
 
           {/* line — animated left-to-right on view */}
           <path
-            d={pathD}
+            d={CHART_PATH_D}
             stroke="#22c55e"
             strokeWidth={2}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
             className={`chart-line ${inView ? "in" : ""}`}
-            style={{ ["--line-len" as string]: `${lineLen}` }}
+            style={{ ["--line-len" as string]: `${CHART_LINE_LEN}` }}
           />
 
           {/* points — fade in with the line */}
-          {scores.map((v, i) => (
+          {CHART_POINTS.map((pt, i) => (
             <circle
               key={i}
-              cx={x(i)}
-              cy={y(v)}
-              r={i === 0 || i === scores.length - 1 ? 4 : 2.5}
+              cx={pt.cx}
+              cy={pt.cy}
+              r={pt.r}
               fill="#22c55e"
               style={{
                 opacity: inView ? 1 : 0,
@@ -171,8 +177,8 @@ function HealthChart() {
 
           {/* x-axis labels: week 0 and week 12 */}
           <text
-            x={x(0)}
-            y={h - 10}
+            x={getChartX(0)}
+            y={CHART_H - 10}
             textAnchor="start"
             fontFamily="'JetBrains Mono', monospace"
             fontSize={10}
@@ -181,8 +187,8 @@ function HealthChart() {
             week 0
           </text>
           <text
-            x={x(scores.length - 1)}
-            y={h - 10}
+            x={getChartX(SCORES.length - 1)}
+            y={CHART_H - 10}
             textAnchor="end"
             fontFamily="'JetBrains Mono', monospace"
             fontSize={10}
@@ -199,6 +205,21 @@ function HealthChart() {
     </div>
   );
 }
+
+/* -------------------- Case Wins Data -------------------- */
+
+// ⚡ Bolt 2026-10-28: Hoist static case wins arrays to module scope — expected impact: Prevents array allocations on component renders.
+const ECOMMERCE_WINS = [
+  "— Eliminated 9 abandoned-cart triggers caused by payment timeout errors (Reliability: 48 → 79)",
+  "— Cut average checkout load time from 4.1s to 2.3s (Performance: 53 → 81)",
+  "— Resolved 6 PCI-adjacent dependency vulnerabilities (Security: 52 → 68)",
+];
+
+const DEV_TOOLING_WINS = [
+  "— Reduced p95 API latency from 890ms to 340ms on core endpoints (Performance: 61 → 88)",
+  "— Cleared 340 lines of deprecated SDK calls ahead of vendor sunset (Code Health: 64 → 79)",
+  "— Added structured error logging — MTTD dropped from hours to under 4 minutes (Reliability: 66 → 78)",
+];
 
 /* -------------------- Deep case columns -------------------- */
 
@@ -414,11 +435,7 @@ function EvidencePage() {
                 from={51}
                 to={74}
                 delta="+23"
-                wins={[
-                  "— Eliminated 9 abandoned-cart triggers caused by payment timeout errors (Reliability: 48 → 79)",
-                  "— Cut average checkout load time from 4.1s to 2.3s (Performance: 53 → 81)",
-                  "— Resolved 6 PCI-adjacent dependency vulnerabilities (Security: 52 → 68)",
-                ]}
+                wins={ECOMMERCE_WINS}
               />
               <SummaryCase
                 title="Developer Tooling SaaS"
@@ -426,11 +443,7 @@ function EvidencePage() {
                 from={63}
                 to={81}
                 delta="+18"
-                wins={[
-                  "— Reduced p95 API latency from 890ms to 340ms on core endpoints (Performance: 61 → 88)",
-                  "— Cleared 340 lines of deprecated SDK calls ahead of vendor sunset (Code Health: 64 → 79)",
-                  "— Added structured error logging — MTTD dropped from hours to under 4 minutes (Reliability: 66 → 78)",
-                ]}
+                wins={DEV_TOOLING_WINS}
               />
             </div>
           </div>
