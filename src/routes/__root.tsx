@@ -11,21 +11,29 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 
+// 🎨 Palette 2026-10-28: Elevate 404/500 error boundaries with Terminal Dark design system styling & WCAG AA accessibility — Ensures visual brand consistency and accessible error recovery.
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+    <div
+      role="status"
+      aria-live="polite"
+      className="flex min-h-screen items-center justify-center bg-[#0c0c0c] px-4 py-12"
+    >
+      <div className="w-full max-w-md border border-[#1e1e1e] bg-[#111] p-8 text-center rounded-[3px]">
+        <div className="mono text-[11px] text-[#22c55e] uppercase tracking-wider mb-2">
+          [ 404: page_not_found ]
+        </div>
+        <h1 className="mono text-6xl font-bold text-[#f0f0f0] tracking-tight">404</h1>
+        <p className="mt-4 text-[14px] text-[#999] leading-relaxed">
+          The requested path does not exist or has been moved.
         </p>
-        <div className="mt-6">
+        <div className="mt-8">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            aria-label="Go home"
+            className="inline-flex items-center justify-center mono text-[13px] bg-[#22c55e] text-[#0c0c0c] font-semibold px-5 py-2.5 rounded-[3px] transition-colors hover:bg-[#22c55e]/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22c55e] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0c0c]"
           >
-            Go home
+            $ cd / ↵
           </Link>
         </div>
       </div>
@@ -36,33 +44,39 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {}, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+    <div
+      role="alert"
+      className="flex min-h-screen items-center justify-center bg-[#0c0c0c] px-4 py-12"
+    >
+      <div className="w-full max-w-md border border-[#1e1e1e] bg-[#111] p-8 text-center rounded-[3px]">
+        <div className="mono text-[11px] text-[#ef4444] uppercase tracking-wider mb-2">
+          [ 500: system_error ]
+        </div>
+        <h1 className="mono text-2xl font-bold text-[#f0f0f0] tracking-tight">Execution failed</h1>
+        <p className="mt-3 text-[14px] text-[#999] leading-relaxed">
+          An unexpected exception occurred while rendering this view.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <button
+            type="button"
+            aria-label="Try again"
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex items-center justify-center mono text-[13px] bg-[#22c55e] text-[#0c0c0c] font-semibold px-4 py-2.5 rounded-[3px] transition-colors hover:bg-[#22c55e]/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22c55e] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0c0c] cursor-pointer"
           >
-            Try again
+            $ retry --force ↵
           </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+          <Link
+            to="/"
+            aria-label="Go home"
+            className="inline-flex items-center justify-center mono text-[13px] border border-[#1e1e1e] bg-[#0c0c0c] text-[#f0f0f0] px-4 py-2.5 rounded-[3px] transition-colors hover:border-[#22c55e] hover:text-[#22c55e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22c55e] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0c0c]"
           >
-            Go home
-          </a>
+            $ cd / ↵
+          </Link>
         </div>
       </div>
     </div>
