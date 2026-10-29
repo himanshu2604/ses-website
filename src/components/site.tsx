@@ -601,11 +601,11 @@ export function AuditForm({ showDedicatedLink = false }: { showDedicatedLink?: b
     }
   }, [location.search]);
 
-  // ⚡ Bolt 2026-09-02: Warm up Formspree connection dynamically on high-intent user interactions — expected impact: Saves ~200-400ms on submit without wasting connection overhead for passive scrolling-only visitors.
-  const [isWarmed, setIsWarmed] = useState(false);
+  // ⚡ Bolt 2026-11-04: Use useRef for isWarmed connection flag to eliminate redundant component re-renders on hover/touch/focus — expected impact: Eliminates 1 unnecessary React re-render of AuditForm on user hover/focus.
+  const isWarmedRef = useRef(false);
   const warmConnection = () => {
-    if (isWarmed || typeof window === "undefined") return;
-    setIsWarmed(true);
+    if (isWarmedRef.current || typeof window === "undefined") return;
+    isWarmedRef.current = true;
     const link = document.createElement("link");
     link.rel = "preconnect";
     link.href = "https://formspree.io";
