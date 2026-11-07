@@ -1,6 +1,6 @@
 {
   "client": "ses-marketing-site",
-  "last_updated": "2026-10-02",
+  "last_updated": "2026-10-30",
   "version": "1.0",
   "architecture": {
     "framework": "TanStack Start v1 — full-stack React framework with file-based routing",
@@ -18,7 +18,10 @@
       "Shared form component for the /audit and contact forms (consolidated 2026-07-24 — do not re-split these back into separate components)",
       "A 'health.json' live-styled widget renders Health Score data with a terminal/CLI aesthetic ($ ses scan --deep, etc.) — this component previously had a CRITICAL code-injection vulnerability, patched 2026-07-11",
       "Strict security headers (HSTS + CSP + COOP + X-Permitted-Cross-Domain-Policies + Permissions-Policy) deployed — any new third-party script/embed must be added to the CSP allowlist or it will silently break",
-      "File-based routing (TanStack Start convention) — pages observed: / (home), /pricing, /evidence, /audit, /about, /privacy, /terms, /security, /status"
+      "File-based routing (TanStack Start convention) — pages observed: / (home), /pricing, /evidence, /audit, /about, /privacy, /terms, /security, /status",
+      "Terminal Dark error boundaries with WCAG AA compliance (contrast, ARIA status/alert roles, keyboard focus) for 404 and 500 error views in src/routes/__root.tsx",
+      "Using useRef for imperative non-rendering interaction flags (such as connection warm-up guards in AuditForm) to prevent redundant component re-renders on user interaction",
+      "Strict search parameter whitelist validation (validateSearch) across all plan-aware routes (/audit, /, and /pricing) to prevent parameter pollution"
     ]
   },
   "design_system": {
@@ -164,6 +167,36 @@
       "agent": "Sentinel",
       "change": "Hardened Cross-Origin-Embedder-Policy security header in vercel.json",
       "impact": "Security score +2 (30 → 32)",
+      "skill_scores": {
+        "overall": "100/100"
+      },
+      "status": "merged"
+    },
+    {
+      "date": "2026-10-28",
+      "agent": "Palette",
+      "change": "Elevate 404/500 error boundaries with Terminal Dark styling & WCAG AA accessibility",
+      "impact": "Experience Quality score +3 (10 → 13)",
+      "skill_scores": {
+        "overall": "100/100"
+      },
+      "status": "merged"
+    },
+    {
+      "date": "2026-10-29",
+      "agent": "Bolt",
+      "change": "Optimize AuditForm connection warming to eliminate redundant re-renders via useRef",
+      "impact": "Performance score +2 (7 → 9)",
+      "skill_scores": {
+        "overall": "100/100"
+      },
+      "status": "merged"
+    },
+    {
+      "date": "2026-10-30",
+      "agent": "Sentinel",
+      "change": "Enforce strict search parameter whitelist validation on pricing route",
+      "impact": "Security score +2 (34 → 36)",
       "skill_scores": {
         "overall": "100/100"
       },
