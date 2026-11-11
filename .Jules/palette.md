@@ -34,3 +34,8 @@
 
 **Learning:** Navigation links without explicit active state indicators leave users confused about their current location on multi-page SPAs, while screen reader users lack location context without `aria-current="page"`. Passing `activeProps` to TanStack Router's `<Link>` component declaratively applies both visual accent styles and `aria-current="page"` semantics when the current route matches, ensuring WCAG 2.1 AA compliant navigation.
 **Action:** Always utilize `activeProps={{ className: "...", "aria-current": "page" }}` on TanStack Router `<Link>` elements for persistent site navigation links across desktop and mobile views.
+
+## 2026-11-11 - Accessible Names on Reusable Progressbar Components
+
+**Learning:** Reusable visual indicators that use ARIA roles (such as `role="progressbar"`) must always provide an accessible name via `aria-label` or `aria-labelledby` per WCAG 2.1 AA (4.1.2 Name, Role, Value). Even when a component supports an optional `label` prop, omitting it at call sites generates critical `aria-progressbar-name` axe violations and leaves assistive technologies unable to announce what quantity the progressbar represents.
+**Action:** Whenever rendering `Bar` or other progress indicators, always supply a descriptive `label` prop reflecting the context or stage (e.g. `${s.when} ${s.label}`) so screen reader users hear complete contextual metrics.

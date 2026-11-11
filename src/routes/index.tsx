@@ -205,7 +205,8 @@ function Problem() {
                   >
                     <CountUp to={s.score} duration={1200 + i * 120} />
                   </div>
-                  <Bar value={s.score} tone={s.tone} />
+                  {/* 🎨 Palette 2026-11-11: Add accessible aria-label to decay timeline progressbars — Resolves aria-progressbar-name WCAG AA violation. */}
+                  <Bar value={s.score} tone={s.tone} label={`${s.when} ${s.label}`} />
                   <div>
                     <div className="text-[#f0f0f0] text-[15px] font-semibold">{s.label}</div>
                     <div className="text-[#999] text-[13px] leading-[1.6] mt-1.5">{s.desc}</div>
